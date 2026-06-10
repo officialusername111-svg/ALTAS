@@ -46,6 +46,10 @@ namespace ALTAS.Models.REPO
                 param.Add("@Status", dto.Status);
                 param.Add("@IncidentForTransfer", dto.IncidentForTransfer);
                 param.Add("@SettledDate", dto.SettledDate);
+                param.Add("@TimeFiled", dto.TimeFiled);     // NEW
+                param.Add("@ORNo", dto.ORNo);               // NEW
+                param.Add("@DateIssued", dto.DateIssued);   // NEW
+                param.Add("@Amount", dto.Amount);           // NEW
 
                 var result = await connection.QuerySingleAsync<int>("SAVE_INCIDENT", param,
                     commandType: CommandType.StoredProcedure, transaction: tran);
@@ -89,6 +93,10 @@ namespace ALTAS.Models.REPO
                 param.Add("@Status", dto.Status);
                 param.Add("@IncidentForTransfer", dto.IncidentForTransfer);
                 param.Add("@SettledDate", dto.SettledDate);
+                param.Add("@TimeFiled", dto.TimeFiled);     // NEW
+                param.Add("@ORNo", dto.ORNo);               // NEW
+                param.Add("@DateIssued", dto.DateIssued);   // NEW
+                param.Add("@Amount", dto.Amount);           // NEW
 
                 var result = await connection.QuerySingleAsync<int>("UPDATE_INCIDENT", param,
                     commandType: CommandType.StoredProcedure, transaction: tran);
@@ -281,7 +289,8 @@ namespace ALTAS.Models.REPO
                 var param = new DynamicParameters();
                 param.Add("@KPCaseNo", dto.KPCaseNo);
                 param.Add("@SettlementDate", dto.SettlementDate);
-                param.Add("@Result", dto.Result);
+                param.Add("@SettlementTime", dto.SettlementTime);   // NEW
+                param.Add("@Result", dto.Result);                   // proc defaults to 'Pending' if empty
                 param.Add("@Remarks", dto.Remarks);
 
                 var result = await connection.QuerySingleAsync<int>("SAVE_INCIDENT_SETTLEMENT", param,
@@ -306,6 +315,7 @@ namespace ALTAS.Models.REPO
                 param.Add("@IncidentSettlementId", dto.IncidentSettlementId);
                 param.Add("@KPCaseNo", dto.KPCaseNo);
                 param.Add("@SettlementDate", dto.SettlementDate);
+                param.Add("@SettlementTime", dto.SettlementTime);   // NEW
                 param.Add("@Result", dto.Result);
                 param.Add("@Remarks", dto.Remarks);
 

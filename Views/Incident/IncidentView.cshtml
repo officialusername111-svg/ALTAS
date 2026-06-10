@@ -92,9 +92,9 @@
             <div class="col-7">
                 <div id="divIncidentInformation">
 
-                    <input type="hidden" name="IncidentID"             id="_hidIncidentID" />
+                    <input type="hidden" name="IncidentID" id="_hidIncidentID" />
                     <input type="hidden" name="ResidentId_Complainant" id="_hidResidentId_Complainant" />
-                    <input type="hidden" name="ResidentId_Respondent"  id="_hidResidentId_Respondent" />
+                    <input type="hidden" name="ResidentId_Respondent" id="_hidResidentId_Respondent" />
 
                     <h6 class="fs-16 fw-bold mt-5">Case Information</h6>
 
@@ -188,6 +188,40 @@
                                     <input type="checkbox" name="IncidentForTransfer" id="inpIncidentForTransfer">
                                     <span class="checkmark"></span> For Transfer
                                 </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Case Payment Information *@
+                    <h6 class="fs-16 fw-bold mt-4">Case Payment Information</h6>
+
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-group mb-3">
+                                <label class="fs-10 text-muted fw-semibold mb-1">Time Filed</label>
+                                <input type="time" class="form-control fs-11"
+                                       name="TimeFiled" id="inpTimeFiled">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group mb-3">
+                                <label class="fs-10 text-muted fw-semibold mb-1">OR No.</label>
+                                <input type="text" class="form-control fs-11"
+                                       name="ORNo" id="inpORNo" placeholder="e.g. 31480S1">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group mb-3">
+                                <label class="fs-10 text-muted fw-semibold mb-1">Date Issued</label>
+                                <input type="date" class="form-control fs-11"
+                                       name="DateIssued" id="inpDateIssued">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group mb-3">
+                                <label class="fs-10 text-muted fw-semibold mb-1">Amount</label>
+                                <input type="number" step="0.01" min="0" class="form-control fs-11"
+                                       name="Amount" id="inpAmount" placeholder="0.00">
                             </div>
                         </div>
                     </div>
@@ -301,7 +335,12 @@
                                 <i class="bi bi-plus-lg me-1"></i> Add Schedule
                             </button>
                         </div>
-                        <table id="tblSettlement" class="display dataTable table-striped table-hover w-100"></table>
+                        <div id="divSettlementCards" class="d-flex flex-column gap-2">
+                            <div class="text-center py-4">
+                                <i class="bi bi-calendar-x fs-24 text-muted"></i>
+                                <p class="text-muted fs-11 mt-1 mb-0">No settlement schedules yet.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -401,7 +440,9 @@
                     <i class="icon-save me-1"></i> Save Complainant
                 </button>
                 <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11"
-                        data-bs-dismiss="modal">Close</button>
+                        data-bs-dismiss="modal">
+                    Close
+                </button>
             </div>
         </div>
     </div>
@@ -441,7 +482,9 @@
             <div class="d-flex justify-content-between p-3">
                 <span class="text-muted fs-10">Select a resident to auto-fill the complainant form fields.</span>
                 <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0"
-                        data-bs-dismiss="modal">Close</button>
+                        data-bs-dismiss="modal">
+                    Close
+                </button>
             </div>
         </div>
     </div>
@@ -481,7 +524,9 @@
             <div class="d-flex justify-content-between p-3">
                 <span class="text-muted fs-10">Select a resident to add as respondent. Multiple respondents allowed.</span>
                 <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0"
-                        data-bs-dismiss="modal">Close</button>
+                        data-bs-dismiss="modal">
+                    Close
+                </button>
             </div>
         </div>
     </div>
@@ -506,7 +551,7 @@
             </div>
             <div class="modal-body mx-2" id="divSettlementForm">
                 <input type="hidden" name="IncidentSettlementId" id="_hidSettlementId" />
-                <input type="hidden" name="KPCaseNo"             id="_hidSettlementKPCaseNo" />
+                <input type="hidden" name="KPCaseNo" id="_hidSettlementKPCaseNo" />
                 <div class="row pt-2">
                     <div class="col">
                         <div class="form-group mb-3">
@@ -517,9 +562,16 @@
                     </div>
                     <div class="col">
                         <div class="form-group mb-3">
+                            <label class="fs-10 text-muted fw-semibold mb-1">Settlement Time</label>
+                            <input type="time" class="form-control fs-11"
+                                   name="SettlementTime" id="inpSettlementTime" value="10:00">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group mb-3">
                             <label class="fs-10 text-muted fw-semibold mb-1">Result</label>
                             <select class="form-select fs-11" name="Result" id="inpSettlementResult">
-                                <option value="" selected disabled>Select Result</option>
+                                <option value="Pending">Pending</option>
                                 <option value="Unsettle">Unsettle</option>
                                 <option value="Settle">Settle</option>
                                 <option value="Referred">Referred</option>
@@ -542,7 +594,9 @@
                     <i class="icon-save me-1"></i> Save Settlement Schedule
                 </button>
                 <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11"
-                        data-bs-dismiss="modal">Close</button>
+                        data-bs-dismiss="modal">
+                    Close
+                </button>
             </div>
         </div>
     </div>
@@ -590,7 +644,9 @@
                     <i class="icon-save me-1"></i> Upload Document
                 </button>
                 <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11"
-                        data-bs-dismiss="modal">Close</button>
+                        data-bs-dismiss="modal">
+                    Close
+                </button>
             </div>
         </div>
     </div>
@@ -621,7 +677,42 @@
                     <i class="bi bi-download me-1"></i> Download
                 </a>
                 <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11"
-                        data-bs-dismiss="modal">Close</button>
+                        data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Modal: Preview Report — shared PDF viewer for all generated KP forms *@
+<div class="modal fade" id="mdlPreviewReport" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header flex-column align-items-start border-bottom-0 pb-0">
+                <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                    <div class="col-auto pe-0">
+                        <img src="/img/_icons/illustrations/house.svg" alt="ATLAS Logo" class="icon-xxxl">
+                    </div>
+                    <div class="col ps-0 d-flex align-items-center">
+                        <div>
+                            <h3 class="fw-bold mb-0">Preview report</h3>
+                            <p class="text-muted fs-12 mb-0">A quick view of the generated report. It allows users to review the layout, content, and accuracy of the data, ensuring everything is correct before printing or downloading.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body p-0" style="height: 80vh; overflow: hidden;">
+                <div class="card h-100 border-0 rounded-0 px-3">
+                    <div class="card-body p-0 h-100">
+                        <iframe id="pdfFrame" src="" frameborder="0" style="width: 100%; height: 100%; display: block;"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end p-3">
+                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

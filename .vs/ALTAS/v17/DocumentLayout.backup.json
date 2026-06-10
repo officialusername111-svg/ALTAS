@@ -7,24 +7,44 @@
       "RelativeMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|solutionrelative:wwwroot\\js\\_defined\\_incident.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|f:\\9. workspace_alternate\\altas\\version 1.7\\altas\\models\\dto\\incidentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|solutionrelative:models\\dto\\incidentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|f:\\9. workspace_alternate\\altas\\version 1.7\\altas\\views\\incident\\incidentview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|solutionrelative:views\\incident\\incidentview.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|f:\\9. workspace_alternate\\altas\\version 1.7\\altas\\controllers\\incidentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|solutionrelative:controllers\\incidentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|f:\\9. workspace_alternate\\altas\\version 1.7\\altas\\controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|solutionrelative:controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|f:\\9. workspace_alternate\\altas\\version 1.7\\altas\\models\\dto\\incidentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|solutionrelative:models\\dto\\incidentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|f:\\9. workspace_alternate\\altas\\version 1.7\\altas\\models\\repo\\incidentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|solutionrelative:models\\repo\\incidentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|f:\\9. workspace_alternate\\altas\\version 1.7\\altas\\reports\\kpform7complaint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|solutionrelative:reports\\kpform7complaint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|f:\\9. workspace_alternate\\altas\\version 1.7\\altas\\models\\interface\\iincidentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|solutionrelative:models\\interface\\iincidentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|f:\\9. workspace_alternate\\altas\\version 1.7\\altas\\views\\reports\\reports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|solutionrelative:views\\reports\\reports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|f:\\9. workspace_alternate\\altas\\version 1.7\\altas\\reports\\kpform9summons.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|solutionrelative:reports\\kpform9summons.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|f:\\9. workspace_alternate\\altas\\version 1.7\\altas\\reports\\kpform8noticeofhearing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|solutionrelative:reports\\kpform8noticeofhearing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|f:\\9. workspace_alternate\\altas\\version 1.7\\altas\\controllers\\incidentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|solutionrelative:controllers\\incidentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{98D9E7B2-4561-4DD0-8CD1-24BACD40A4E8}|ALTAS.csproj|f:\\9. workspace_alternate\\altas\\version 1.7\\altas\\views\\resident\\residentinformation.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -38,7 +58,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,7 +66,111 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
+              "Title": "KPForm8NoticeOfHearing.cs",
+              "DocumentMoniker": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Reports\\KPForm8NoticeOfHearing.cs",
+              "RelativeDocumentMoniker": "Reports\\KPForm8NoticeOfHearing.cs",
+              "ToolTip": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Reports\\KPForm8NoticeOfHearing.cs",
+              "RelativeToolTip": "Reports\\KPForm8NoticeOfHearing.cs",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAswIcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T06:46:45.152Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "KPForm7Complaint.cs",
+              "DocumentMoniker": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Reports\\KPForm7Complaint.cs",
+              "RelativeDocumentMoniker": "Reports\\KPForm7Complaint.cs",
+              "ToolTip": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Reports\\KPForm7Complaint.cs",
+              "RelativeToolTip": "Reports\\KPForm7Complaint.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAM4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T06:46:27.186Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ReportsController.cs",
+              "DocumentMoniker": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Controllers\\ReportsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ReportsController.cs",
+              "ToolTip": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Controllers\\ReportsController.cs",
+              "RelativeToolTip": "Controllers\\ReportsController.cs",
+              "ViewState": "AgIAAAwBAAAAAAAAAAAmwC4BAABaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T06:39:14.046Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IncidentRepository.cs",
+              "DocumentMoniker": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Models\\REPO\\IncidentRepository.cs",
+              "RelativeDocumentMoniker": "Models\\REPO\\IncidentRepository.cs",
+              "ToolTip": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Models\\REPO\\IncidentRepository.cs",
+              "RelativeToolTip": "Models\\REPO\\IncidentRepository.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAowAwBAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-02T07:42:18.551Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IncidentView.cshtml",
+              "DocumentMoniker": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Views\\Incident\\IncidentView.cshtml",
+              "RelativeDocumentMoniker": "Views\\Incident\\IncidentView.cshtml",
+              "ToolTip": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Views\\Incident\\IncidentView.cshtml",
+              "RelativeToolTip": "Views\\Incident\\IncidentView.cshtml",
+              "ViewState": "AgIAAMECAAAAAAAAAAAiwPYCAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-02T03:24:54.372Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "_incident.js",
+              "DocumentMoniker": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\wwwroot\\js\\_defined\\_incident.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\_defined\\_incident.js",
+              "ToolTip": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\wwwroot\\js\\_defined\\_incident.js",
+              "RelativeToolTip": "wwwroot\\js\\_defined\\_incident.js",
+              "ViewState": "AgIAANIDAAAAAAAAAAAmwAQEAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-06-02T06:04:14.841Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Reports.cshtml",
+              "DocumentMoniker": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Views\\Reports\\Reports.cshtml",
+              "RelativeDocumentMoniker": "Views\\Reports\\Reports.cshtml",
+              "ToolTip": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Views\\Reports\\Reports.cshtml",
+              "RelativeToolTip": "Views\\Reports\\Reports.cshtml",
+              "ViewState": "AgIAAIQAAAAAAAAAAAAAAI8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-10T07:26:23.857Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IIncidentRepository.cs",
+              "DocumentMoniker": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Models\\Interface\\IIncidentRepository.cs",
+              "RelativeDocumentMoniker": "Models\\Interface\\IIncidentRepository.cs",
+              "ToolTip": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Models\\Interface\\IIncidentRepository.cs",
+              "RelativeToolTip": "Models\\Interface\\IIncidentRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAoAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T06:40:44.387Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "IncidentController.cs",
               "DocumentMoniker": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Controllers\\IncidentController.cs",
               "RelativeDocumentMoniker": "Controllers\\IncidentController.cs",
@@ -58,68 +182,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IncidentRepository.cs",
-              "DocumentMoniker": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Models\\REPO\\IncidentRepository.cs",
-              "RelativeDocumentMoniker": "Models\\REPO\\IncidentRepository.cs",
-              "ToolTip": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Models\\REPO\\IncidentRepository.cs",
-              "RelativeToolTip": "Models\\REPO\\IncidentRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-02T07:42:18.551Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "IIncidentRepository.cs",
-              "DocumentMoniker": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Models\\Interface\\IIncidentRepository.cs",
-              "RelativeDocumentMoniker": "Models\\Interface\\IIncidentRepository.cs",
-              "ToolTip": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Models\\Interface\\IIncidentRepository.cs",
-              "RelativeToolTip": "Models\\Interface\\IIncidentRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-02T07:42:05.024Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "IncidentDTO.cs",
               "DocumentMoniker": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Models\\DTO\\IncidentDTO.cs",
               "RelativeDocumentMoniker": "Models\\DTO\\IncidentDTO.cs",
               "ToolTip": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Models\\DTO\\IncidentDTO.cs",
               "RelativeToolTip": "Models\\DTO\\IncidentDTO.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAA5wDUAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAABQAAAAAAAAAAAAAACcAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-02T07:41:44.829Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "_incident.js",
-              "DocumentMoniker": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\wwwroot\\js\\_defined\\_incident.js",
-              "RelativeDocumentMoniker": "wwwroot\\js\\_defined\\_incident.js",
-              "ToolTip": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\wwwroot\\js\\_defined\\_incident.js",
-              "RelativeToolTip": "wwwroot\\js\\_defined\\_incident.js",
-              "ViewState": "AgIAAF8DAAAAAAAAAAAmwGsDAABXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2026-06-02T06:04:14.841Z",
+              "WhenOpened": "2026-06-02T07:41:44.829Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "IncidentView.cshtml",
-              "DocumentMoniker": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Views\\Incident\\IncidentView.cshtml",
-              "RelativeDocumentMoniker": "Views\\Incident\\IncidentView.cshtml",
-              "ToolTip": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Views\\Incident\\IncidentView.cshtml",
-              "RelativeToolTip": "Views\\Incident\\IncidentView.cshtml",
-              "ViewState": "AgIAAEQCAAAAAAAAAAAmwHYCAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-06-02T03:24:54.372Z"
+              "DocumentIndex": 8,
+              "Title": "KPForm9Summons.cs",
+              "DocumentMoniker": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Reports\\KPForm9Summons.cs",
+              "RelativeDocumentMoniker": "Reports\\KPForm9Summons.cs",
+              "ToolTip": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Reports\\KPForm9Summons.cs",
+              "RelativeToolTip": "Reports\\KPForm9Summons.cs",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAswJwAAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-10T06:46:55.292Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 11,
               "Title": "ResidentInformation.cshtml",
               "DocumentMoniker": "F:\\9. Workspace_Alternate\\ALTAS\\version 1.7\\ALTAS\\Views\\Resident\\ResidentInformation.cshtml",
               "RelativeDocumentMoniker": "Views\\Resident\\ResidentInformation.cshtml",

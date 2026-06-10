@@ -33,6 +33,11 @@
         public string? RespondentNames { get; set; }
         public int ComplainantCount { get; set; }
         public int RespondentCount { get; set; }
+
+        public string? TimeFiled { get; set; }
+        public string? ORNo { get; set; }
+        public DateTime? DateIssued { get; set; }
+        public decimal? Amount { get; set; }
     }
 
     public class CaseTypeDTO
@@ -58,6 +63,8 @@
         public string? FileLocation { get; set; }
         public DateTime DateUploaded { get; set; }
         public Guid? UploadedByUserId { get; set; }
+
+
     }
 
     public class IncidentPartyDTO
@@ -78,6 +85,7 @@
         public int IncidentSettlementId { get; set; }
         public string? KPCaseNo { get; set; }
         public DateTime? SettlementDate { get; set; }
+        public string? SettlementTime { get; set; }   // NEW — "HH:mm" (24h)
         public string? Result { get; set; }
         public string? Remarks { get; set; }
     }
