@@ -1,0 +1,565 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Officials";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="form-container mx-5">
+    <div class="mb-5">
+        <div class="row mx-3 border-bottom-dash border-1 py-2">
+            <div class="col-auto pe-0">
+                <img src="/img/png/ctc.png" alt="ATLAS Logo" class="icon-png">
+            </div>
+            <div class="col ps-0 d-flex align-items-center">
+                <div>
+                    <h3 class="fw-bold mb-0">Document Archive Management</h3>
+                    <p class="text-muted fs-12 w-75">Handles the storage, categorization, and retrieval of archived documents, ensuring organized, accessible, and traceable records within the system.</p>
+                </div>
+            </div>
+            <div class="col-auto d-flex align-content-end flex-wrap">
+                <button type="button" class="btn btn-main-outline btn-sm fw-semibold" id="btnSearchResident" data-bs-toggle="modal" data-bs-target="#mdlResident"><i class="icon-person me-1"></i> Find Resident from Current List </button>
+                <button type="button" class="btn btn-main-outline btn-sm fw-semibold ms-2" id="btnNewOR" data-bs-toggle="modal" data-bs-target="#mdlORHistory"><i class="icon-receipt me-1"></i> Manage OR </button>
+                <button type="button" class="btn btn-main-outline btn-sm fw-semibold ms-2" id="btnNewOR" data-bs-toggle="modal" data-bs-target="#mdlCTCCollection"><i class="icon-collect me-1"></i> Collection / Remittance </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-5 mx-5"  id="divResidentInformation">
+    <input type="hidden" name="ResidentId" />
+    <div class="row px-0 border border-1">
+        <div class="col-8">
+            <div class="row px-0">
+                <div class="col-8 text-center py-3">
+                    <span class="fs-20 fw-semibold">COMMUNITY TAX CERTIFICATE</span>
+                </div>
+                <div class="col-4 bg-dark text-center py-3">
+                    <span class="fs-20 fw-semibold  text-white">INDIVIDUAL</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 bg-secondary bg-opacity-25 text-start">
+            <span class="fw-bolder fs-22 ps-3 mt-2">CCI20225  <span class="fw-normal fs-2 ps-3" id="inpORNumber" name="ORNumber">  </span></span>
+        </div>
+    </div>
+    <div class="row border-start border-bottom border-end">
+        <div class="col-8">
+            <div class="row px-0 border-end">
+                <div class="col-2 border-end">
+                    <div class="form-group py-2">
+                        <span class="fs-10 form-label text-muted mb-0">YEAR </span>
+                        <input type="number" class="form-control fs-12 fw-bold ps-3 text-muted text-center border-0" id="inpYear" name="YearPaid" placeholder="">
+                    </div>
+                </div>
+                <div class="col-7 border-end">
+                    <div class="form-group  py-2">
+                        <span class="fs-10 form-label text-muted mb-0">PLACE OF ISSUE <spam class="fs-10"> (City/Mun./Prov.)</spam> </span>
+                        <span type="text" class="form-control fs-12 fw-bold ps-3 text-muted border-0 text-uppercase"> @ViewBag.AppLocation </span>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group  py-2">
+                        <span class="fs-10 form-label text-muted fw-semibold mb-0">DATE OF ISSUED </span>
+                        <input type="date" class="form-control fs-12 fw-bold ps-3 text-muted border-0" id="inpDateOfIssue" name="ORDate" placeholder="">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-4 text-center pt-3">
+            <span class="fw-semibold fs-22 ps-3 mt-2">TAX PAYER'S COPY</span>
+        </div>
+    </div>
+
+
+    <div class="row border-start border-bottom border-end">
+        <div class="col-8">
+            <div class="row px-0 border-end">
+                <div class="col-4 border-end">
+                    <div class="form-group py-2">
+                        <span class="fs-10 form-label text-muted mb-0">NAME (SURNAME) </span>
+                        <input type="text" class="form-control fs-12 fw-bold ps-3 text-muted border-0 text-uppercase" name="LastName" placeholder="">
+                    </div>
+                </div>
+                <div class="col-4 border-end">
+                    <div class="form-group  py-2">
+                        <span class="fs-10 form-label text-muted mb-0">(FIRST) </span>
+                        <input type="text" class="form-control fs-12 fw-bold ps-3 text-muted border-0 text-uppercase" name="FirstName" placeholder="">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group  py-2">
+                        <span class="fs-10 form-label text-muted mb-0">(MIDDLE) </span>
+                        <input type="text" class="form-control fs-12 fw-bold ps-3 text-muted border-0 text-uppercase" name="MiddleName" placeholder="">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-4 pt-2">
+            <div class="form-group">
+                <span class="fs-10 form-label text-muted mb-0">TIN <span class="fs-6">(If any): </span> </span>
+                <input type="text" class="form-control fs-14 fw-bold ps-3 text-muted text-center border-0 text-uppercase" name="TINnumber" placeholder="">
+            </div>
+        </div>
+    </div>
+    <div class="row border-start border-bottom border-end">
+        <div class="col-8 pt-2 border-end">
+            <div class="form-group">
+                <span class="fs-10 form-label text-muted mb-0">ADDRESS </span>
+                <input type="text" class="form-control fs-14 fw-bold ps-3 text-muted text-start border-0 text-uppercase" name="Household" placeholder="">
+            </div>
+        </div>
+        <div class="col-4 pt-2">
+            <div class="form-group">
+                <span class="fs-10 form-label text-muted mb-0">SEX </span>
+                <select class="form-select fs-11 text-muted border-0 fw-bold ps-5" name="Sex">
+                    <option value="" class="text-muted" selected="" disabled="">SELECT SEX</option>
+                    <option value="Male">MALE</option>
+                    <option value="Female">FEMALE</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row border-start border-bottom border-end">
+        <div class="col-3 pt-2 border-end">
+            <div class="form-group">
+                <span class="fs-10 form-label text-muted mb-0">CITIZENSHIP </span>
+                <input type="text" class="form-control fs-14 fw-bold ps-3 text-muted text-center border-0 text-uppercase" name="Citizenship" placeholder="">
+            </div>
+        </div>
+        <div class="col-3 pt-2 border-end">
+            <div class="form-group">
+                <span class="fs-10 form-label text-muted mb-0">ICR NO. <span class="fs-6">(If an Alien): </span> </span>
+                <input type="text" class="form-control fs-14 fw-bold ps-3 text-muted text-center border-0 text-uppercase" name="" placeholder="">
+            </div>
+        </div>
+        <div class="col-4 pt-2 border-end">
+            <div class="form-group">
+                <span class="fs-10 form-label text-muted mb-0">PLACE OF BIRTH </span>
+                <input type="text" class="form-control fs-14 fw-bold ps-3 text-muted text-center border-0 text-uppercase" name="BirthPlace" placeholder="">
+            </div>
+        </div>
+        <div class="col-2 pt-2">
+            <div class="form-group">
+                <span class="fs-10 form-label text-muted mb-0">WEIGHT</span>
+                <input type="number" class="form-control fs-14 fw-bold ps-3 text-muted text-center border-0 " name="Weight" placeholder="">
+            </div>
+        </div>
+    </div>
+
+    <div class="row border-start border-bottom border-end">
+        <div class="col-8 pt-2 border-end">
+            <div class="form-group">
+                <span class="fs-10 form-label text-muted mb-0">CIVIL STATUS </span>
+                <select class="form-select fs-11 text-muted border-0 fw-bold ps-5" name="CivilStatus">
+                    <option value="" class="text-muted" selected="" disabled="">SELECT CIVIL STATUS</option>
+                    <option value="Single">SINGLE</option>
+                    <option value="Married">MARRIED</option>
+                    <option value="Widow">WIDOW</option>
+                    <option value="Widower">WIDOWER</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-2 pt-2 border-end">
+            <div class="form-group">
+                <span class="fs-10 form-label text-muted mb-0">DATE OF BIRTH </span>
+                <input type="date" class="form-control fs-12 fw-bold ps-3 text-muted border-0" id="inpBirthdate" name="Birthdate" placeholder="">
+            </div>
+        </div>
+
+        <div class="col-2 pt-2">
+            <div class="form-group">
+                <span class="fs-10 form-label text-muted mb-0">HEIGHT</span>
+                <input type="number" class="form-control fs-14 fw-bold ps-3 text-muted text-center border-0 " name="Height" placeholder="">
+            </div>
+        </div>
+    </div>
+
+    <div class="row border-start border-bottom border-end">
+        <div class="col-8 pt-2 border-end">
+            <div class="form-group">
+                <div class="form-group">
+                    <span class="fs-10 form-label text-muted mb-0"> PROFESSION / OCCUPATION / BUSINESS </span>
+                    <input type="text" class="form-control fs-12 fw-bold ps-3 text-muted border-0 text-uppercase" name="Occupation" placeholder="">
+                </div>
+            </div>
+        </div>
+        <div class="col-2 pt-2 border-end">
+            <div class="form-group text-center pt-3">
+                <span class="fs-14 form-label text-muted mb-0 fw-semibold">TAXABLE AMOUNT </span>
+
+            </div>
+        </div>
+
+        <div class="col-2 pt-2">
+            <div class="form-group text-center pt-3">
+                <span class="fs-14 form-label text-muted mb-0 fw-semibold">COMMUNITY TAX DUE</span>
+            </div>
+        </div>
+    </div>
+    <div class="row border-start border-bottom border-end">
+        <div class="col-8 border-end">
+            <div class="form-group">
+                <div class="form-group py-1">
+                    <span class="fs-14 form-label text-muted text-start  mb-0 fw-semibold">A. BASIC COMMUNITY TAX (₱5.00) Voluntary or Exempted (₱1.00) </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 border-end bg-secondary bg-opacity-25">
+           
+        </div>
+
+        <div class="col-2">
+            <div class="form-group py-1 text-end">
+                <span class="w-100 fs-12 fw-bold text-muted pe-5" name="Basic">5.00</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row border-start border-bottom border-end">
+        <div class="col-8 border-end">
+            <div class="form-group">
+                <div class="form-group text-start py-1">
+                    <span class="fs-14 form-label text-muted mb-0 fw-semibold">B. ADDITIONAL COMMUNITY TAX ( tax not to exceed ₱5,000.00) </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 border-end bg-secondary bg-opacity-25">
+        </div>
+
+        <div class="col-2 bg-secondary bg-opacity-25">
+        </div>
+    </div>
+
+    <div class="row border-start border-bottom border-end">
+        <div class="col-8 border-end">
+            <div class="form-group">
+                <div class="form-group text-start py-1">
+                    <span class="fs-12 form-label text-muted mb-0">1. GROSS RECEIPTS OR EARNINGS DERIVED FROM BUSINESS DURING THE PRECEDING YEAR ( ₱1.00 for every ₱ 1,000.00 ) </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 border-end">
+            <div class="form-group py-1">
+                <input type="number" class="form-control fs-12 fw-bold ps-3 text-muted text-end border-0" autocomplete="off" id="inp1Value" name="TaxAmount1" placeholder="">
+            </div>
+        </div>
+
+        <div class="col-2">
+            <div class="form-group py-1 text-end">
+                @* <input type="number" class="form-control fs-12 fw-bold ps-3 text-muted text-end border-0" id="inp1Amount" name="year" placeholder=""> *@
+
+                <span class="w-100 fs-12 fw-bold text-muted pe-5" id="inp1Amount" name="TaxDue1">0.00</span>
+            </div>
+        </div>
+    </div>
+    <div class="row border-start border-bottom border-end">
+        <div class="col-8 border-end">
+            <div class="form-group">
+                <div class="form-group text-start py-1">
+                    <span class="fs-12 form-label text-muted mb-0">2. SALARIES OR GROSS RECEIPT OR EARNINGS DERIVED FROM EXERCISE OF PROFESSION OR PURSUIT OF ANY OCCUPATION ( ₱1.00 for every ₱ 1,000 ) </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 border-end">
+            <div class="form-group py-1">
+                <input type="number" class="form-control fs-12 fw-bold ps-3 text-muted text-end border-0" autocomplete="off" id="inp2Value" name="TaxAmount2" placeholder="">
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group py-1 text-end">
+                @* <input type="number" class="form-control fs-12 fw-bold ps-3 text-muted text-end border-0" id="inp2Amount" name="year" placeholder=""> *@
+
+                <span class="w-100 fs-12 fw-bold text-muted pe-5" id="inp2Amount" name="TaxDue2">0.00</span>
+            </div>
+        </div>
+    </div>
+    <div class="row border-start border-bottom border-end">
+        <div class="col-8 border-end">
+            <div class="form-group">
+                <div class="form-group text-start py-1">
+                    <span class="fs-12 form-label text-muted mb-0">3. INCOME FROM REAL PROPERTY ( ₱1.00 for every ₱ 1,000 ) </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 border-end">
+            <div class="form-group py-1">
+                <input type="number" class="form-control fs-12 fw-bold ps-3 text-muted text-end border-0" autocomplete="off" id="inp3Value" name="TaxAmount3" placeholder="">
+            </div>
+        </div>
+
+        <div class="col-2">
+            <div class="form-group py-1 text-end">
+                @* <input type="number" class="form-control fs-12 fw-bold ps-3 text-muted text-end border-0" id="inp3Amount" name="year" placeholder=""> *@
+                <span class="w-100 fs-12 fw-bold text-muted pe-5" id="inp3Amount" name="TaxDue3">0.00</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row border-start border-end">
+        <div class="col-8 border-end border-bottom">
+        </div>
+
+        <div class="col-4">
+
+            <div class="row border-bottom">
+                <div class="col-6 border-end">
+                    <div class="form-group text-center py-1">
+                        <span class="fs-14 form-label text-ce text-muted mb-0 fw-semibold">TOTAL </span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group py-1 text-end">
+                        @* <input type="number" class="form-control fs-12 fw-bold ps-3 text-muted text-end border-0" autocomplete="off" id="inpTotal" name="year" placeholder=""> *@
+                        <span class="w-100 fs-12 fw-bold text-muted pe-5" id="inpTotal" name="TotalAmount">0.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row border-bottom">
+                <div class="col-6 border-end">
+                    <div class="form-group text-center py-1">
+                        <span class="fs-14 form-label text-muted mb-0 fw-semibold">INTEREST </span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group py-1 text-end">
+                        @* <input type="number" class="form-control fs-12 fw-bold ps-3 text-muted text-end border-0"  autocomplete="off" id="inpInterest" name="year" placeholder=""> *@
+                        <span class="w-100 fs-12 fw-bold text-muted pe-5" id="inpInterest" name="Interest">0.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row border-bottom">
+                <div class="col-6 border-end">
+                    <div class="form-group text-center py-1">
+                        <span class="fs-14 form-label text-muted mb-0 fw-semibold">TOTAL AMOUNT PAID </span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group py-1 text-end">
+                        @* <input type="number" class="form-control fs-12 fw-bold ps-3 text-muted text-end border-0" autocomplete="off" id="inpGrandTotal" name="year" placeholder=""> *@
+                        <span class="w-100 fs-12 fw-bold text-muted pe-5" id="inpGrandTotal" name="GrandTotal">0.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row px-4 mt-2">
+    <div class="col">
+        <button type="button" class="btn btn-main btn-sm fw-semibold float-end me-2" id="btnSaveCTC"><i class="icon-save me-1"></i> Save Community Tax Certificate </button>
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" id="mdlResident" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header flex-column align-items-start border-bottom-0">
+
+                <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                    <div class="col-auto pe-0">
+                        <img src="/img/png/search.png" alt="ATLAS Logo" class="icon-png-sm pe-3">
+                    </div>
+                    <div class="col ps-0 d-flex align-items-center">
+                        <div>
+                            <h3 class="fw-bold mb-0">Search Resident</h3>
+                            <p class="text-muted fs-12 w-100">Filter residents by name to quickly find and access their details.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search -->
+                <div class="w-75 mt-4">
+                    <div class="search-box">
+                        <i class="icon-search"></i>
+                        <input type="text" class="form-control fs-11 border-elm" id="searchResidentInput" placeholder="Search by name...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+                <div class="card mx-2 rounded-2">
+                    <div class="card-body shadow-sm border-1 p-0">
+                        <table id="tblResident" class="display dataTable table-striped table-hover w-100"> </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-between p-3">
+                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="mdlEncodeOR" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-scrollable">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header flex-column align-items-start border-bottom-0">
+
+                <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                    <div class="col-auto pe-0">
+                        <img src="/img/png/or.png" alt="ATLAS Logo" class="icon-png-sm pe-3">
+                    </div>
+                    <div class="col ps-0 d-flex align-items-center">
+                        <div>
+                            <h3 class="fw-bold mb-0">Official Receipt Infomation</h3>
+                            <p class="text-muted fs-12 w-100">A complete record of all Official Receipts (OR) issued, dates and references.</p>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- Search -->
+            <div class="modal-body mx-2" id="divNewOR">
+                <input type="hidden" name="ORID" id="_hidNewORID" />
+                <div class="row pt-2">
+                    <div class="col ps-2">
+                        <div class="form-group">
+                            <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">ORTypeID </span>
+                            @Html.DropDownList("ORTypeID", ViewData["drpORType"] as SelectList, new { @class = "form-select fs-11 text-muted", @id = "ORTypeID" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-6 ps-2">
+                        <div class="form-group">
+                            <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Stub Number </span>
+                            <input type="text" class="form-control fs-11 ps-3 text-muted " name="StubNumber" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col ps-2">
+                        <div class="form-group">
+                            <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Starting OR </span>
+                            <input type="text" class="form-control fs-11 ps-3 text-muted " name="StartingOR" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col ps-2">
+                        <div class="form-group">
+                            <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">EndingOR </span>
+                            <input type="text" class="form-control fs-11 ps-3 text-muted " name="EndingOR" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-2 ps-2">
+                        <div class="form-group">
+                            <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Quantity </span>
+                            <input type="text" class="form-control fs-11 ps-3 text-muted " name="Qty" placeholder="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row pt-2">
+                    <div class="col ps-2">
+                        <div class="form-group">
+                            <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Current OR </span>
+                            <input type="text" class="form-control fs-11 ps-3 text-muted " name="CurrentOR" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="row pt-2">
+                    <div class="col ps-2">
+                        <div class="form-group">
+                            <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Remarks </span>
+                            <textarea class="form-control fs-11 ps-3 text-muted" name="Remarks" placeholder="" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="d-flex justify-content-end gap-2 p-3">
+                <button type="button" class="btn btn-main btn-sm fw-semibold" id="btnSaveOR"><i class="icon-save icon-md-2 me-1"></i> Save Official Receipt </button>
+                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0" id="btnCloseNewOR">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="mdlORHistory" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header flex-column align-items-start border-bottom-0">
+
+                <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                    <div class="col-auto pe-0">
+                        <img src="/img/png/search.png" alt="ATLAS Logo" class="icon-png-sm pe-3">
+                    </div>
+                    <div class="col ps-0 d-flex align-items-center">
+                        <div>
+                            <h3 class="fw-bold mb-0">Search Official Receipt</h3>
+                            <p class="text-muted fs-12 w-100">List of official receipt records using relevant information.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-main btn-sm fw-semibold" id="btnAddNewOR"><i class="icon-add icon-md me-1"></i> Add new household </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-body p-2">
+                <div class="card mx-2 rounded-2">
+                    <div class="card-body shadow-sm border-1 p-0">
+                        <table id="tblORHistory" class="display dataTable table-striped table-hover w-100"> </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-end p-3">
+              
+                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="mdlCTCCollection" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header flex-column align-items-start border-bottom-0">
+                <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                    <div class="col-auto pe-0">
+                        <img src="/img/png/search.png" alt="ATLAS Logo" class="icon-png-sm pe-3">
+                    </div>
+                    <div class="col ps-0 d-flex align-items-center">
+                        <div>
+                            <h3 class="fw-bold mb-0">CTC Collection</h3>
+                            <p class="text-muted fs-12 w-100">List of community tax certificate collection records.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body p-2">
+                <div class="card mx-2 rounded-2">
+                    <div class="card-body shadow-sm border-1 p-0">
+                        <table id="tblCTCCollection" class="display dataTable table-striped table-hover w-100"></table>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end p-3">
+                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/_defined/_ctc.js"></script>

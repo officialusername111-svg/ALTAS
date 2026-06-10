@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ALTAS</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/datatables.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ALTAS.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/datatables.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</head>
+<body>
+    <div class="main-container d-flex">
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="side_nav">
+            @await Html.PartialAsync("_sidebar")
+            <img class="d-inline-flex me-1 side-footer" src="~/img/png/sidebar_bg.png" />
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             QUEUE STATUS PANEL
+             Placed directly after the sidebar. Powered by SignalR.
+             Toggle visibility via #qsp-toggle-btn in the navbar.
+        ════════════════════════════════════════════════════════════════ -->
+        <div id="qsp-panel" class="qsp-collapsed">
+
+            <!-- ── Header ────────────────────────────────────────────── -->
+            <div class="qsp-header">
+                <i class="bi bi-ticket-perforated-fill qsp-header-icon"></i>
+                <span class="qsp-header-title">Queue Status</span>
+                <span class="qsp-dot" id="qsp-dot" title="SignalR connection status"></span>
+            </div>
+
+            <!-- ── 1 · Now Serving ───────────────────────────────────── -->
+            <div class="qsp-block qsp-serving-block">
+                <div class="qsp-block-label">
+                    <i class="bi bi-person-fill-check"></i> Now Serving
+                </div>
+                <div class="qsp-serving-number" id="qsp-serving">—</div>
+                <div class="qsp-serving-sub" id="qsp-serving-sub">
+                    Waiting for a ticket to be called
+                </div>
+            </div>
+
+            <!-- ── 2 · Queue Count per Transaction ──────────────────── -->
+            <div class="qsp-block">
+                <div class="qsp-block-label">
+                    <i class="bi bi-stack"></i> Queue Count
+                </div>
+                <div class="qsp-counts-grid">
+                    <div class="qsp-count-item qsp-green">
+                        <span class="qsp-count-prefix">C</span>
+                        <span class="qsp-count-label">Clearance</span>
+                        <span class="qsp-count-num" id="qsp-count-C">0</span>
+                    </div>
+                    <div class="qsp-count-item qsp-blue">
+                        <span class="qsp-count-prefix">B</span>
+                        <span class="qsp-count-label">Certification</span>
+                        <span class="qsp-count-num" id="qsp-count-B">0</span>
+                    </div>
+                    <div class="qsp-count-item qsp-orange">
+                        <span class="qsp-count-prefix">T</span>
+                        <span class="qsp-count-label">CTC</span>
+                        <span class="qsp-count-num" id="qsp-count-T">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── 3 · Next Available Number per Transaction ─────────── -->
+            <div class="qsp-block">
+                <div class="qsp-block-label">
+                    <i class="bi bi-arrow-right-circle-fill"></i> Next in Queue
+                </div>
+                <div class="qsp-next-grid">
+                    <div class="qsp-next-item">
+                        <span class="qsp-next-svc qsp-green-text">Clearance</span>
+                        <span class="qsp-next-num" id="qsp-next-C">—</span>
+                    </div>
+                    <div class="qsp-next-item">
+                        <span class="qsp-next-svc qsp-blue-text">Certification</span>
+                        <span class="qsp-next-num" id="qsp-next-B">—</span>
+                    </div>
+                    <div class="qsp-next-item">
+                        <span class="qsp-next-svc qsp-orange-text">CTC</span>
+                        <span class="qsp-next-num" id="qsp-next-T">—</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── 4 · Call Number Buttons ───────────────────────────── -->
+            <div class="qsp-block">
+                <div class="qsp-block-label">
+                    <i class="bi bi-megaphone-fill"></i> Call Number
+                </div>
+                <div class="qsp-call-buttons">
+                    <button class="qsp-call-btn qsp-btn-green"
+                            data-service="1" data-prefix="C"
+                            title="Call next Barangay Clearance ticket">
+                        <i class="bi bi-play-fill"></i>
+                        <span>Clearance</span>
+                    </button>
+                    <button class="qsp-call-btn qsp-btn-blue"
+                            data-service="2" data-prefix="B"
+                            title="Call next Barangay Certification ticket">
+                        <i class="bi bi-play-fill"></i>
+                        <span>Certification</span>
+                    </button>
+                    <button class="qsp-call-btn qsp-btn-orange"
+                            data-service="3" data-prefix="T"
+                            title="Call next Community Tax Certificate ticket">
+                        <i class="bi bi-play-fill"></i>
+                        <span>CTC</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ── 5 · Description / Instructions ───────────────────── -->
+            <div class="qsp-block qsp-desc-block">
+                <i class="bi bi-info-circle qsp-desc-icon"></i>
+                <p class="qsp-desc-text">
+                    Press <strong>Call Number</strong> to serve the next waiting
+                    customer for that transaction type. The display board and
+                    kiosk update automatically across all connected screens.
+                </p>
+            </div>
+
+        </div>
+        <!-- /#qsp-panel -->
+
+        <!-- Main Content Area -->
+        <div class="content w-100">
+
+            <!-- Empty div if needed for dynamic content -->
+            <div id="scrn" class=""></div>
+
+            <!-- Top Navbar -->
+            <nav class="navbar navbar-expand-lg border-bottom shadow-sm px-3">
+                <div class="d-flex justify-content-between align-items-center w-100">
+
+                    <!-- Sidebar toggle (mobile) -->
+                    <div class="d-md-none">
+                        <button class="btn px-2 py-1 open-btn">
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <!-- App name -->
+                    <div class="flex-grow-1">
+                        <h1 class="ms-5 fs-18 fw-semibold text-white">@ViewBag.AppName</h1>
+                    </div>
+
+                    <!-- ── Queue Panel Toggle Button ───────────────────── -->
+                    <div class="me-3">
+                        <button id="qsp-toggle-btn" type="button" title="Toggle Queue Status Panel">
+                            <i class="bi bi-ticket-perforated-fill qsp-btn-icon"></i>
+                            <span class="d-none d-md-inline">Queue</span>
+                            <span id="qsp-badge" class="hidden">0</span>
+                        </button>
+                    </div>
+
+                    <!-- User Dropdown aligned right -->
+                    <div class="dropdown ms-auto bg-primary px-2 bg-opacity-25 rounded-3">
+                        <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle p-2 me-2"
+                           id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="~/img/_icons/profile/default.png" width="25" height="25" class="rounded-circle me-2" alt="User Avatar">
+                            <div class="text-start lh-sm">
+                                <div class="lbl_userfullname fw-semibold text-warning small me-3">
+                                    @ViewBag.FullName
+                                </div>
+                                <div class="lbl_userOffice text-white text-opacity-50" style="font-size:0.75rem;">
+                                    @ViewBag.Position
+                                </div>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm drp-profile"
+                            aria-labelledby="dropdownUser1" style="width:200px;">
+                            <li class="dropdown-header fw-semibold text-muted small px-3 pt-2">Profile Actions</li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li class="preference-nav">
+                                <a href="" class="text-decoration-none px-3 pt-1 d-block">
+                                    <img src="~/img/_icons/sidenav/system.svg" alt="" class="pe-2"> Preferences
+                                </a>
+                            </li>
+                            <li class="profile-nav">
+                                <a href="" class="text-decoration-none px-3 pt-1 d-block">
+                                    <img src="~/img/_icons/body/profile.svg" alt="" class="pe-2"> Profile Information
+                                </a>
+                            </li>
+                            <li class="logout-nav">
+                                <a asp-controller="Login" asp-action="Logout" class="text-decoration-none px-3 pt-1 d-block">
+                                    <img src="~/img/_icons/body/sign-out.svg" alt="" class="pe-2"> Sign-out
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </nav>
+
+            <!-- Page Content -->
+            <div class="container-fluid pb-3">
+                @RenderBody()
+                <!-- Toast Notification -->
+                <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SignalR + Queue Status Panel script -->
+    <script src="~/lib/signalr/dist/signalr.min.js"></script>
+    <script src="~/js/_defined/_queuestatus.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

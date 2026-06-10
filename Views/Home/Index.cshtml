@@ -1,0 +1,285 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container-fluid mt-4">
+    <!-- KPI Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="kpi-card-main text-start">
+                <div class="text-muted fw-semibold">Total Residents</div>
+                <div class="text-dark kpi-number pt-3">12,345</div>
+                <span>
+                    <span class="fs-12 text-primary fw-semibold">10.75%</span>
+                    <span class="fs-10 text-muted"> of resisent is the head of family</span>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="kpi-card-secondary text-start">
+                <div class="text-muted fw-semibold">Total Active Voters</div>
+                <div class="text-dark kpi-number pt-3">5,645</div>
+
+                <span>
+                    <span class="fs-11 text-success fw-semibold">25.63%</span>
+                    <span class="fs-10 text-muted"> of resident are active voters</span>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="kpi-card text-start">
+                <div class="text-muted fw-semibold">Total Number of Household</div>
+                <div class="text-dark kpi-number pt-3">3</div>
+
+                <span>
+                    <span class="fs-12 text-warning fw-semibold">50.23%</span>
+                    <span class="fs-10 text-muted">of household has less than  3 members</span>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="kpi-card text-start">
+                <div class="text-muted fw-semibold">Total Resident with Comorbidities</div>
+                <div class="text-dark kpi-number pt-3">7</div>
+
+                <span>
+                    <span class="fs-11 text-danger fw-semibold">12.62%</span>
+                    <span class="fs-10 text-muted"> of resident are with Comorbidities</span>
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+   
+</div>
+
+
+<!-- Charts -->
+<div class="row g-3 mx-2">
+
+    <!-- Left: Education -->
+    <div class="col-md-8">
+        <div class="card chart-border border-0 h-100">
+            <div class="card-body d-flex flex-column">
+
+                <h5 class="fw-bold mb-1 text-dark">Educational Attainment</h5>
+                <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                    Distribution of residents by highest educational level.
+                </p>
+
+                <div class="flex-grow-1">
+                    <canvas id="chartEducation"></canvas>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Right -->
+    <div class="col-md-4 d-flex flex-column gap-3">
+
+        <!-- Status -->
+        <div class="card chart-border border-0 flex-fill">
+            <div class="card-body d-flex flex-column">
+
+                <h5 class="fw-bold mb-1 text-dark">Civil Status</h5>
+                <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                    Breakdown of residents by marital status.
+                </p>
+
+                <div class="flex-grow-1">
+                    <canvas id="chartStatus"></canvas>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Gender -->
+        <div class="card chart-border border-0 flex-fill">
+            <div class="card-body d-flex flex-column">
+
+                <h5 class="fw-bold mb-1 text-dark">Gender Distribution</h5>
+                <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                    Overview of population by gender.
+                </p>
+
+                <div class="flex-grow-1">
+                    <canvas id="chartGender"></canvas>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row mt-3 mx-2">
+    <div class="col-4">
+        <div class="card chart-border border-0 h-100">
+            <div class="card-body d-flex flex-column">
+
+                <h5 class="fw-bold mb-1 text-dark">Gender Distribution </h5>
+                <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                    Distribution of residents by highest educational level.
+                </p>
+
+                <div class="row">
+                    <div class="col">
+                        <img src="/img/_icons/profile/default.png" width="25" height="25" class="rounded-circle me-2" alt="User Avatar">
+                        <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                            Percentage of male residents
+                        </p>
+                        <h6 class="fw-semibold mb-1 text-success pt-1">42.56%</h6>
+                    </div>
+                    <div class="col">
+                        <img src="/img/_icons/profile/p-female-4.png" width="25" height="25" class="rounded-circle me-2" alt="User Avatar">
+                        <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                            Percentage of female residents
+                        </p>
+                        <h6 class="fw-semibold mb-1 text-primary pt-1">57.44%</h6>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card chart-border border-0 h-100">
+            <div class="card-body d-flex flex-column">
+
+                <h5 class="fw-bold mb-1 text-dark">Voter's Status Distribution</h5>
+                <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                    Distribution of residents by highest educational level.
+                </p>
+
+                <div class="row">
+                    <div class="col">
+                        <img src="/img/_icons/profile/p-male-1.png" width="25" height="25" class="rounded-circle me-2" alt="User Avatar">
+                        <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                            Active Voter's
+                        </p>
+                        <h6 class="fw-semibold mb-1 text-success pt-1">22.56%</h6>
+                    </div>
+                    <div class="col">
+                        <img src="/img/_icons/profile/p-male-1.png" width="25" height="25" class="rounded-circle me-2" alt="User Avatar">
+                        <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                            Inactive Voter's
+                        </p>
+                        <h6 class="fw-semibold mb-1 text-primary pt-1">27.44%</h6>
+                    </div>
+                    <div class="col">
+                        <img src="/img/_icons/profile/p-male-1.png" width="25" height="25" class="rounded-circle me-2" alt="User Avatar">
+                        <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                            Pending Voter's
+                        </p>
+                        <h6 class="fw-semibold mb-1 text-primary pt-1">26.44%</h6>
+                    </div>
+                    <div class="col">
+                        <img src="/img/_icons/profile/p-male-1.png" width="25" height="25" class="rounded-circle me-2" alt="User Avatar">
+                        <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                            Others
+                        </p>
+                        <h6 class="fw-semibold mb-1 text-primary pt-1">22.44%</h6>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+
+
+
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+            set_active_sidebar('.dashboard-nav');
+
+            function renderChart(canvasId, labels, data, customType = null) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+
+            let chartType = customType || (labels.length <= 4 ? 'doughnut' : 'bar');
+            let indexAxis = chartType === 'bar' ? 'y' : 'x';
+
+            const gradients = labels.map(() => {
+                const gradient = ctx.createLinearGradient(0, 0, 400, 0);
+                gradient.addColorStop(0, '#4d4dff');
+                gradient.addColorStop(1, '#bbc8dd');
+                return gradient;
+            });
+
+            new Chart(ctx, {
+                type: chartType,
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: gradients,
+                        borderRadius: chartType === 'bar' ? 6 : 0,
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    indexAxis: indexAxis,
+                    plugins: {
+                        legend: {
+                            display: chartType !== 'bar'
+                        }
+                    },
+                    scales: chartType === 'bar' ? {
+                        x: {
+                            grid: {
+                                display: false,   // ❌ remove vertical lines
+                                drawBorder: false
+                            },
+                            ticks: {
+                                display: false   // optional: hide numbers
+                            }
+                        },
+                        y: {
+                            grid: {
+                                display: false,   // ❌ remove horizontal lines
+                                drawBorder: false
+                            }
+                        }
+                    } : {},
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+                  renderChart('chartGender', ['Male', 'Female'], [120, 95], 'bar' );
+
+         renderChart('chartEducation',
+                        [
+                            "No Formal Education",
+                            "Elementary Level",
+                            "Elementary Graduate",
+                            "High School Level",
+                            "High School Graduate",
+                            "Senior High School Level",
+                            "Senior High School Graduate",
+                            "Vocational / Technical",
+                            "College Level",
+                            "College Graduate",
+                            "Postgraduate (Master's)",
+                            "Doctorate (PhD)"
+                        ],
+                        Array.from({ length: 12 }, () => Math.floor(Math.random() * 150) + 10),
+                       'bar'
+                    );
+
+         renderChart('chartStatus',
+                        ['Single', 'Married', 'Widow', 'Widower'],
+                        [80, 140, 30, 20],
+                       'bar'
+                    );
+    </script>
+}

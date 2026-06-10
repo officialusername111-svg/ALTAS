@@ -1,0 +1,630 @@
+@{
+    ViewBag.Title = "Incident Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mb-5">
+
+    <div class="mb-5 mx-5">
+        <div class="row mx-3 border-bottom-dash border-1 py-2">
+            <div class="col-auto pe-0">
+                <img src="/img/png/incident.png" alt="ATLAS Logo" class="icon-png">
+            </div>
+            <div class="col ps-0 d-flex align-items-center">
+                <div>
+                    <h3 class="fw-bold mb-0">Incident Management</h3>
+                    <p class="text-muted fs-12 mb-0">
+                        A centralized module for recording, managing, and monitoring barangay incident and complaint cases,
+                        including parties involved and settlement schedules.
+                    </p>
+                </div>
+            </div>
+            <div class="col-auto d-flex align-content-end flex-wrap">
+                <button type="button" class="btn btn-main-outline btn-sm fw-semibold" id="btnNewIncident">
+                    <i class="bi bi-plus-lg me-1"></i>Create New Incident Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    @* KPI Cards *@
+    <div id="divSummaryCards" class="row g-3 px-4 mb-3">
+        <div class="col-md-2">
+            <div class="kpi-card text-start h-100">
+                <div class="text-muted fw-semibold">Total Incidents</div>
+                <div class="text-dark kpi-number pt-2" id="statTotal">-</div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="kpi-card text-start h-100">
+                <div class="text-muted fw-semibold">Open</div>
+                <div class="text-dark kpi-number pt-2" id="statOpen">-</div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="kpi-card text-start h-100">
+                <div class="text-muted fw-semibold">On-going</div>
+                <div class="text-dark kpi-number pt-2" id="statOngoing">-</div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="kpi-card text-start h-100">
+                <div class="text-muted fw-semibold">Settled</div>
+                <div class="text-dark kpi-number pt-2" id="statSettled">-</div>
+            </div>
+        </div>
+    </div>
+
+    @* Incident List Panel *@
+    <div id="divIncidentList" class="px-4">
+        <div class="card border-0 shadow-sm rounded-3">
+            <div class="card-body p-0">
+                <div class="d-flex justify-content-between align-items-center px-3 pt-3 pb-2 border-bottom">
+                    <span class="fw-semibold fs-13" style="color:#1a3a5c;">Incident Records</span>
+                    <div class="search-box" style="width:280px;">
+                        <i class="bi bi-search"></i>
+                        <input type="text" class="form-control fs-11 border-elm"
+                               id="searchIncidentList" placeholder="Search case no., name, status...">
+                    </div>
+                </div>
+                <div class="px-2 pb-2">
+                    <table id="tblIncidentList" class="display dataTable table-striped table-hover w-100"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Form Panel — hidden by default *@
+    <div id="divIncidentForm" class="px-4" style="display:none;">
+
+        <div class="d-flex justify-content-end gap-1 mb-2">
+            <button type="button" class="btn btn-main-outline btn-sm fw-semibold" id="btnPrintIncident">
+                <i class="bi bi-printer me-1"></i> Print
+            </button>
+            <button type="button" class="btn btn-main-outline btn-sm fw-semibold" id="btnBackToList">
+                <i class="bi bi-arrow-left me-1"></i> Back to Incident List
+            </button>
+        </div>
+
+        <div class="row g-4">
+
+            @* LEFT: Case Info + Parties *@
+            <div class="col-7">
+                <div id="divIncidentInformation">
+
+                    <input type="hidden" name="IncidentID"             id="_hidIncidentID" />
+                    <input type="hidden" name="ResidentId_Complainant" id="_hidResidentId_Complainant" />
+                    <input type="hidden" name="ResidentId_Respondent"  id="_hidResidentId_Respondent" />
+
+                    <h6 class="fs-16 fw-bold mt-5">Case Information</h6>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group mb-3">
+                                <label class="fs-10 text-muted fw-semibold mb-1">KP Case No.</label>
+                                <input type="text" class="form-control fs-11"
+                                       name="KPCaseNo" id="inpKPCaseNo">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group mb-3">
+                                <label class="fs-10 text-muted fw-semibold mb-1">Incident Date</label>
+                                <input type="date" class="form-control fs-11"
+                                       name="IncidentDate" id="inpIncidentDate">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group mb-3">
+                                <label class="fs-10 text-muted fw-semibold mb-1">Case Type</label>
+                                <select class="form-select fs-11" name="CaseTypeID" id="inpCaseTypeID">
+                                    <option value="" selected disabled>Select Case Type</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group mb-3">
+                                <label class="fs-10 text-muted fw-semibold mb-1">Complaint Type</label>
+                                <select class="form-select fs-11" name="ComplaintTypeID" id="inpComplaintTypeID" disabled>
+                                    <option value="" selected disabled>Select Case Type first</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group mb-3">
+                                <label class="fs-10 text-muted fw-semibold mb-1">Complaint Description</label>
+                                <textarea class="form-control fs-11" rows="3"
+                                          name="ComplaintDescription" id="inpComplaintDescription"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group mb-3">
+                                <label class="fs-10 text-muted fw-semibold mb-1">Additional Description</label>
+                                <textarea class="form-control fs-11" rows="2"
+                                          name="ComplaintAdditionalDescription" id="inpComplaintAdditionalDescription"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group mb-3">
+                                <label class="fs-10 text-muted fw-semibold mb-1">Remarks</label>
+                                <textarea class="form-control fs-11" rows="2"
+                                          name="ComplaintRemarks" id="inpComplaintRemarks"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-end">
+                        <div class="col-4">
+                            <div class="form-group mb-3">
+                                <label class="fs-10 text-muted fw-semibold mb-1">Status</label>
+                                <select class="form-select fs-11" name="Status" id="inpStatus">
+                                    <option value="" selected disabled>Select Status</option>
+                                    <option value="Open">Open</option>
+                                    <option value="On-going">On-going</option>
+                                    <option value="Settled">Settled</option>
+                                    <option value="Transferred">Transferred</option>
+                                    <option value="Dismissed">Dismissed</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4" id="divSettledDate" style="display:none;">
+                            <div class="form-group mb-3">
+                                <label class="fs-10 text-muted fw-semibold mb-1">Settled Date</label>
+                                <input type="date" class="form-control fs-11"
+                                       name="SettledDate" id="inpSettledDate">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-group mb-3">
+                                <label class="custom-checkbox fs-10 text-muted fw-semibold">
+                                    <input type="checkbox" name="IncidentForTransfer" id="inpIncidentForTransfer">
+                                    <span class="checkmark"></span> For Transfer
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-3" style="border-color:#e0e0e0;">
+
+                    @* Complainant / Respondent Tabs *@
+                    <ul class="nav nav-tabs border-bottom-dash" id="tabParties" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active fw-semibold fs-14 px-4"
+                                    id="tab-complainant" data-bs-toggle="tab"
+                                    data-bs-target="#pane-complainant" type="button" role="tab"
+                                    aria-controls="pane-complainant" aria-selected="true">
+                                <i class="bi bi-person-fill me-1"></i> Complainant
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link fw-semibold fs-14 px-4"
+                                    id="tab-respondent" data-bs-toggle="tab"
+                                    data-bs-target="#pane-respondent" type="button" role="tab"
+                                    aria-controls="pane-respondent" aria-selected="false">
+                                <i class="bi bi-person-fill-exclamation me-1"></i> Respondent
+                            </button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content border border-top-0 rounded-bottom px-3 py-3 mb-3">
+
+                        @* Complainant Pane *@
+                        <div class="tab-pane fade show active" id="pane-complainant"
+                             role="tabpanel" aria-labelledby="tab-complainant">
+
+                            <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+                                <span class="fs-10 text-muted fst-italic">
+                                    <i class="bi bi-info-circle me-1"></i>
+                                    May be a registered resident or manually entered. Multiple allowed.
+                                </span>
+                                <div class="d-flex gap-1">
+                                    <button type="button" class="btn btn-main-outline btn-sm fw-semibold"
+                                            id="btnSearchComplainantResident"
+                                            data-bs-toggle="modal" data-bs-target="#mdlFindComplainant">
+                                        <i class="bi bi-person-search me-1"></i> Search Resident
+                                    </button>
+                                    <button type="button" class="btn btn-main-outline btn-sm fw-semibold"
+                                            id="btnEncodeComplainant"
+                                            data-bs-toggle="modal" data-bs-target="#mdlAddComplainant">
+                                        <i class="bi bi-pencil-square me-1"></i> Encode Complainant
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="divComplainantCards" class="d-flex flex-column gap-2">
+                                <div class="text-center py-3">
+                                    <i class="bi bi-person-dash fs-24 text-muted"></i>
+                                    <p class="text-muted fs-11 mt-1 mb-0">No complainants added yet.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        @* Respondent Pane *@
+                        <div class="tab-pane fade" id="pane-respondent"
+                             role="tabpanel" aria-labelledby="tab-respondent">
+
+                            <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+                                <span class="fs-10 text-muted fst-italic">
+                                    <i class="bi bi-exclamation-circle me-1 text-danger"></i>
+                                    Must be a registered barangay resident. At least one required.
+                                </span>
+                                <button type="button" class="btn btn-main-outline btn-sm fw-semibold"
+                                        id="btnAddRespondent"
+                                        data-bs-toggle="modal" data-bs-target="#mdlFindResident">
+                                    <i class="bi bi-person-search me-1"></i> Search Resident
+                                </button>
+                            </div>
+                            <div id="divRespondentCards" class="d-flex flex-column gap-2">
+                                <div class="text-center py-3">
+                                    <i class="bi bi-person-dash fs-24 text-muted"></i>
+                                    <p class="text-muted fs-11 mt-1 mb-0">No respondents added yet.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    @* Save / Clear Buttons *@
+                    <div class="d-flex justify-content-end gap-2 pb-4">
+                        <button type="button" class="btn btn-main-outline btn-sm fw-semibold" id="btnClear">
+                            <i class="bi bi-trash me-1"></i> Clear
+                        </button>
+                        <button type="button" class="btn btn-main fw-semibold" id="btnSave">
+                            <i class="icon-save me-1"></i> Save Incident Information
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            @* RIGHT: Settlements + Attachments *@
+            <div class="col-5">
+
+                @* Settlement Schedule Card *@
+                <div class="card border-0 shadow-sm rounded-3">
+                    <div class="card-body px-3 py-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="fw-bold mb-0" style="color:#1a6c8a;">
+                                <i class="bi bi-calendar-check me-1"></i> Settlement Schedule
+                            </h6>
+                            <button type="button" class="btn btn-main-outline btn-sm fw-semibold"
+                                    id="btnAddSettlement" data-bs-toggle="modal" data-bs-target="#mdlSettlement">
+                                <i class="bi bi-plus-lg me-1"></i> Add Schedule
+                            </button>
+                        </div>
+                        <table id="tblSettlement" class="display dataTable table-striped table-hover w-100"></table>
+                    </div>
+                </div>
+
+                @* Attachments Card *@
+                <div class="card border-0 shadow-sm rounded-3 mt-5">
+                    <div class="card-body px-3 py-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="fw-bold mb-0" style="color:#1a6c8a;">
+                                <i class="bi bi-paperclip me-1"></i> Attachments
+                            </h6>
+                            <button type="button" class="btn btn-main-outline btn-sm fw-semibold"
+                                    id="btnAddAttachment" data-bs-toggle="modal" data-bs-target="#mdlAttachment">
+                                <i class="bi bi-upload me-1"></i> Upload
+                            </button>
+                        </div>
+                        <div id="divAttachmentList">
+                            <span class="text-muted fs-11 fst-italic">No attachments yet.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@* Modal: Add Complainant — form with optional resident lookup *@
+<div class="modal fade" id="mdlAddComplainant" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header flex-column align-items-start border-bottom-0">
+                <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                    <div class="col-auto pe-0">
+                        <img src="/img/png/search.png" class="icon-png-sm pe-3">
+                    </div>
+                    <div class="col ps-0 d-flex align-items-center">
+                        <div>
+                            <h3 class="fw-bold mb-0">Add Complainant</h3>
+                            <p class="text-muted fs-12">Enter details manually or use Find Resident to auto-fill.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body mx-2" id="divComplainantForm">
+                <input type="hidden" id="_hidComplainantPartyId">
+                <input type="hidden" id="_hidComplainantResidentId">
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group mb-3">
+                            <label class="fs-10 text-muted fw-semibold mb-1">Full Name</label>
+                            <input type="text" class="form-control fs-11" id="inpCFullName">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group mb-3">
+                            <label class="fs-10 text-muted fw-semibold mb-1">Gender</label>
+                            <select class="form-select fs-11" id="inpCGender">
+                                <option value="" selected disabled>Select</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group mb-3">
+                            <label class="fs-10 text-muted fw-semibold mb-1">Civil Status</label>
+                            <select class="form-select fs-11" id="inpCCivilStatus">
+                                <option value="" selected disabled>Select</option>
+                                <option value="Single">Single</option>
+                                <option value="Married">Married</option>
+                                <option value="Widowed">Widowed</option>
+                                <option value="Separated">Separated</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group mb-3">
+                            <label class="fs-10 text-muted fw-semibold mb-1">Address</label>
+                            <input type="text" class="form-control fs-11" id="inpCAddress">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group mb-3">
+                            <label class="fs-10 text-muted fw-semibold mb-1">Contact No.</label>
+                            <input type="text" class="form-control fs-11" id="inpCContactNo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end gap-2 p-3">
+                <button type="button" class="btn btn-main fw-semibold btn-sm" id="btnSaveComplainant">
+                    <i class="icon-save me-1"></i> Save Complainant
+                </button>
+                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11"
+                        data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Modal: Find Resident for Complainant lookup *@
+<div class="modal fade" id="mdlFindComplainant" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header flex-column align-items-start border-bottom-0">
+                <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                    <div class="col-auto pe-0">
+                        <img src="/img/png/search.png" class="icon-png-sm pe-3">
+                    </div>
+                    <div class="col ps-0 d-flex align-items-center">
+                        <div>
+                            <h3 class="fw-bold mb-0">Find Resident — Complainant</h3>
+                            <p class="text-muted fs-12 w-100">Select a resident to auto-fill the complainant form.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-75 mt-4">
+                    <div class="search-box">
+                        <i class="bi bi-search"></i>
+                        <input type="text" class="form-control fs-11 border-elm"
+                               id="searchComplainantInput" placeholder="Search by name or address...">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body p-2">
+                <div class="card mx-2 rounded-2">
+                    <div class="card-body shadow-sm border-1 p-0">
+                        <table id="tblComplainantResident" class="display dataTable table-striped table-hover w-100"></table>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between p-3">
+                <span class="text-muted fs-10">Select a resident to auto-fill the complainant form fields.</span>
+                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0"
+                        data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Modal: Find Resident (respondent — required) *@
+<div class="modal fade" id="mdlFindResident" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header flex-column align-items-start border-bottom-0">
+                <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                    <div class="col-auto pe-0">
+                        <img src="/img/png/search.png" class="icon-png-sm pe-3">
+                    </div>
+                    <div class="col ps-0 d-flex align-items-center">
+                        <div>
+                            <h3 class="fw-bold mb-0">Find Resident</h3>
+                            <p class="text-muted fs-12 w-100">Search and select a registered barangay resident as the respondent.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-75 mt-4">
+                    <div class="search-box">
+                        <i class="bi bi-search"></i>
+                        <input type="text" class="form-control fs-11 border-elm"
+                               id="searchResidentInput" placeholder="Search by name or address...">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body p-2">
+                <div class="card mx-2 rounded-2">
+                    <div class="card-body shadow-sm border-1 p-0">
+                        <table id="tblResident" class="display dataTable table-striped table-hover w-100"></table>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between p-3">
+                <span class="text-muted fs-10">Select a resident to add as respondent. Multiple respondents allowed.</span>
+                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0"
+                        data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Modal: Add / Edit Settlement *@
+<div class="modal fade" id="mdlSettlement" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-scrollable">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header flex-column align-items-start border-bottom-0">
+                <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                    <div class="col-auto pe-0">
+                        <img src="/img/png/settle.png" class="icon-png-sm pe-3">
+                    </div>
+                    <div class="col ps-0 d-flex align-items-center">
+                        <div>
+                            <h3 class="fw-bold mb-0">Settlement Schedule</h3>
+                            <p class="text-muted fs-12">Set the schedule and result of the settlement hearing.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body mx-2" id="divSettlementForm">
+                <input type="hidden" name="IncidentSettlementId" id="_hidSettlementId" />
+                <input type="hidden" name="KPCaseNo"             id="_hidSettlementKPCaseNo" />
+                <div class="row pt-2">
+                    <div class="col">
+                        <div class="form-group mb-3">
+                            <label class="fs-10 text-muted fw-semibold mb-1">Settlement Date</label>
+                            <input type="date" class="form-control fs-11"
+                                   name="SettlementDate" id="inpSettlementDate">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group mb-3">
+                            <label class="fs-10 text-muted fw-semibold mb-1">Result</label>
+                            <select class="form-select fs-11" name="Result" id="inpSettlementResult">
+                                <option value="" selected disabled>Select Result</option>
+                                <option value="Unsettle">Unsettle</option>
+                                <option value="Settle">Settle</option>
+                                <option value="Referred">Referred</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group mb-3">
+                            <label class="fs-10 text-muted fw-semibold mb-1">Remarks</label>
+                            <textarea class="form-control fs-11" rows="3"
+                                      name="Remarks" id="inpSettlementRemarks"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end gap-2 p-3">
+                <button type="button" class="btn btn-main fw-semibold btn-sm" id="btnSaveSettlement">
+                    <i class="icon-save me-1"></i> Save Settlement Schedule
+                </button>
+                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11"
+                        data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Modal: Upload Attachment *@
+<div class="modal fade" id="mdlAttachment" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-scrollable">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header flex-column align-items-start border-bottom-0">
+                <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                    <div class="col-auto pe-0">
+                        <img src="/img/png/or.png" class="icon-png-sm pe-3">
+                    </div>
+                    <div class="col ps-0 d-flex align-items-center">
+                        <div>
+                            <h3 class="fw-bold mb-0">Upload Document</h3>
+                            <p class="text-muted fs-12">Attach a document to this incident record.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body mx-2">
+                <div class="row pt-2">
+                    <div class="col">
+                        <div class="form-group mb-3">
+                            <label class="fs-10 text-muted fw-semibold mb-1">Description</label>
+                            <input type="text" class="form-control fs-11"
+                                   id="inpAttachmentDescription">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group mb-3">
+                            <label class="fs-10 text-muted fw-semibold mb-1">File</label>
+                            <input type="file" class="form-control fs-11"
+                                   id="inpAttachmentFile" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end gap-2 p-3">
+                <button type="button" class="btn btn-main fw-semibold btn-sm" id="btnSaveAttachment">
+                    <i class="icon-save me-1"></i> Upload Document
+                </button>
+                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11"
+                        data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Modal: Preview Attachment *@
+<div class="modal fade" id="mdlPreviewAttachment" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header flex-column align-items-start border-bottom-0">
+                <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                    <div class="col-auto pe-0">
+                        <img src="/img/png/or.png" class="icon-png-sm pe-3">
+                    </div>
+                    <div class="col ps-0 d-flex align-items-center">
+                        <div>
+                            <h3 class="fw-bold mb-0" id="lblPreviewFileName">Document Preview</h3>
+                            <p class="text-muted fs-12 mb-0" id="lblPreviewDescription"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body p-3" id="divPreviewBody" style="min-height:420px;">
+            </div>
+            <div class="d-flex justify-content-between align-items-center p-3">
+                <a href="#" id="lnkDownloadAttachment" target="_blank"
+                   class="btn btn-main-outline btn-sm fw-semibold">
+                    <i class="bi bi-download me-1"></i> Download
+                </a>
+                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11"
+                        data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/_defined/_incident.js"></script>

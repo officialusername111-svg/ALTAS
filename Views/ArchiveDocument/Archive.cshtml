@@ -1,0 +1,158 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Archive";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="form-container mx-5">
+    <div class="mb-5">
+        <div class="row mx-3 border-bottom-dash border-1 py-2">
+            <div class="col-auto pe-0">
+                <img src="/img/png/archiving.png" alt="ATLAS Logo" class="icon-png">
+            </div>
+            <div class="col ps-0 d-flex align-items-center">
+                <div>
+                    <h3 class="fw-bold mb-0">Document Archive Management</h3>
+                    <p class="text-muted fs-12 w-75">Handles the storage, categorization, and retrieval of archived documents, ensuring organized, accessible, and traceable records within the system.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+    
+
+    <div class="mt-2 mx-2" id="divArchiveDocument">
+        <input type="hidden" name="ArchiveDocumentId" id="_hidArchiveDocumentId" />
+        <input type="hidden" id="_hidFileURL" name="FileLocation" />
+
+        <div class="row px-4">
+            <div class="col-7 pe-4">
+                <div class="row">
+                    <div class="col">
+                        <h6 class="fs-16 fw-bold"> Archive Documents Details  </h6>
+                    </div>
+                </div>
+
+                <div class="row pt-2">
+                    <div class="col-6 ps-2">
+                        <div class="form-group">
+                            <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Ordinance / Reso Title </span>
+                            <input type="text" class="form-control fs-11 ps-3 text-muted" name="OrdResoTitle" placeholder="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row pt-2">
+                    <div class="col ">
+                        <div class="form-group">
+                            <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Subject </span>
+                            <textarea class="form-control fs-11 ps-3 text-muted" name="OrdResoSubject" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col">
+                        <div class="form-group">
+                            <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Document Category </span>
+                            @Html.DropDownList("ArchiveCategoryId", ViewData["drpArchiveCategory"] as SelectList, new { @class = "form-select fs-11 text-muted", @id = "ArchiveCategoryId" })
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Date Archive </span>
+                            <input type="date" class="form-control fs-11 ps-3 text-muted " name="DateArchive" placeholder="">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col ps-4">
+                <div class="row">
+                    <div class="col">
+                        <h6 class="fs-16 fw-bold"> Archive Documents Details  </h6>
+                    </div>
+                </div>
+                <div class="row p-2">
+                    <div class="col rounded-3 border-2 border-dash d-flex flex-column justify-content-center align-items-center text-center py-4" id="divUploadDocument">
+                        <h1 class="text-muted fs-60 mb-2 py-2">
+                            <i class="icon-upload icon-xxl me-1" id="documentIcon"></i>
+                        </h1>
+                        <h6 class="fs-11 text-muted" id="documentsName" name="FileName">
+                            Drag & Drop your document here or click to upload
+                        </h6>
+                        <span class="bg-secondary opacity-50 text-white fs-10 px-2 py-1 rounded-3 d-none" id="documentSize">
+
+                        </span>
+                        <input type="file" id="fileInput" class="d-none" accept=".pdf,.png,.jpg,.jpeg,.txt" />
+                    </div>
+                </div>
+                <div class="row px-2">
+                    <button type="button" class="float-end btn btn-main-outline btn-sm fw-semibold" id="btnPreviewDocument"><i class="icon-search me-1"></i> Preview Selected Document </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row p-4 mt-4">
+        <div class="col d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-main-outline fw-semibold py-3" id="btnClearArchiveDocument"><i class="icon-delete icon-md-2 me-1"></i> Clear </button>
+            <button type="button" class="btn btn-main fw-semibold py-3" id="btnSaveArchiveDocument"><i class="icon-add-user icon-md-2 me-1"></i> Save Archive Document </button>
+        </div>
+    </div>
+
+    <div class="row px-4 mt-2">
+        <div class="col-5">
+            <div class="search-box">
+                <i class="icon-search"></i>
+                <input type="text" class="form-control fs-11 border-elm" id="searchArchiveDocumentInput" placeholder="Search by name, position or status...">
+            </div>
+        </div>
+    </div>
+    <div class="card rounded-2 mt-3 mx-4">
+        <div class="card-body shadow-sm border-1 p-0">
+            <table id="tblArchiveDocument" class="display dataTable table-striped table-hover w-100"> </table>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" >
+        <div class="modal-content shadow-lg">
+            <div class="modal-header flex-column align-items-start border-bottom-0">
+                <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                    <div class="col-auto pe-0">
+                        <img src="/img/_icons/illustrations/search_resident.svg" alt="ATLAS Logo" class="icon-xxxl">
+                    </div>
+                    <div class="col ps-0 d-flex align-items-center">
+                        <div>
+                            <h3 class="fw-bold mb-0">Preview Document</h3>
+                            <p class="text-muted fs-12 w-100">
+                                View the selected file. PDFs and images are shown; other files display only name and size.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body text-center" id="previewContent">
+                <!-- Preview content will be injected here -->
+            </div>
+
+            <div class="d-flex justify-content-end p-3">
+                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="~/js/_defined/_archivedocs.js"></script>

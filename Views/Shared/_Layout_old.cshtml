@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ALTAS</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/datatables.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ALTAS.styles.css" asp-append-version="true" />
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/datatables.min.js"></script>
+    <script src="~/lib/signalr/dist/signalr.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+</head>
+<body>
+    <div class="main-container d-flex">
+
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="side_nav">
+            @await Html.PartialAsync("_sidebar")
+
+
+
+            <img class="d-inline-flex me-1 side-footer" src="~/img/png/sidebar_bg.png" />
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="content w-100">
+
+            <!-- Empty div if needed for dynamic content -->
+            <div id="scrn" class=""></div>
+
+            <!-- Top Navbar -->
+            <nav class="navbar navbar-expand-lg border-bottom shadow-sm px-3">
+                <div class="d-flex justify-content-between align-items-center w-100">
+
+                    <!-- Sidebar toggle (mobile) -->
+                    <div class="d-md-none">
+                        <button class="btn px-2 py-1 open-btn">
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <!-- Spacer -->
+                    <div class="flex-grow-1">
+                        <h1 class="ms-5 fs-18 fw-semibold text-white"> @ViewBag.AppName </h1>
+                    </div>
+
+
+                    <!-- User Dropdown aligned right -->
+                    <div class="dropdown ms-auto  bg-primary px-2 bg-opacity-25 rounded-3">
+                        <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle p-2 me-2" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="~/img/_icons/profile/default.png" width="25" height="25" class="rounded-circle me-2" alt="User Avatar">
+                            <div class="text-start lh-sm">
+                                <div class="lbl_userfullname fw-semibold text-warning small me-3">
+                                    @ViewBag.FullName
+                                </div>
+                                <div class="lbl_userOffice text-white text-opacity-50" style="font-size:0.75rem;">
+                                    @ViewBag.Position
+                                </div>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm drp-profile"
+                            aria-labelledby="dropdownUser1"
+                            style="width: 200px;">
+                            <li class="dropdown-header fw-semibold text-muted small px-3 pt-2">
+                                Profile Actions
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li class="preference-nav"><a href="" class="text-decoration-none px-3 pt-1 d-block"><img src="~/img/_icons/sidenav/system.svg" alt="ATLAS Logo" class="pe-2"> Preferences</a></li>
+                            <li class="profile-nav"><a href="" class="text-decoration-none px-3 pt-1 d-block"><img src="~/img/_icons/body/profile.svg" alt="ATLAS Logo" class="pe-2"> Profile Information</a></li>
+                            <li class="logout-nav">
+                                <a asp-controller="Login" asp-action="Logout" class="text-decoration-none px-3 pt-1 d-block">
+                                    <img src="~/img/_icons/body/sign-out.svg" alt="Sign Out" class="pe-2"> Sign-out
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </nav>
+
+
+            <!-- Page Content -->
+            <div class="container-fluid pb-3">
+                @RenderBody()
+
+
+                @* <img class="d-inline-flex me-1 side-footer" width: auto; height: 200px; src="~/img/png/layout_bg.png" /> *@
+
+                <!-- Toast Notification -->
+                <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer"></div>
+            </div>
+        </div>
+    </div>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

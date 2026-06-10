@@ -1,0 +1,304 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container-fluid mt-4">
+    <!-- KPI Cards -->
+    <div class="row g-3 mb-4" id="divDasboardStats">
+        <div class="col-md-2">
+            <div class="kpi-card text-start h-100">
+                <div class="text-muted fw-semibold">Total Residents</div>
+                <div class="text-dark kpi-number pt-2" name="TotalResidents">0</div>
+                <span>
+                    <span class="fs-12 text-primary fw-bold" name="PercentFamilyHead">0%</span>
+                    <span class="fs-10 text-muted"> of resisent is the head of family</span>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="kpi-card text-start h-100">
+                <div class="text-muted fw-semibold">Total Active Voters</div>
+                <div class="text-dark kpi-number pt-2" name="TotalActiveVoters">0</div>
+                <span>
+                    <span class="fs-11 text-success fw-bold" name="PercentActiveVoters">0%</span>
+                    <span class="fs-10 text-muted"> of resident are active voters</span>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="kpi-card text-start h-100">
+                <div class="text-muted fw-semibold">Total Household</div>
+                <div class="text-dark kpi-number pt-2" name="TotalHouseholds">0</div>
+                <span>
+                    <span class="fs-12 text-warning fw-bold" name="PercentSmallHouseholds">0%</span>
+                    <span class="fs-10 text-muted">of household has less than  3 members</span>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="kpi-card text-start h-100">
+                <div class="text-muted fw-semibold">Resident with Comorbidities</div>
+                <div class="text-dark kpi-number pt-2" name="TotalWithComorbidities">0</div>
+                <span>
+                    <span class="fs-11 text-danger fw-bold" name="PercentWithComorbidities">0%</span>
+                    <span class="fs-10 text-muted"> of resident are with Comorbidities</span>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+
+
+</div>
+
+
+<!-- Charts -->
+<div class="row g-3 mx-2">
+
+    <!-- Left: Education -->
+    <div class="col-md-4">
+        <div class="card chart-border border-0 h-100">
+            <div class="card-body d-flex flex-column">
+                <h5 class="fw-bold mb-1">Educational Attainment</h5>
+                <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                    Distribution of residents by highest educational level.
+                </p>
+                <div class="flex-grow-1">
+                    <canvas id="chartEducation"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Left: BirthRate -->
+    <div class="col-md-8 gap-3">
+        <div class="row">
+            <div class="col">
+                <div class="card chart-border border-0 h-100">
+                    <div class="card-body d-flex flex-column">
+
+                        <h5 class="fw-bold mb-1">Birthd Rate per Decade</h5>
+                        <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                            Graph of birthdate per decade based on the data archive.
+                        </p>
+
+                        <div class="flex-grow-1">
+                            <canvas id="chartBirthRate"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-6">
+                <!-- Status -->
+                <div class="card chart-border border-0 flex-fill">
+                    <div class="card-body d-flex flex-column">
+
+                        <h5 class="fw-bold mb-1">Civil Status</h5>
+                        <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                            Breakdown of residents by marital status.
+                        </p>
+
+                        <div class="flex-grow-1">
+                            <canvas id="chartStatus"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <!-- Gender -->
+                <div class="card chart-border border-0 flex-fill">
+                    <div class="card-body d-flex flex-column">
+
+                        <h5 class="fw-bold mb-1">Common Demographic Age Structure</h5>
+                        <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                            Overview of population by age.
+                        </p>
+
+                        <div class="flex-grow-1">
+                            <canvas id="chartAge"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row mt-3 mx-2">
+    <div class="col-3">
+        <div class="card chart-border border-0 h-100">
+            <div class="card-body d-flex flex-column">
+
+                <h5 class="fw-bold mb-1">Gender Distribution </h5>
+                <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                    Distribution of residents by highest educational level.
+                </p>
+
+                <div class="row" id="divGenderStats">
+                    <div class="col">
+                        <img src="/img/_icons/profile/default.png" width="25" height="25" class="rounded-circle me-2" alt="User Avatar">
+                        <span class="fw-bold mb-1 text-success pt-1" name="Male">0%</span>
+                        <p class="text-muted fs-12 mb-0">
+                            Male residents
+                        </p>
+                    </div>
+                    <div class="col">
+                        <img src="/img/_icons/profile/p-female-4.png" width="25" height="25" class="rounded-circle me-2" alt="User Avatar">
+                        <span class="fw-bold mb-1 text-primary pt-1" name="Female">0%</span>
+                        <p class="text-muted fs-12 mb-0">
+                            Female residents
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card chart-border border-0 h-100">
+            <div class="card-body d-flex flex-column">
+
+                <h5 class="fw-bold mb-1">Voter's Status Distribution</h5>
+                <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                    Distribution of residents by highest educational level.
+                </p>
+
+                <div class="row" id="divVotersStats">
+                    <div class="col">
+                        <img src="/img/_icons/profile/p-male-1.png" width="25" height="25" class="rounded-circle me-2" alt="User Avatar">
+                        <span class="fw-bold mb-1 text-success pt-1" name="Active">0%</span>
+                        <p class="text-muted fs-12 mb-0">
+                            Active Voter's 
+                        </p>
+                    </div>
+                    <div class="col">
+                        <img src="/img/_icons/profile/p-male-1.png" width="25" height="25" class="rounded-circle me-2" alt="User Avatar">
+                        <span class="fw-bold mb-1 text-primary pt-1" name="Inactive">0%</span>
+                        <p class="text-muted fs-12 mb-0">
+                            Inactive Voter's 
+                        </p>
+                    </div>
+                    <div class="col">
+                        <img src="/img/_icons/profile/p-male-1.png" width="25" height="25" class="rounded-circle me-2" alt="User Avatar">
+                        <span class="fw-bold mb-1 text-primary pt-1" name="Pending_Or_Under_Verification">0%</span>
+                        <p class="text-muted fs-12 mb-0">
+                            Pending Voter's  
+                        </p>
+                    </div>
+                    <div class="col">
+                        <img src="/img/_icons/profile/p-male-1.png" width="25" height="25" class="rounded-circle me-2" alt="User Avatar">
+                        <span class="fw-bold mb-1 text-primary pt-1" name="Others">0%</span>
+                        <p class="text-muted fs-12 mb-0">
+                            Others  
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 class="ms-4 mt-4 fw-bold"> Collection Summary </h2>
+<div class="row mt-3 mx-2">
+    <div class="col-md-5 gap-2">
+
+        <div class="row mx-0 chart-border border-0  py-2">
+            <div class="col-4">
+                <div class="card border-0">
+                    <div class="card-body border-end-dash">
+                        <p class="text-muted fw-semibold mb-1">Today's Collection</p>
+                        <h3 class="fw-bold" id="lblDailyCollection">₱ 0.00</h3>
+                        <small class="text-muted"><span id="lblDailyIssued">0</span> CTC Issued</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card border-0">
+                    <div class="card-body border-end-dash">
+                        <p class="text-muted fw-semibold mb-1">This Month's Collection</p>
+                        <h3 class="fw-bold" id="lblMonthlyCollection">₱ 0.00</h3>
+                        <small class="text-muted"><span id="lblMonthlyIssued">0</span> CTC Issued</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card border-0">
+                    <div class="card-body ">
+                        <p class="text-muted fw-semibold mb-1">This Year's Collection</p>
+                        <h3 class="fw-bold" id="lblYearlyCollection">₱ 0.00</h3>
+                        <small class="text-muted"><span id="lblYearlyIssued">0</span> CTC Issued</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mx-0 chart-border border-0  py-2 mt-3">
+            <div class="col-4">
+                <div class="card border-0">
+                    <div class="card-body border-end-dash">
+                        <p class="text-muted fw-semibold mb-1">Today's Collection</p>
+                        <h3 class="fw-bold" id="lblDailyCollection">₱ 0.00</h3>
+                        <small class="text-muted"><span id="lblDailyIssued">0</span> CTC Issued</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card border-0">
+                    <div class="card-body border-end-dash">
+                        <p class="text-muted fw-semibold mb-1">This Month's Collection</p>
+                        <h3 class="fw-bold" id="lblMonthlyCollection">₱ 2,077.90</h3>
+                        <small class="text-muted"><span id="lblMonthlyIssued">3</span> CTC Issued</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card border-0">
+                    <div class="card-body ">
+                        <p class="text-muted fw-semibold mb-1">This Year's Collection</p>
+                        <h3 class="fw-bold" id="lblYearlyCollection">₱ 2,077.90</h3>
+                        <small class="text-muted"><span id="lblYearlyIssued">3</span> CTC Issued</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="card chart-border border-0 h-100">
+            <div class="card-body d-flex flex-column">
+
+                <h5 class="fw-bold mb-1 text-dark">Collection for the last 30 days</h5>
+                <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                    Shows the distribution of collection made for the last  30 days.
+                </p>
+
+                <div class="flex-grow-1">
+                    <canvas id="chartCollection"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+
+
+
+
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="~/js/_defined/_dashboard.js"></script>
+}

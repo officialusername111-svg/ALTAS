@@ -1,0 +1,243 @@
+@using ALTAS.Models.DTO
+@model UserDTO
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log In</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <style>
+        :root { --accent:       #2d3e50; --accent-hover: #1a2633; --input-border: #d5dce6; --input-focus:  #4a90d9; --text-main:    #1e293b; --text-muted:   #7b8fa6; --error-color:  #e53e3e; --radius-card:  18px; --radius-input: 8px; }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body { min-height: 100vh; font-family: 'DM Sans', sans-serif; background-color: #eef2f7; display: flex; align-items: center; justify-content: center; }
+
+        /* ── Main two-column wrapper ── */
+        .page-layout { display: flex; align-items: center; justify-content: center; gap: 2rem; width: 100%; max-width: 900px; padding: 2rem 1.5rem;
+        }
+
+        /* ── Illustration ── */
+        .illustration-wrap { flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+
+        .illustration-wrap img { width: 750px; height: 625px; object-fit: contain; display: block; }
+
+        /* ── Right column: login card + tagline ── */
+        .right-col { display: flex; flex-direction: column; gap: 1rem; width: 360px; flex-shrink: 0; animation: fadeUp .45s cubic-bezier(.16,1,.3,1) both; }
+
+        @@keyframes fadeUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Login card ── */
+        .login-card { background: #ffffff; border-radius: var(--radius-card); box-shadow: 0 8px 40px rgba(45, 62, 80, 0.13), 0 2px 8px rgba(45,62,80,.06); padding: 2.5rem 2.25rem 2.25rem; border: 1px solid rgba(213, 220, 230, 0.6); }
+
+        .form-title { font-size: 1.65rem; font-weight: 700; color: var(--text-main); margin-bottom: 1.6rem; }
+
+        /* ── Tagline panel ── */
+        .tagline-panel { background: #ffffff; border-radius: 12px; box-shadow: 0 4px 16px rgba(45,62,80,.08); border: 1px solid rgba(213, 220, 230, 0.6); padding: 1rem 1.4rem; text-align: center; animation: fadeUp .45s .12s cubic-bezier(.16,1,.3,1) both; }
+
+        .tagline-panel p { font-size: .88rem; font-weight: 600; color: var(--text-main); line-height: 1.5; margin: 0; }
+
+        .tagline-panel p span { color: var(--input-focus); }
+
+        .tagline-panel .tagline-sub { font-size: .78rem; font-weight: 400; color: var(--text-muted); margin-top: .3rem; }
+
+        /* ── Inputs ── */
+        .field-group { margin-bottom: .85rem; }
+
+        .field-group .form-control { border: 1px solid var(--input-border); border-radius: var(--radius-input); color: var(--text-main); font-size: .9rem; padding: .65rem 1rem; background: #fff; width: 100%; transition: border-color .2s, box-shadow .2s; }
+        .field-group .form-control::placeholder { color: #aab5c4; }
+        .field-group .form-control:focus { border-color: var(--input-focus); box-shadow: 0 0 0 3px rgba(74,144,217,.15); outline: none; }
+        .field-group .form-control.is-invalid { border-color: var(--error-color); box-shadow: 0 0 0 3px rgba(229,62,62,.12); }
+
+        /* password eye toggle */
+        .pw-wrap { position: relative; }
+        .pw-wrap .form-control { padding-right: 2.6rem; }
+        .btn-pw-toggle { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px; font-size: .95rem; line-height: 1; transition: color .15s; }
+        .btn-pw-toggle:hover { color: var(--input-focus); }
+
+        .field-error { display: none; font-size: .77rem; color: var(--error-color); margin-top: 4px; }
+        .field-error.visible { display: block; }
+
+        /* ── Remember / Forgot row ── */
+        .row-remember { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.4rem; font-size: .84rem; }
+        .row-remember .form-check { margin: 0; padding: 0; display: flex; align-items: center; gap: 7px; }
+        .row-remember .form-check-input { margin: 0; accent-color: var(--input-focus); cursor: pointer; }
+        .row-remember .form-check-label { color: var(--text-muted); cursor: pointer; user-select: none; line-height: 1; }
+        .link-forgot { color: var(--input-focus); text-decoration: none; font-weight: 500; transition: color .15s; }
+        .link-forgot:hover { color: var(--accent); text-decoration: underline; }
+
+        /* ── Submit button ── */
+        .btn-login { width: 100%; background: var(--accent); border: none; border-radius: var(--radius-input); color: #fff; font-size: .95rem; font-weight: 600; padding: .75rem; cursor: pointer; letter-spacing: .025em; transition: background .2s, transform .1s, box-shadow .2s; }
+        .btn-login:hover  { background: var(--accent-hover); box-shadow: 0 4px 18px rgba(45,62,80,.28); }
+        .btn-login:active { transform: scale(.98); }
+        .btn-login:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+        .btn-login .btn-text { display: block; }
+        .btn-login .spinner { display: none; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,.35); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; margin: 0 auto; }
+        .btn-login.loading .btn-text { display: none; }
+        .btn-login.loading .spinner  { display: block; }
+
+        @@keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── Server-side error alert ── */
+        .alert-login { display: none; background: #fff5f5; border: 1px solid #feb2b2; border-radius: 8px; color: #c53030; font-size: .84rem; padding: .65rem .9rem; margin-bottom: 1rem; gap: 8px; align-items: flex-start; }
+        .alert-login.visible { display: flex; }
+
+        /* ── Responsive ── */
+        @@media (max-width: 720px) {
+            .page-layout { flex-direction: column; padding: 2rem 1rem; }
+            .illustration-wrap img { width: 260px; height: 260px; }
+            .right-col { width: 100%; max-width: 400px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-layout">
+
+        <!-- ══ LEFT — illustration ══ -->
+        <div class="illustration-wrap">
+            <img src="~/img/png/login_illustration_nobg.png" alt="Asset manager illustration" />
+        </div>
+
+        <!-- ══ RIGHT — login card + tagline ══ -->
+        <div class="right-col">
+
+            <!-- LOGIN CARD -->
+            <div class="login-card">
+                <h1 class="form-title">Log In</h1>
+
+                <!-- Server-side ModelState error banner -->
+                <div asp-validation-summary="ModelOnly" class="alert-login" id="serverAlert" role="alert">
+                    <i class="bi bi-exclamation-circle-fill" style="font-size:.9rem;flex-shrink:0;margin-top:2px;"></i>
+                    <span id="serverAlertMsg">Invalid credentials. Please try again.</span>
+                </div>
+
+                <form id="loginForm" asp-action="ExecuteLogin" asp-controller="Login" method="post" novalidate>
+
+                    @Html.AntiForgeryToken()
+
+                    <!-- User name -->
+                    <div class="field-group">
+                        <input type="text" id="Username" asp-for="UserName" class="form-control" placeholder="User name" autocomplete="username" required /> <div class="field-error" id="usernameError"></div>
+                        <span asp-validation-for="UserName" class="field-error"></span>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="field-group">
+                        <div class="pw-wrap">
+                            <input type="password" id="Password" asp-for="Password" class="form-control" placeholder="Password" autocomplete="current-password" required />
+                            <button type="button" class="btn-pw-toggle" id="togglePw" aria-label="Toggle password visibility">
+                                <i class="bi bi-eye" id="pwIcon"></i>
+                            </button>
+                        </div>
+                        <div class="field-error" id="passwordError"></div>
+                        <span asp-validation-for="Password" class="field-error"></span>
+                    </div>
+
+                    <!-- Entity code -->
+                    <div class="field-group">
+                        <input type="text" id="EntityCode" asp-for="EntityCode" class="form-control" placeholder="entity code (e. g. Display)" autocomplete="entitycode" /> <div class="field-error" id="entitycodeError"></div>
+                        <span asp-validation-for="EntityCode" class="field-error"></span>
+                    </div>
+
+                    <!-- Remember me / Forgot password -->
+                    <div class="row-remember">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="RememberMe" asp-for="RememberMe" />
+                            <label class="form-check-label" for="RememberMe">Keep me signed in</label>
+                        </div>
+                        <a href="/Login/ForgotPassword" class="link-forgot">Forgot password?</a>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="btn-login" id="submitBtn">
+                        <span class="btn-text">Log In</span>
+                        <div class="spinner" role="status" aria-label="Signing in…"></div>
+                    </button>
+
+                </form>
+            </div><!-- /login-card -->
+
+            <!-- TAGLINE PANEL -->
+            <div class="tagline-panel">
+                <p>Welcome to <span>ALTAS</span> — Administrative &amp; Tracking and Local Services</p>
+                <p class="tagline-sub">Manage your community, faster, and with confidence.</p>
+            </div>
+
+        </div><!-- /right-col -->
+    </div><!-- /page-layout -->
+
+    <!-- ── Scripts ── -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    $(function () {
+
+        /* ── Password visibility toggle ── */
+        $('#togglePw').on('click', function () {
+            var $pw   = $('#Password');
+            var $icon = $('#pwIcon');
+            var hidden = $pw.attr('type') === 'password';
+            $pw.attr('type', hidden ? 'text' : 'password');
+            $icon.toggleClass('bi-eye', !hidden).toggleClass('bi-eye-slash', hidden);
+        });
+
+        /* ── jQuery Validate ── */
+        $.validator.setDefaults({
+            errorClass: 'field-error visible',
+            validClass: '',
+            highlight:   function (el) { $(el).addClass('is-invalid'); },
+            unhighlight: function (el) { $(el).removeClass('is-invalid'); },
+            errorPlacement: function (error, element) {
+                var id = element.attr('id');
+                var $t = id === 'Username'   ? $('#usernameError')
+                       : id === 'Password'   ? $('#passwordError')
+                       : id === 'EntityCode' ? $('#entityError')
+                       : element.siblings('.field-error').first();
+                $t.text(error.text()).addClass('visible');
+            },
+            success: function (label, element) {
+                var id = $(element).attr('id');
+                var $t = id === 'Username'   ? $('#usernameError')
+                       : id === 'Password'   ? $('#passwordError')
+                       : id === 'EntityCode' ? $('#entityError')
+                       : null;
+                if ($t) $t.text('').removeClass('visible');
+            }
+        });
+
+        /* ── Submit: validate → spinner ── */
+        $('#loginForm').on('submit', function (e) {
+            if (!$(this).valid()) { e.preventDefault(); return; }
+            $('#submitBtn').addClass('loading').prop('disabled', true);
+        });
+
+        /* ── Surface server ModelState errors ── */
+        var $summary = $('[data-valmsg-summary]');
+        if ($summary.find('li').length) {
+            $('#serverAlertMsg').text($summary.find('li').first().text());
+            $('#serverAlert').addClass('visible');
+        }
+
+        /* ── Auto-focus first empty field ── */
+        var $u = $('#Username');
+        $u.val() ? $('#Password').trigger('focus') : $u.trigger('focus');
+
+    });
+    </script>
+
+</body>
+</html>

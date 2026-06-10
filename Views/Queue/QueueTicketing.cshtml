@@ -1,0 +1,921 @@
+﻿@*
+    Queue Ticketing Kiosk — Redesigned layout
+*@
+@{
+    ViewBag.Title = "Queue Ticketing";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Queue Ticketing</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'DM Sans', 'Segoe UI', sans-serif;
+            background: #e8edf5;
+        }
+
+        /* ── Page Shell ── */
+        .page-shell {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ══════════════════════════════════════
+                   LEFT PANEL
+                ══════════════════════════════════════ */
+        .left-panel {
+            width: 280px;
+            min-width: 260px;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 36px 24px 0;
+            border-right: 1px solid #dce4f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .left-logo {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 16px;
+        }
+
+        .left-brgy-name {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1a3a5c;
+            text-align: center;
+            letter-spacing: 0.02em;
+            margin: 0 0 2px;
+            text-transform: uppercase;
+        }
+
+        .left-brgy-sub {
+            font-size: 12px;
+            color: #7a8fa5;
+            text-align: center;
+            margin: 0 0 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .left-divider {
+            width: 60%;
+            border: none;
+            border-top: 1.5px solid #dce4f0;
+            margin-bottom: 22px;
+        }
+
+        .left-welcome-icon {
+            width: 48px;
+            height: 48px;
+            background: #eaf1fb;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+            .left-welcome-icon svg {
+                width: 24px;
+                height: 24px;
+            }
+
+        .left-welcome-text {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+            .left-welcome-text p {
+                margin: 0 0 2px;
+                font-size: 12px;
+                color: #7a8fa5;
+            }
+
+            .left-welcome-text h3 {
+                margin: 0 0 4px;
+                font-size: 18px;
+                font-weight: 700;
+                color: #1a3a5c;
+                line-height: 1.25;
+            }
+
+            .left-welcome-text small {
+                font-size: 11px;
+                color: #9aafbf;
+            }
+
+        .left-announcement {
+            width: 100%;
+            background: #f4f8ff;
+            border: 1px solid #d0dff5;
+            border-radius: 12px;
+            padding: 14px 16px;
+            text-align: center;
+        }
+
+            .left-announcement .ann-header {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                font-size: 11px;
+                font-weight: 700;
+                color: #1a4f8a;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                margin-bottom: 8px;
+            }
+
+            .left-announcement p {
+                margin: 0 0 6px;
+                font-size: 12px;
+                color: #4a6080;
+                line-height: 1.5;
+            }
+
+            .left-announcement .ann-thanks {
+                font-size: 12px;
+                font-weight: 600;
+                color: #1a4f8a;
+                margin: 0;
+            }
+
+        .left-wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        /* ══════════════════════════════════════
+                   RIGHT PANEL
+                ══════════════════════════════════════ */
+        .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* ── Top Bar ── */
+        .top-bar {
+            background: #1a4f8a;
+            padding: 14px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .top-bar-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.01em;
+        }
+
+        .hamburger {
+            background: none;
+            border: none;
+            padding: 4px;
+            cursor: pointer;
+            color: #fff;
+            opacity: 0.8;
+        }
+
+        .top-bar-clock {
+            text-align: right;
+            color: #fff;
+        }
+
+            .top-bar-clock .clock-time {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                justify-content: flex-end;
+                font-size: 20px;
+                font-weight: 600;
+                font-family: 'DM Mono', monospace;
+            }
+
+            .top-bar-clock .clock-date {
+                font-size: 11px;
+                opacity: 0.7;
+                margin-top: 2px;
+            }
+
+        /* ── Scrollable Content ── */
+        .right-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 24px;
+            display: flex;
+            gap: 18px;
+        }
+
+        /* ── Center Column ── */
+        .center-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* ── Ticket Preview Card ── */
+        .ticket-preview-card {
+            background: #fff;
+            border: 1.5px solid #dce4f0;
+            border-radius: 14px;
+            padding: 20px 24px;
+            text-align: center;
+        }
+
+            .ticket-preview-card .tp-label {
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: #1a4f8a;
+                margin-bottom: 14px;
+            }
+
+        .tp-body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .tp-receipt-icon {
+            color: #c5d5e8;
+        }
+
+            .tp-receipt-icon svg {
+                width: 56px;
+                height: 56px;
+            }
+
+        .tp-info {
+            text-align: left;
+        }
+
+        .tp-dashes {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+            .tp-dashes span {
+                width: 32px;
+                height: 6px;
+                background: #1a4f8a;
+                border-radius: 3px;
+                opacity: 0.8;
+            }
+
+        #tp-service-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a3a5c;
+            margin-bottom: 2px;
+        }
+
+        #tc-number {
+            font-family: 'DM Mono', monospace;
+            font-size: 36px;
+            font-weight: 600;
+            color: #1a4f8a;
+            line-height: 1;
+        }
+
+        #tp-idle-msg {
+            font-size: 13px;
+            color: #7a8fa5;
+        }
+
+        .dot-pulse {
+            width: 8px;
+            height: 8px;
+            background: #1a4f8a;
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+        }
+
+        @@keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.2;
+            }
+        }
+
+        /* ── Service Selection ── */
+        .service-section-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #1a4f8a;
+            margin-bottom: 2px;
+        }
+
+            .service-section-label svg {
+                width: 18px;
+                height: 18px;
+            }
+
+        .service-divider {
+            border: none;
+            border-top: 1.5px solid #dce4f0;
+            margin: 6px 0 12px;
+        }
+
+        .service-btn {
+            width: 100%;
+            background: #fff;
+            border: 1.5px solid #dce4f0;
+            border-radius: 12px;
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: border-color 0.15s, background 0.15s, transform 0.1s;
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+            .service-btn:last-child {
+                margin-bottom: 0;
+            }
+
+            .service-btn:hover {
+                border-color: #1a4f8a;
+                background: #f4f8ff;
+                transform: translateY(-1px);
+            }
+
+            .service-btn:active,
+            .service-btn.pressed {
+                transform: scale(0.98);
+                border-color: #1a4f8a;
+                background: #eaf1fb;
+            }
+
+            .service-btn.disabled-btn {
+                opacity: 0.6;
+                pointer-events: none;
+            }
+
+        .svc-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+            .svc-icon.blue {
+                background: #ddeaf8;
+            }
+
+            .svc-icon.teal {
+                background: #d6f0e8;
+            }
+
+            .svc-icon.amber {
+                background: #fdf0d8;
+            }
+
+            .svc-icon svg {
+                width: 26px;
+                height: 26px;
+            }
+
+        .svc-text {
+            flex: 1;
+        }
+
+            .svc-text h3 {
+                margin: 0 0 3px;
+                font-size: 14px;
+                font-weight: 700;
+                color: #1a3a5c;
+            }
+
+            .svc-text p {
+                margin: 0;
+                font-size: 12px;
+                color: #7a8fa5;
+            }
+
+        .svc-ticket-badge {
+            background: #1a4f8a;
+            color: #fff;
+            border-radius: 8px;
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'DM Mono', monospace;
+            font-size: 13px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+            .svc-ticket-badge svg {
+                width: 16px;
+                height: 16px;
+                opacity: 0.8;
+            }
+
+        /* ── Right Column (Reminders) ── */
+        .right-col {
+            width: 210px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .reminders-card {
+            background: #fff;
+            border: 1.5px solid #dce4f0;
+            border-radius: 14px;
+            padding: 18px 16px;
+        }
+
+            .reminders-card .rem-header {
+                display: flex;
+                align-items: center;
+                gap: 7px;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.09em;
+                text-transform: uppercase;
+                color: #1a4f8a;
+                margin-bottom: 14px;
+            }
+
+                .reminders-card .rem-header svg {
+                    width: 16px;
+                    height: 16px;
+                }
+
+        .reminder-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #e0e8f2;
+        }
+
+            .reminder-item:last-child {
+                margin-bottom: 0;
+                padding-bottom: 0;
+                border-bottom: none;
+            }
+
+        .rem-check {
+            width: 20px;
+            height: 20px;
+            background: #1a4f8a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+            .rem-check svg {
+                width: 11px;
+                height: 11px;
+            }
+
+        .rem-text {
+            font-size: 12px;
+            color: #4a6080;
+            line-height: 1.5;
+        }
+
+        .brgy-illus {
+            margin-top: auto;
+            text-align: center;
+            opacity: 0.18;
+        }
+
+            .brgy-illus svg {
+                width: 100%;
+                max-width: 160px;
+            }
+
+        /* ── Footer Info Bar ── */
+        .footer-info {
+            background: #fff;
+            border-top: 1.5px solid #dce4f0;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+
+        .footer-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .footer-icon {
+            width: 36px;
+            height: 36px;
+            background: #1a4f8a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+            .footer-icon svg {
+                width: 16px;
+                height: 16px;
+            }
+
+        .footer-text strong {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            color: #1a3a5c;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .footer-text span {
+            font-size: 11px;
+            color: #7a8fa5;
+            line-height: 1.5;
+        }
+
+        .footer-divider {
+            width: 1px;
+            height: 36px;
+            background: #dce4f0;
+        }
+
+        /* ── Bottom Bar ── */
+        .bottom-bar {
+            background: #1a4f8a;
+            padding: 10px 24px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+            .bottom-bar p {
+                margin: 0;
+                font-size: 11px;
+                color: rgba(255,255,255,0.55);
+            }
+    </style>
+</head>
+<body>
+
+    <div class="page-shell">
+
+        <!-- ══════════════ LEFT PANEL ══════════════ -->
+        <div class="left-panel">
+
+            <img src="~/img/report_logo.jpg" alt="Barangay Logo" class="left-logo" />
+
+            <h6 class="fs-16 fw-bold left-brgy-name">Barangay Poblacion</h6>
+            <p class="fs-12 fw-semibold left-brgy-sub">Tupi, South Cotabato</p>
+
+            <hr class="left-divider" />
+
+            <div class="left-welcome-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#1a4f8a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+            </div>
+
+            <div class="left-welcome-text">
+                <p>Welcome to the</p>
+                <h3>Barangay Hall<br>Queue System</h3>
+                <small>Efficient service. Better community.</small>
+            </div>
+
+            <div class="left-announcement">
+                <div class="ann-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#1a4f8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                    </svg>
+                    Announcements
+                </div>
+                <p>Please fall in line and wait for your number to be called.</p>
+                <p class="ann-thanks">Thank you!</p>
+            </div>
+
+            <div class="left-wave">
+                <svg viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                    <path d="M0 40 Q70 10 140 40 Q210 70 280 40 L280 80 L0 80 Z" fill="#ddeaf8" opacity="0.5" />
+                    <path d="M0 55 Q70 30 140 55 Q210 80 280 55 L280 80 L0 80 Z" fill="#1a4f8a" opacity="0.12" />
+                </svg>
+            </div>
+
+        </div>
+
+        <!-- ══════════════ RIGHT PANEL ══════════════ -->
+        <div class="right-panel">
+
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="top-bar-left">
+                    <button class="hamburger" type="button">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <line x1="3" y1="12" x2="21" y2="12" />
+                            <line x1="3" y1="18" x2="21" y2="18" />
+                        </svg>
+                    </button>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;opacity:0.85;">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                        <polyline points="9 22 9 12 15 12 15 22" />
+                    </svg>
+                    <span class="top-bar-title">Barangay Hall — Queue System</span>
+                </div>
+                <div class="top-bar-clock">
+                    <div class="clock-time">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="width:16px;height:16px;opacity:0.7;">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                        <span id="k-time">--:--:-- --</span>
+                    </div>
+                    <div class="clock-date" id="k-date">Loading...</div>
+                </div>
+            </div>
+
+            <!-- Scrollable Content -->
+            <div class="right-content">
+
+                <!-- Center Column -->
+                <div class="center-col">
+
+                    <!-- Ticket Preview -->
+                    <div class="ticket-preview-card">
+                        <div class="tp-label">Your Queue Number</div>
+                        <div class="tp-body">
+                            <div class="tp-receipt-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                                    <polyline points="14 2 14 8 20 8" />
+                                    <line x1="8" y1="13" x2="16" y2="13" />
+                                    <line x1="8" y1="17" x2="12" y2="17" />
+                                    <path d="M6 22v-2M18 22v-2" />
+                                </svg>
+                            </div>
+                            <div class="tp-info">
+                                <div id="idleMsg">
+                                    <div class="tp-dashes">
+                                        <span></span><span></span><span></span><span></span>
+                                    </div>
+                                    <div id="tp-idle-msg">Please select a service to<br>get your queue number.</div>
+                                </div>
+                                <div id="printMsg" style="display:none;align-items:center;gap:8px;font-size:13px;color:#1a4f8a;font-weight:500;">
+                                    <div class="dot-pulse"></div>
+                                    Printing your ticket...
+                                </div>
+                                <div id="ticketCard" style="display:none;">
+                                    <div id="tp-service-name"></div>
+                                    <div id="tc-number"></div>
+                                    <div style="font-size:11px;color:#9aafbf;margin-top:4px;">Please wait for your number to be called.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service Selection -->
+                    <div>
+                        <div class="service-section-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#1a4f8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+                            </svg>
+                            Select a Service to Get Your Queue Number
+                        </div>
+                        <hr class="service-divider" />
+
+                        <button class="service-btn" data-service="1" data-label="Barangay Clearance" data-prefix="C">
+                            <div class="svc-icon blue">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#1a4f8a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 11l3 3L22 4" />
+                                    <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+                                </svg>
+                            </div>
+                            <div class="svc-text">
+                                <h3>Barangay Clearance</h3>
+                                <p>For employment, business,<br>or legal purposes.</p>
+                            </div>
+                            <div class="svc-ticket-badge" id="code-C">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                    <rect x="2" y="7" width="20" height="14" rx="2" />
+                                    <path d="M16 7V5a2 2 0 00-4 0v2M8 7V5a2 2 0 00-4 0v2" />
+                                </svg>
+                                C - - - -
+                            </div>
+                        </button>
+
+                        <button class="service-btn" data-service="2" data-label="Barangay Certification" data-prefix="B">
+                            <div class="svc-icon teal">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#0f6e56" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="16" rx="2" />
+                                    <line x1="7" y1="9" x2="17" y2="9" />
+                                    <line x1="7" y1="13" x2="13" y2="13" />
+                                    <circle cx="17" cy="16" r="2.5" />
+                                    <path d="M19.5 18.5l1.5 1.5" />
+                                </svg>
+                            </div>
+                            <div class="svc-text">
+                                <h3>Barangay Certification</h3>
+                                <p>Proof of residency and<br>other certifications.</p>
+                            </div>
+                            <div class="svc-ticket-badge" id="code-B">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                    <rect x="2" y="7" width="20" height="14" rx="2" />
+                                    <path d="M16 7V5a2 2 0 00-4 0v2M8 7V5a2 2 0 00-4 0v2" />
+                                </svg>
+                                B - - - -
+                            </div>
+                        </button>
+
+                        <button class="service-btn" data-service="3" data-label="Community Tax Certificate (CTC)" data-prefix="T">
+                            <div class="svc-icon amber">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#854f0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="5" width="20" height="14" rx="2" />
+                                    <line x1="2" y1="10" x2="22" y2="10" />
+                                    <circle cx="7" cy="15" r="1" />
+                                    <circle cx="12" cy="15" r="1" />
+                                </svg>
+                            </div>
+                            <div class="svc-text">
+                                <h3>Community Tax Certificate (CTC)</h3>
+                                <p>Also known as Cedula —<br>annual tax document.</p>
+                            </div>
+                            <div class="svc-ticket-badge" id="code-T">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                                    <rect x="2" y="7" width="20" height="14" rx="2" />
+                                    <path d="M16 7V5a2 2 0 00-4 0v2M8 7V5a2 2 0 00-4 0v2" />
+                                </svg>
+                                T - - - -
+                            </div>
+                        </button>
+                    </div>
+
+                </div>
+                <!-- /center-col -->
+                <!-- Right Column — Reminders -->
+                <div class="right-col">
+                    <div class="reminders-card">
+                        <div class="rem-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#1a4f8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                                <path d="M13.73 21a2 2 0 01-3.46 0" />
+                            </svg>
+                            Reminders
+                        </div>
+                        <div class="reminder-item">
+                            <div class="rem-check"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg></div>
+                            <div class="rem-text">Please wait for your number to be called.</div>
+                        </div>
+                        <div class="reminder-item">
+                            <div class="rem-check"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg></div>
+                            <div class="rem-text">Prepare the necessary requirements.</div>
+                        </div>
+                        <div class="reminder-item">
+                            <div class="rem-check"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg></div>
+                            <div class="rem-text">Always keep your queue slip.</div>
+                        </div>
+                        <div class="reminder-item">
+                            <div class="rem-check"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg></div>
+                            <div class="rem-text">Thank you for your cooperation.</div>
+                        </div>
+                    </div>
+
+                    <div class="brgy-illus">
+                        <svg viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="30" y="40" width="100" height="70" fill="#1a4f8a" />
+                            <rect x="50" y="20" width="60" height="25" fill="#1a4f8a" />
+                            <rect x="70" y="8" width="20" height="16" fill="#1a4f8a" />
+                            <rect x="78" y="2" width="4" height="8" fill="#1a4f8a" />
+                            <rect x="75" y="0" width="10" height="3" fill="#1a4f8a" />
+                            <rect x="40" y="60" width="18" height="20" fill="#fff" opacity="0.3" />
+                            <rect x="70" y="60" width="20" height="20" fill="#fff" opacity="0.3" />
+                            <rect x="102" y="60" width="18" height="20" fill="#fff" opacity="0.3" />
+                            <rect x="55" y="85" width="50" height="25" fill="#fff" opacity="0.2" />
+                            <rect x="70" y="85" width="20" height="25" fill="#fff" opacity="0.35" />
+                            <rect x="0" y="108" width="160" height="12" fill="#1a4f8a" />
+                        </svg>
+                    </div>
+                </div>
+                <!-- /right-col -->
+
+            </div>
+            <!-- /right-content -->
+            <!-- Footer Info Bar -->
+            <div class="footer-info">
+                <div class="footer-item">
+                    <div class="footer-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                    </div>
+                    <div class="footer-text">
+                        <strong>Office Hours</strong>
+                        <span>Monday – Friday<br>8:00 AM – 5:00 PM</span>
+                    </div>
+                </div>
+                <div class="footer-divider"></div>
+                <div class="footer-item">
+                    <div class="footer-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.01 2.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z" />
+                        </svg>
+                    </div>
+                    <div class="footer-text">
+                        <strong>Contact Us</strong>
+                        <span>(083) 123-4567<br>barangaypoblacion&#64;gmail.com</span>
+                    </div>
+                </div>
+                <div class="footer-divider"></div>
+                <div class="footer-item">
+                    <div class="footer-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                        </svg>
+                    </div>
+                    <div class="footer-text">
+                        <strong>Visit Us</strong>
+                        <span>Barangay Poblacion Hall<br>Tupi, South Cotabato</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="bottom-bar">
+                <p>Barangay Hall — Queue System &nbsp;|&nbsp; Fair and efficient service for everyone. &nbsp;&#9829;</p>
+            </div>
+
+        </div>
+        <!-- /right-panel -->
+
+    </div>
+    <!-- /page-shell -->
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="~/lib/signalr/dist/signalr.min.js"></script>
+    <script src="~/js/_defined/_getticket.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,468 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Resident";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="mb-5 mx-5">
+        <div class="row mx-3 border-bottom-dash border-1 py-2">
+            <div class="col-auto pe-0">
+            <img src="/img/png/resident.png" alt="ATLAS Logo" class="icon-png">
+            </div>
+            <div class="col ps-0 d-flex align-items-center">
+                <div>
+                    <h3 class="fw-bold mb-0">Resident Information Center</h3>
+                    <p class="text-muted fs-12 w-75">A centralized hub for managing and viewing resident records, including personal details, contact information, and relevant documentation, ensuring accurate and efficient data handling.</p>
+                </div>
+            </div>
+        <div class="col-auto d-flex align-content-end flex-wrap">
+            <button type="button" class="btn btn-main-outline btn-sm fw-semibold" id="btnSearchResident" data-bs-toggle="modal" data-bs-target="#mdlResident"><i class="icon-person me-1"></i> Find Resident from Current List </button>
+        </div>
+        </div>
+    </div>
+
+<div id="divResidentInformation" class="mx-5 px-5">
+    <input type="hidden" name="ResidentId" id="_hidResidentId" />
+    <input type="hidden" name="HouseholdId" id="_hidHouseholdId" />
+
+    <div class="row">
+        <div class="col">
+            <h6 class="fs-16 fw-bold"> General Information </h6>
+        </div>
+    </div>
+    <div class="row pt-2">
+        <div class="col-2 ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Courtesy </span>
+                <select class="form-select fs-11 text-muted " name="CourtesyName">
+                    <option value="" class="text-muted" selected disabled>Select Courtesy</option>
+                    <option value="Mr.">Mr.</option>
+                    <option value="Ms.">Ms.</option>
+                    <option value="Mrs.">Mrs.</option>
+                    <option value="Hon.">Hon.</option>
+                    <option value="Atty.">Atty.</option>
+                    <option value="Engr.">Engr.</option>
+                    <option value="Dr.">Dr.</option>
+                </select>
+            </div>
+        </div>
+        <div class="col ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">First Name </span>
+                <input type="text" class="form-control fs-11 ps-3 text-muted " name="FirstName" placeholder="">
+            </div>
+        </div>
+        <div class="col ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Middle Name </span>
+                <input type="text" class="form-control fs-11 ps-3 text-muted " name="MiddleName" placeholder="">
+            </div>
+        </div>
+        <div class="col ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Last Name </span>
+                <input type="text" class="form-control fs-11 ps-3 text-muted " name="LastName" placeholder="">
+            </div>
+        </div>
+        <div class="col-1 ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Extension </span>
+                <input type="text" class="form-control fs-11 ps-3 text-muted " name="ExtensionName" placeholder="">
+            </div>
+        </div>
+    </div>
+    <div class="row pt-2">
+        <div class="col ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Household </span>
+                <input type="text" class="form-control fs-11 ps-3 text-muted " id="inpResidentHousehold" name="Household" placeholder="" readonly>
+            </div>
+        </div>
+        <div class="col ps-2 d-flex align-items-end">
+            <div class="form-group">
+                <button type="button" class="btn btn-main-outline btn-sm fw-semibold" id="btnSearchHouseHold" data-bs-toggle="modal" data-bs-target="#mdlHouseHold"><i class="icon-search me-1"></i> Find Household </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-2">
+        <div class="col-auto ps-2">
+            <div class="form-group">
+                <label class="custom-checkbox fs-10 form-label text-muted fw-semibold mb-0 mt-4 pt-2">
+                    <input type="checkbox" name="IsFamilyHead">
+                    <span class="checkmark"></span> Is Family Head
+                </label>
+            </div>
+        </div>
+        <div class="col ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Relationship to Family Head </span>
+                <input type="text" class="form-control fs-11 ps-3 text-muted " id="inpRelationshipToFamilyHead" name="RelationshipToFamilyHead" placeholder="">
+            </div>
+        </div>
+
+        <div class="col ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Gender </span>
+                <select class="form-select fs-11 text-muted " name="Sex">
+                    <option value="" class="text-muted" selected disabled>Select Sex</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+        </div>
+        <div class="col ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Birth date </span>
+                <input type="date" class="form-control fs-11 ps-3 text-muted " id="inpResidentBirthdate" name="Birthdate" placeholder="">
+            </div>
+        </div>
+        <div class="col-auto ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Age </span>
+                <input type="text" class="form-control fs-11 ps-3 text-muted " id="inpResidentAge" name="Age" placeholder="" readonly>
+            </div>
+        </div>
+    </div>
+
+    <div class="row pt-2">
+        <div class="col ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">BirthPlace </span>
+                <input type="text" class="form-control fs-11 ps-3 text-muted " name="BirthPlace" placeholder="">
+            </div>
+        </div>
+        <div class="col-3 ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">CivilStatus </span>
+                <select class="form-select fs-11 text-muted " name="CivilStatus">
+                    <option value="" class="text-muted" selected disabled>Select Civil Status</option>
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                    <option value="Widow">Widow</option>
+                    <option value="Widower">Widower</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-3 ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Blood Type </span>
+                <select class="form-select fs-11 text-muted" id="bloodType" name="BloodType">
+                    <option value="" class="text-muted" selected disabled>Select Blood Type</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+    <h6 class="fs-16 fw-bold mt-5"> Contact Information </h6>
+    <div class="row pt-2">
+        <div class="col-3 ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Contact Number </span>
+                <input type="text" class="form-control fs-11 ps-3 text-muted " name="ContactNumber" placeholder="">
+            </div>
+        </div>
+        <div class="col ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Email Address </span>
+                <input type="text" class="form-control fs-11 ps-3 text-muted " name="EmailAddress" placeholder="">
+            </div>
+        </div>
+    </div>
+
+    <h6 class="fs-16 fw-bold mt-5"> Other Information </h6>
+    <div class="row pt-2">
+        <div class="col-3 ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Educational Attainment </span>
+                <select class="form-select text-muted" name="EducationalAttainment">
+                    <option value="" selected disabled>Select Educational Attainment</option>
+                    <option value="No Formal Education">No Formal Education</option>
+                    <option value="Elementary Level">Elementary Level</option>
+                    <option value="Elementary Graduate">Elementary Graduate</option>
+                    <option value="High School Level">High School Level</option>
+                    <option value="High School Graduate">High School Graduate</option>
+                    <option value="Senior High School Level">Senior High School Level</option>
+                    <option value="Senior High School Graduate">Senior High School Graduate</option>
+                    <option value="Vocational / Technical">Vocational / Technical</option>
+                    <option value="College Level">College Level</option>
+                    <option value="College Graduate">College Graduate</option>
+                    <option value="Postgraduate (Master's)">Postgraduate (Master's)</option>
+                    <option value="Doctorate (PhD)">Doctorate (PhD)</option>
+                </select>
+            </div>
+        </div>
+        <div class="col ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Religion </span>
+                <select class="form-select fs-11 text-muted " id="bloodType" name="Religion">
+                    <option value="" class="text-muted" selected disabled>Select Religion</option>
+                    <option value="Christianity">Christianity</option>
+                    <option value="Islam">Islam</option>
+                </select>
+            </div>
+        </div>
+        <div class="col ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Religion Sect </span>
+                <input type="text" class="form-control fs-11 ps-3 text-muted " name="ReligionSect" placeholder="">
+            </div>
+        </div>
+        
+        <div class="col ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Tribe </span>
+                <input type="text" class="form-control fs-11 ps-3 text-muted " name="Tribe" placeholder="">
+            </div>
+        </div>
+    </div>
+    <div class="row pt-2">
+        <div class="col-4 ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Occupation </span>
+                <input type="text" class="form-control fs-11 ps-3 text-muted " name="Occupation" placeholder="">
+            </div>
+        </div>
+        <div class="col-2 ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Voter Status </span>
+                <select class="form-select fs-11 text-muted " name="VoterStatus">
+                    <option value="" class="text-muted" selected disabled>Select Voter's Status</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                    <option value="Cancelled / Deactivated">Cancelled / Deactivated</option>
+                    <option value="Pending / Under Verification">Pending / Under Verification</option>
+                    <option value="With Deficiency">With Deficiency</option>
+                    <option value="Disqualified">Disqualified</option>
+                </select>
+
+            </div>
+        </div>
+        <div class="col ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">TIN Number </span>
+                <input type="text" class="form-control fs-11 ps-3 text-muted " name="TINNumber" placeholder="">
+            </div>
+        </div>
+        <div class="col ps-2">
+            <div class="form-group">
+                <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Citizenship </span>
+                <input type="text" class="form-control fs-11 ps-3 text-muted " name="Citizenship" placeholder="">
+            </div>
+        </div>
+    </div>
+
+    <h6 class="fs-16 fw-bold mt-5"> Physical Information </h6>
+    <div class="row pt-2">
+        <div class="col-auto ps-2">
+            <div class="form-group">
+                <label class="custom-checkbox fs-10 form-label text-muted fw-semibold mb-0 mt-4 pt-2">
+                    <input type="checkbox" name="HasComorbidities">
+                    <span class="checkmark"></span> Has Comorbidities
+                </label>
+            </div>
+        </div>
+
+        <div class="col-auto ps-2">
+            <div class="form-group">
+                <label class="custom-checkbox fs-10 form-label text-muted fw-semibold mb-0 mt-4 pt-2">
+                    <input type="checkbox" name="isDeceased">
+                    <span class="checkmark"></span> is Deceased
+                </label>
+            </div>
+        </div>
+
+        <div class="col-1 ps-2">
+            <div class="form-group">
+                <span class="fs-10 form-label text-muted fw-semibold mb-0">Height <span class="text-success fs-10 fw-normal"> (in cm) </span></span>
+                <input type="text" class="form-control fs-11 ps-3 text-muted " name="Height" placeholder="">
+            </div>
+        </div>
+        <div class="col-1 ps-2">
+            <div class="form-group">
+                <span class="fs-10 form-label text-muted fw-semibold mb-0">Weight <span class="text-success fs-10 fw-normal"> (in kg) </span> </span>
+                <input type="text" class="form-control fs-11 ps-3 text-muted " name="Weight" placeholder="">
+            </div>
+        </div>
+
+        <div class="col d-flex justify-content-end gap-1">
+            <button type="button" class="btn btn-main-outline btn-sm fw-semibold" id="btnClearResident"><i class="icon-delete icon-md-2 me-1"></i> Clear </button>
+            <button type="button" class="btn btn-main btn-sm fw-semibold" id="btnSaveResident"><i class="icon-add-user icon-md-2 me-1"></i> Save Resident Information </button>
+            
+        </div>
+    </div>
+
+
+
+</div>
+
+<div class="modal fade" id="mdlHouseHold" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content shadow-lg">
+                <div class="modal-header flex-column align-items-start border-bottom-0">
+
+                    <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                        <div class="col-auto pe-0">
+                        <img src="/img/png/household.png" alt="ATLAS Logo" class="icon-png-sm pe-3">
+                        </div>
+                        <div class="col ps-0 d-flex align-items-center">
+                            <div>
+                                <h3 class="fw-bold mb-0">Search Household</h3>
+                                <p class="text-muted fs-12 w-100">Find and identify household records using relevant information such as resident names, street, or purok.</p>
+                            </div>
+                        </div>
+
+                        <div class="col-auto">
+                        <button type="button" class="btn btn-main btn-sm fw-semibold" id="btnAddNewHousehold"><i class="icon-add icon-md me-1"></i> Add new household </button>
+                            </div>
+                    </div>
+
+                    <!-- Search -->
+                    <div class="w-75 mt-4">
+                        <div class="search-box">
+                            <i class="icon-search"></i>
+                            <input type="text" class="form-control fs-11 border-elm" id="searchHouseholdInput" placeholder="Search Household by Purok or Street...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-body p-2">
+                    <div class="card mx-2 rounded-2">
+                        <div class="card-body shadow-sm border-1 p-0">
+                            <table id="tblHouseHold" class="display dataTable table-striped table-hover w-100"> </table>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div class="d-flex justify-content-between p-3">
+                    <div class="text-muted">
+                        <span class="fs-10 fw-bold">Note : </span> <span class="fs-10">A green highlight indicates the head of the family. If no highlight is present, no head of household has been designated in the system.</span>
+                    </div>
+                    <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<div class="modal fade" id="mdlResident" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header flex-column align-items-start border-bottom-0">
+
+                <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                    <div class="col-auto pe-0">
+                        <img src="/img/png/search.png" alt="ATLAS Logo" class="icon-png-sm pe-3">
+                    </div>
+                    <div class="col ps-0 d-flex align-items-center">
+                        <div>
+                            <h3 class="fw-bold mb-0">Search Resident</h3>
+                            <p class="text-muted fs-12 w-100">Filter residents by name to quickly find and access their details.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search -->
+                <div class="w-75 mt-4">
+                    <div class="search-box">
+                        <i class="icon-search"></i>
+                        <input type="text" class="form-control fs-11 border-elm" id="searchResidentInput" placeholder="Search by name...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+                <div class="card mx-2 rounded-2">
+                    <div class="card-body shadow-sm border-1 p-0">
+                        <table id="tblResident" class="display dataTable table-striped table-hover w-100"> </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-between p-3">
+                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="mdlNewHousehold" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-scrollable">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header flex-column align-items-start border-bottom-0">
+
+                <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                    <div class="col-auto pe-0">
+                        <img src="/img/png/add_household.png" alt="ATLAS Logo" class="icon-png-sm pe-3">
+                    </div>
+                    <div class="col ps-0 d-flex align-items-center">
+                        <div>
+                            <h3 class="fw-bold mb-0">Household Infomation</h3>
+                            <p class="text-muted fs-12 w-100">Add a new household by providing its street and purok details. This will create a household record in the system..</p>
+                        </div>
+                    </div>
+                </div>
+
+               
+            </div>
+            <!-- Search -->
+            <div class="modal-body mx-2" id="divNewHousehold">
+                <input type="hidden" name="HouseholdId" id="_hidNewHouseholdId" />
+                <div class="row pt-2">
+                    <div class="col-6 ps-2">
+                        <div class="form-group">
+                            <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Household No </span>
+                            <input type="text" class="form-control fs-11 ps-3 text-muted " name="HouseHoldNo" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col ps-2">
+                        <div class="form-group">
+                            <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Street </span>
+                            @Html.DropDownList("StreetId", ViewData["drpStreet"] as SelectList, new { @class = "form-select fs-11 text-muted", @id = "StreetId" })
+                        </div>
+                    </div>
+                    <div class="col ps-2">
+                        <div class="form-group">
+                            <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Purok </span>
+                            @Html.DropDownList("PurokId", ViewData["drpPurok"] as SelectList, new { @class = "form-select fs-11 text-muted ", @id = "PurokId" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col ps-2">
+                        <div class="form-group">
+                            <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Remarks </span>
+                            <textarea class="form-control fs-11 ps-3 text-muted" name="Remarks" placeholder="" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+
+            
+
+            <div class="d-flex justify-content-end gap-2 p-3">
+                <button type="button" class="btn btn-main btn-sm fw-semibold" id="btnSaveHousehold"><i class="icon-save icon-md-2 me-1"></i> Save Household Information </button>
+                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/_defined/_resident.js"></script>

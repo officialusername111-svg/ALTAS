@@ -1,0 +1,147 @@
+﻿@{
+    ViewBag.Title = "Officials";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="form-container mx-5">
+    <div class="mb-5">
+        <div class="row mx-3 border-bottom-dash border-1 py-2">
+            <div class="col-auto pe-0">
+                <img src="/img/png/officials.png" alt="ATLAS Logo" class="icon-png">
+            </div>
+            <div class="col ps-0 d-flex align-items-center">
+                <div>
+                    <h3 class="fw-bold mb-0">Barangay Official Management</h3>
+                    <p class="text-muted fs-12 w-75">Handles the registration, maintenance, and tracking of barangay officials. It provides tools to manage official details, assign roles, monitor term durations, and keep historical records, ensuring consistency, accuracy, and accessibility of leadership data within the system.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-5">
+            <div class="search-box">
+                <i class="icon-search"></i>
+                <input type="text" class="form-control fs-11 border-elm" id="searchBarangayOfficialInput" placeholder="Search by name, position or status...">
+            </div>
+        </div>
+    </div>
+
+    <div class="card rounded-2 mt-3">
+        <div class="card-body shadow-sm border-1 p-0">
+            <table id="tblBarangayOfficials" class="display dataTable table-striped table-hover w-100"> </table>
+        </div>
+    </div>
+
+
+    <div class="row mt-5">
+        <div class="col">
+            <h6 class="fs-16 fw-bold"> Barangay Official Term Details  </h6>
+        </div>
+    </div>
+
+    <div class="mt-2 mx-2" id="divBarangayDetail">
+        <input type="hidden" name="ResidentId" id="_hidResidentId" />
+        <input type="hidden" name="OfficialId" id="_hidOfficialId" />
+        <div class="row pt-2">
+            <div class="col ps-2">
+                <div class="form-group">
+                    <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Resident </span>
+                    <input type="text" class="form-control fs-11 ps-3 text-muted " id="inpResident" name="Resident" placeholder="" readonly>
+                </div>
+            </div>
+            <div class="col ps-2 d-flex align-items-end">
+                <div class="form-group">
+                    <button type="button" class="btn btn-main-outline btn-sm fw-semibold" id="btnSearchHouseHold" data-bs-toggle="modal" data-bs-target="#mdlResident"><i class="icon-search me-1"></i> Find Resident </button>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-2">
+            <div class="col-3 col-sm-3 col-md-3 ps-2">
+                <div class="form-group">
+                    <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Street </span>
+                    @Html.DropDownList("PositionId", ViewData["drpPosition"] as SelectList, new { @class = "form-select fs-11 text-muted", @id = "PositionId" })
+                </div>
+            </div>
+            <div class="col-2 col-sm-2 col-md-2 ps-2">
+                <div class="form-group">
+                    <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Start </span>
+                    <input type="date" class="form-control fs-11 ps-3 text-muted " name="TermStart" placeholder="">
+                </div>
+            </div>
+            <div class="col-2 col-sm-2 col-md-2 ps-2">
+                <div class="form-group">
+                    <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">End </span>
+                    <input type="date" class="form-control fs-11 ps-3 text-muted " name="TermEnd" placeholder="">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <span class="fs-10 form-label text-muted fw-semibold mb-0">Status </span>
+                    <select class="form-select fs-11 text-muted " name="Status">
+                        <option value="" class="text-muted" selected disabled>Select Term Status</option>
+                        <option value="Active">Active</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Expired">Expired</option>
+                        <option value="Resigned">Resigned</option>
+                        <option value="Removed">Removed</option>
+                        <option value="Suspended">Suspended</option>
+                        <option value="Vacant">Vacant</option>
+                        <option value="Holdover">Holdover</option>
+                        <option value="Disqualified">Disqualified</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row py-4 mt-4">
+        <div class="col d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-main-outline fw-semibold py-3" id="btnClearOfficial"><i class="icon-delete icon-md-2 me-1"></i> Clear </button>
+            <button type="button" class="btn btn-main fw-semibold py-3" id="btnSaveBarangayOfficial"><i class="icon-add-user icon-md-2 me-1"></i> Save Barangay Official </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="mdlResident" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header flex-column align-items-start border-bottom-0">
+
+                <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                    <div class="col-auto pe-0">
+                        @* <img src="/img/_icons/illustrations/search_resident.svg" alt="ATLAS Logo" class="icon-xxxl"> *@
+                        <img src="/img/png/search.png" alt="ATLAS Logo" class="icon-png-sm pe-3">
+                    </div>
+                    <div class="col ps-0 d-flex align-items-center">
+                        <div>
+                            <h3 class="fw-bold mb-0">Search Resident</h3>
+                            <p class="text-muted fs-12 w-100">Filter residents by name to quickly find and access their details.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search -->
+                <div class="w-75 mt-4">
+                    <div class="search-box">
+                        <i class="icon-search"></i>
+                        <input type="text" class="form-control fs-11 border-elm" id="searchResidentInput" placeholder="Search by name...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body p-2">
+                <div class="card mx-2 rounded-2">
+                    <div class="card-body shadow-sm border-1 p-0">
+                        <table id="tblResident" class="display dataTable table-striped table-hover w-100"> </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-between p-3">
+                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/_defined/_brgyofficials.js"></script>

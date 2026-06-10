@@ -1,0 +1,574 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Queue Display – Barangay Poblacion</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <style>
+        :root {
+            --navy:       #0d2146;
+            --navy-light: #122856;
+            --blue:       #1a4fa0;
+            --blue-bg:    #dce9f7;
+            --blue-text:  #0d2e6e;
+            --green:      #1a6b3c;
+            --green-bg:   #d6f0e2;
+            --green-text: #0e4226;
+            --orange:     #b94e00;
+            --orange-bg:  #fde8d6;
+            --orange-text:#7a3100;
+            --gold:       #f5a800;
+            --gold-dark:  #c88200;
+            --light-bg:   #eef3fb;
+            --border:     #c8d8ee;
+            --radius:     10px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            height: 100%;
+            font-family: 'Barlow', sans-serif;
+            background: var(--light-bg);
+            overflow: hidden;
+        }
+
+        .qd-root {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* ── Header ─────────────────────────────── */
+        .qd-header {
+            background: var(--navy);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 28px;
+            height: 88px;
+            flex-shrink: 0;
+        }
+
+        .qd-header-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .qd-seal {
+            width: 62px;
+            height: 62px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .qd-seal img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .qd-seal-fallback {
+            width: 100%;
+            height: 100%;
+            background: var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qd-seal-fallback i {
+            font-size: 2rem;
+            color: #fff;
+        }
+
+        .qd-title {
+            font-family: 'Barlow Condensed', sans-serif;
+        }
+
+        .qd-title-main {
+            font-size: 1.9rem;
+            font-weight: 800;
+            letter-spacing: .03em;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        .qd-title-sub {
+            font-size: .9rem;
+            font-weight: 600;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            opacity: .7;
+            margin-top: 2px;
+        }
+
+        .qd-header-divider {
+            width: 1px;
+            height: 52px;
+            background: rgba(255,255,255,.25);
+            margin: 0 24px;
+        }
+
+        .qd-clock {
+            text-align: right;
+        }
+
+        .qd-clock-time {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: .04em;
+        }
+
+        .qd-clock-date {
+            font-size: .82rem;
+            opacity: .7;
+            margin-top: 2px;
+        }
+
+        /* ── Middle section ──────────────────────── */
+        .qd-middle {
+            display: flex;
+            flex: 1;
+            min-height: 0;
+            gap: 0;
+        }
+
+        /* ── Now Serving panel ───────────────────── */
+        .qd-now-serving {
+            flex: 1 1 60%;
+            background: #fff;
+            border: 1px solid var(--border);
+            margin: 16px 8px 16px 16px;
+            border-radius: var(--radius);
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .qd-ns-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 32px;
+            text-align: center;
+        }
+
+        .qd-ns-label {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .qd-ns-number {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(5rem, 13vw, 8.5rem);
+            font-weight: 800;
+            color: var(--navy);
+            line-height: 1;
+            letter-spacing: .02em;
+            animation: numPop .4s cubic-bezier(.34,1.56,.64,1);
+        }
+
+        @@keyframes numPop {
+            from { transform: scale(.75); opacity: .2; }
+            to   { transform: scale(1);  opacity: 1;  }
+        }
+
+        /* Decorative dashes beside number */
+        .qd-ns-dashes {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .qd-ns-dashes-side {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .qd-ns-dash {
+            width: 36px;
+            height: 5px;
+            background: var(--blue-bg);
+            border-radius: 3px;
+            opacity: .8;
+        }
+
+        .qd-ns-dash:nth-child(2) { width: 24px; }
+
+        .qd-ns-window-badge {
+            margin-top: 10px;
+            background: var(--navy);
+            color: #fff;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            padding: 8px 26px;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Up Next sidebar inside now-serving card */
+        .qd-up-next {
+            width: 220px;
+            background: var(--gold);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 16px;
+            flex-shrink: 0;
+        }
+
+        .qd-up-next-label {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .qd-up-next-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .qd-up-next-item {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--navy);
+            text-align: center;
+            padding: 6px 0;
+            border-bottom: 1.5px dashed rgba(13,33,70,.2);
+        }
+
+        .qd-up-next-item:last-child { border-bottom: none; }
+
+        .qd-up-next-empty {
+            font-size: .85rem;
+            color: var(--navy);
+            opacity: .5;
+            text-align: center;
+        }
+
+        /* ── Queue columns ───────────────────────── */
+        .qd-queues {
+            display: flex;
+            flex-direction: column;
+            flex: 0 0 36%;
+            margin: 16px 16px 16px 8px;
+            gap: 10px;
+        }
+
+        .qd-queue-col {
+            flex: 1;
+            border-radius: var(--radius);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .qd-queue-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .qd-queue-header i { font-size: 1.2rem; }
+
+        .qd-queue-col.col-green .qd-queue-header  { background: var(--green); }
+        .qd-queue-col.col-blue  .qd-queue-header  { background: var(--blue); }
+        .qd-queue-col.col-orange .qd-queue-header { background: var(--orange); }
+
+        .qd-queue-col.col-green  { border: 1.5px solid #a8d8be; }
+        .qd-queue-col.col-blue   { border: 1.5px solid #a8c0e0; }
+        .qd-queue-col.col-orange { border: 1.5px solid #f0c09a; }
+
+        .qd-queue-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .qd-queue-col.col-green  .qd-queue-body { background: var(--green-bg); }
+        .qd-queue-col.col-blue   .qd-queue-body { background: var(--blue-bg); }
+        .qd-queue-col.col-orange .qd-queue-body { background: var(--orange-bg); }
+
+        .qd-ticket-row {
+            display: flex;
+            align-items: center;
+            padding: 7px 18px;
+            border-bottom: 1.5px dashed rgba(0,0,0,.1);
+            gap: 12px;
+        }
+
+        .qd-ticket-row:last-child { border-bottom: none; }
+
+        .qd-ticket-row.is-next .qd-ticket-arrow {
+            display: inline-block;
+        }
+
+        .qd-ticket-arrow {
+            display: none;
+            font-size: .85rem;
+            flex-shrink: 0;
+        }
+
+        .col-green  .qd-ticket-arrow { color: var(--green); }
+        .col-blue   .qd-ticket-arrow { color: var(--blue); }
+        .col-orange .qd-ticket-arrow { color: var(--orange); }
+
+        .qd-ticket-num {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.9rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .col-green  .qd-ticket-num { color: var(--green-text); }
+        .col-blue   .qd-ticket-num { color: var(--blue-text); }
+        .col-orange .qd-ticket-num { color: var(--orange-text); }
+
+        .qd-no-tickets {
+            padding: 14px 18px;
+            font-size: .82rem;
+            opacity: .45;
+            font-style: italic;
+        }
+
+        .col-green  .qd-no-tickets { color: var(--green-text); }
+        .col-blue   .qd-no-tickets { color: var(--blue-text); }
+        .col-orange .qd-no-tickets { color: var(--orange-text); }
+
+        /* ── Footer ticker ───────────────────────── */
+        .qd-footer {
+            background: var(--navy);
+            color: #fff;
+            height: 48px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 0;
+            overflow: hidden;
+        }
+
+        .qd-footer-icon {
+            background: var(--blue);
+            height: 100%;
+            width: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .qd-footer-icon i { font-size: 1.1rem; color: #fff; }
+
+        .qd-footer-items {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            font-size: .82rem;
+        }
+
+        .qd-footer-sep {
+            color: rgba(255,255,255,.25);
+            font-size: 1.2rem;
+            margin: 0 8px;
+        }
+
+        .qd-footer-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .qd-footer-item i { opacity: .7; }
+    </style>
+</head>
+<body>
+<div class="qd-root">
+
+    <!-- ── Header ── -->
+    <header class="qd-header">
+        <div class="qd-header-left">
+            <div class="qd-seal">
+                <div class="qd-seal-fallback">
+                    <i class="bi bi-sun-fill"></i>
+                </div>
+            </div>
+            <div class="qd-title">
+                <div class="qd-title-main">Barangay Poblacion</div>
+                <div class="qd-title-sub">Queue System</div>
+            </div>
+        </div>
+
+        <div class="qd-header-divider"></div>
+
+        <div class="qd-clock text-white">
+            <div id="disp-time" class="qd-clock-time">--:-- --</div>
+            <div id="disp-date" class="qd-clock-date"></div>
+        </div>
+    </header>
+
+    <!-- ── Middle ── -->
+    <div class="qd-middle">
+
+        <!-- Now Serving card -->
+        <div class="qd-now-serving">
+            <div class="qd-ns-main">
+                <div class="qd-ns-label">Now Serving</div>
+
+                <div class="qd-ns-dashes">
+                    <div class="qd-ns-dashes-side">
+                        <div class="qd-ns-dash"></div>
+                        <div class="qd-ns-dash"></div>
+                        <div class="qd-ns-dash"></div>
+                    </div>
+
+                    <div id="ns-number" class="qd-ns-number">—</div>
+
+                    <div class="qd-ns-dashes-side">
+                        <div class="qd-ns-dash"></div>
+                        <div class="qd-ns-dash"></div>
+                        <div class="qd-ns-dash"></div>
+                    </div>
+                </div>
+
+                <div class="qd-ns-window-badge mt-3">
+                    <i class="bi bi-person-workspace"></i>
+                    AT WINDOW <span id="ns-window">—</span>
+                </div>
+            </div>
+
+            <!-- Up Next sidebar -->
+            <div class="qd-up-next">
+                <div class="qd-up-next-label">
+                    <i class="bi bi-people-fill"></i> Up Next
+                </div>
+                <div class="qd-up-next-list" id="up-next-list">
+                    <div class="qd-up-next-empty">No upcoming tickets</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Queue columns -->
+        <div class="qd-queues">
+
+            <!-- Barangay Clearance -->
+            <div class="qd-queue-col col-green">
+                <div class="qd-queue-header">
+                    <i class="bi bi-clipboard2-check-fill"></i>
+                    Barangay Clearance
+                </div>
+                <div class="qd-queue-body" id="q-C">
+                    <div class="qd-no-tickets">No pending tickets</div>
+                </div>
+            </div>
+
+            <!-- Barangay Certification -->
+            <div class="qd-queue-col col-blue">
+                <div class="qd-queue-header">
+                    <i class="bi bi-file-earmark-text-fill"></i>
+                    Barangay Certification
+                </div>
+                <div class="qd-queue-body" id="q-B">
+                    <div class="qd-no-tickets">No pending tickets</div>
+                </div>
+            </div>
+
+            <!-- Community Tax Certificate -->
+            <div class="qd-queue-col col-orange">
+                <div class="qd-queue-header">
+                    <i class="bi bi-receipt-cutoff"></i>
+                    Community Tax Certificate (CTC)
+                </div>
+                <div class="qd-queue-body" id="q-T">
+                    <div class="qd-no-tickets">No pending tickets</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ── Footer ── -->
+    <footer class="qd-footer">
+        <div class="qd-footer-icon">
+            <i class="bi bi-megaphone-fill"></i>
+        </div>
+        <div class="qd-footer-items">
+            <div class="qd-footer-item">
+                Please wait for your number to be called.
+            </div>
+            <span class="qd-footer-sep">|</span>
+            <div class="qd-footer-item">
+                <i class="bi bi-clock"></i>
+                <span>OFFICE HOURS: Monday – Friday &nbsp;|&nbsp; 8:00 AM – 5:00 PM</span>
+            </div>
+            <span class="qd-footer-sep">|</span>
+            <div class="qd-footer-item">
+                <i class="bi bi-telephone-fill"></i>
+                <span>(083) 123-4567</span>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+    <!-- ── Scripts ── -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/signalr/dist/signalr.min.js"></script>
+    <script src="~/js/_defined/_displayticket.js" asp-append-version="true"></script>
+   
+</body>
+</html>

@@ -1,0 +1,1313 @@
+﻿/* ===============================
+   Root & Base
+=================================*/
+
+:root {
+    --sidebar-width: 300px;
+    --sidebar-bg: #fff;
+    /*--sidebar-bg: #eef1f6;*/
+    --sidebar-active: #365396;
+    --brand-blue: #2171ac;
+    --text-muted: #a6a6a6;
+    --focus-color: #258cfb;
+}
+
+html {
+    font-size: 10px;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 12px;
+    }
+}
+
+body {
+    /*margin-bottom: 60px;*/
+}
+
+
+/* ===============================
+   Focus States
+=================================*/
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem #fff, 0 0 0 0.25rem var(--focus-color);
+}
+
+.navbar.navbar-expand-lg {
+    background-color: #365396;
+}
+/* ===============================
+   Navigation
+=================================*/
+.nav-heading {
+    font-weight: 900;
+    font-size: 4.5rem;
+    background: var(--brand-blue);
+}
+
+
+/* ===============================
+   Sidebar
+=================================*/
+
+#side_nav {
+    background: var(--sidebar-bg);
+    width: var(--sidebar-width);
+    transition: margin-left 0.3s ease;
+    box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+    position: relative;
+}
+
+
+.side-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    transition: margin-left 0.3s ease;
+}
+
+.content {
+    min-height: 100vh;
+    width: 100%;
+}
+
+hr.h-color {
+    background: #fff;
+}
+
+
+/* Sidebar Links */
+
+.sidebar li a {
+    margin-right: 5px;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+}
+
+    .sidebar li a:hover {
+        color: #6983b0;
+    }
+
+    .sidebar li.active a {
+        color: #fff;
+    }
+
+.sidebar li.active {
+    background: var(--sidebar-active);
+    border-radius: 5px;
+}
+
+
+/* Sidebar Icons */
+
+.sidebar li img,
+.drp-profile li img,
+.drp-alert li img,
+.drp-notification li img {
+    width: 18px;
+    height: 18px;
+    filter: brightness(0) saturate(100%) invert(60%);
+    transition: filter 0.2s ease;
+}
+
+.sidebar li:hover img {
+    filter: brightness(0) saturate(100%) invert(55%) sepia(18%) saturate(900%) hue-rotate(185deg) brightness(95%) contrast(95%);
+}
+
+.sidebar li.active img {
+    filter: brightness(0) saturate(100%) invert(100%);
+}
+
+
+/* ===============================
+   Dropdown Profile
+=================================*/
+
+.drp-profile li a {
+    color: var(--text-muted);
+}
+
+
+/* ===============================
+   Mobile Behavior
+=================================*/
+
+@media (max-width: 767px) {
+    #side_nav {
+        position: fixed;
+        min-height: 100vh;
+        margin-left: calc(-1 * var(--sidebar-width));
+        z-index: 999;
+    }
+
+        #side_nav.active {
+            margin-left: 0;
+        }
+
+    .side-footer {
+        margin-left: calc(-1 * (var(--sidebar-width)-41) );
+        z-index: 999;
+    }
+    
+}
+
+
+
+/* Dashboard page-specific styles */
+
+/* KPI Cards */
+.kpi-card {
+    border-radius: 0.5rem;
+    box-shadow: rgb(163, 183, 220) 0px 1px 4px 0px;
+    padding: 1rem;
+    background-color: #fff;
+}
+
+.kpi-card-main {
+    border-radius: 0.5rem;
+    box-shadow: rgb(163, 183, 220) 0px 1px 4px 0px;
+    padding: 1rem;
+    background-color: #d6f5dd;
+}
+
+.kpi-card-secondary {
+    border-radius: 0.5rem;
+    box-shadow: rgb(163, 183, 220) 0px 1px 4px 0px;
+    padding: 1rem;
+    background-color: #e6f2ff;
+}
+
+.chart-border {
+    border-radius: 0.5rem;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-color: #fff;
+}
+
+
+.kpi-border {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.kpi-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+/* Tables */
+.recent-activity-table {
+    background-color: #fff;
+}
+
+    .recent-activity-table th,
+    .recent-activity-table td {
+        vertical-align: middle;
+    }
+
+.badge-pending {
+    background-color: #F59E0B;
+    color: #000;
+}
+
+.badge-completed {
+    background-color: #16A34A;
+    color: #fff;
+}
+
+.chart-card {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+
+.fs-8 {
+    font-size: 7px !important;
+}
+.fs-8 {
+    font-size: 8px !important;
+}
+
+.fs-9 {
+    font-size: 9px !important;
+}
+
+.fs-10 {
+    font-size: 10px !important;
+}
+
+.fs-11 {
+    font-size: 11px !important;
+}
+
+.fs-12 {
+    font-size: 12px !important;
+}
+
+.fs-13 {
+    font-size: 13px !important;
+}
+
+.fs-14 {
+    font-size: 14px !important;
+}
+
+.fs-15 {
+    font-size: 15px !important;
+}
+
+.fs-16 {
+    font-size: 16px !important;
+}
+
+.fs-17 {
+    font-size: 17px !important;
+}
+
+.fs-18 {
+    font-size: 18px !important;
+}
+
+.fs-19 {
+    font-size: 19px !important;
+}
+
+.fs-20 {
+    font-size: 20px !important;
+}
+
+.fs-22 {
+    font-size: 22px !important;
+}
+
+.fs-24 {
+    font-size: 24px !important;
+}
+
+.fs-big {
+    font-size: 2.75rem !important;
+}
+
+.fs-biger {
+    font-size: 3.5rem !important;
+}
+
+.icon-xs {
+    width: 12px;
+}
+
+.icon-sm {
+    width: 18px;
+}
+
+.icon-md {
+    width: 25px;
+}
+
+.icon-lg {
+    width: 50px;
+}
+
+.icon-xl {
+    width: 100px;
+}
+
+
+@font-face {
+    font-family: 'montserrat-variablefont_wght';
+    src: url('../font/montserrat-variablefont_wght.ttf') format('truetype');
+}
+
+.fw-medium {
+    font-weight:500 !important;
+}
+
+.fw-semibold {
+    font-weight: 600 !important;
+}
+
+.border-dash {
+    border: 1px dashed #dee2e6;
+}
+
+.border-top-dash {
+    border-top: 1px dashed #dee2e6;
+}
+
+.border-bottom-dash {
+    border-bottom: 1px dashed #dee2e6;
+}
+
+.border-start-dash {
+    border-left: 1px dashed #dee2e6;
+}
+
+
+.border-end-dash {
+    border-right: 1px dashed #dee2e6;
+}
+
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #1F5DA0;
+    box-shadow: none;
+}
+
+
+.form-control,
+.form-select {
+    border-radius: 5px !important;
+    padding: 7px 7px 7px 7px !important;
+}
+
+
+
+
+
+/* Container */
+.custom-checkbox {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    gap: 8px;
+}
+
+    /* Hide default checkbox */
+    .custom-checkbox input {
+        display: none;
+    }
+
+    /* Custom box */
+    .custom-checkbox .checkmark {
+        width: 16px;
+        height: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        position: relative;
+        transition: all 0.2s ease;
+    }
+
+    /* Checked state */
+    .custom-checkbox input:checked + .checkmark {
+        background-color: #1E293B;
+        border-color: #1E293B;
+    }
+
+    /* Check icon */
+    .custom-checkbox .checkmark::after {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 2px;
+        width: 4px;
+        height: 8px;
+        border: solid white;
+        border-width: 0 1px 1px 0;
+        transform: rotate(45deg);
+        opacity: 0;
+    }
+
+    /* Show check when checked */
+    .custom-checkbox input:checked + .checkmark::after {
+        opacity: 1;
+    }
+
+    /* Hover effect */
+    .custom-checkbox:hover .checkmark {
+        border-color: #1E293B;
+    }
+
+
+.form-check-input:checked {
+    background-color: #1E293B;
+    border-color: #1E293B;
+}
+
+
+
+.btn-main.btn-sm, .btn-main-outline.btn-sm {
+    border-radius: 8px !important;
+    padding: 7px 10px !important;
+}
+
+
+.btn-main {
+    background-color: #073173;
+    border-color: #073173;
+    color: white;
+}
+
+    .btn-main:hover {
+        background-color: #0a4da1;
+        border-color: #0a4da1;
+        color: white;
+    }
+
+.btn-main-outline {
+    color: #073173;
+    border-color: #073173;
+}
+
+    .btn-main-outline:hover {
+        background-color: #073173;
+        color: white;
+    }
+
+.btn-main:hover {
+    background-color: #0d6efd;
+    color: white; /* The icon will now turn white too! */
+}
+
+
+
+
+.search-box {
+    position: relative;
+}
+
+    .search-box i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6c757d;
+    }
+
+    .search-box input {
+        padding-left: 45px !important;
+    }
+
+
+
+.icon-sm {
+    width: 10px !important;
+    height: 10px !important;
+}
+
+
+
+.icon-md {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+.icon-md-2 {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.icon-md-3 {
+    width: 18px !important;
+    height: 18px !important;
+}
+
+.icon-lg {
+    width: 22px !important;
+    height: 22px !important;
+}
+
+.icon-xl {
+    width: 30px !important;
+    height: 30px !important;
+}
+
+.icon-xxl {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+.icon-xxxl {
+    width: 50px !important;
+    height: 50px !important;
+}
+
+.icon-header {
+    width: 100px !important;
+    height: 100px !important;
+}
+
+.icon-png-sm {
+    width: 70px !important;
+    height: 50px !important;
+}
+
+.icon-png {
+    width: 130px !important;
+    height: 100px !important;
+}
+
+.icon-add {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor; /* This makes it match the text color! */
+    mask: url('../img/_icons/form/add.svg') no-repeat center;
+    -webkit-mask: url('../img/_icons/form/add.svg') no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    vertical-align: middle;
+}
+
+.icon-add-user {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor; /* This makes it match the text color! */
+    mask: url('../img/_icons/form/add-user.svg') no-repeat center;
+    -webkit-mask: url('../img/_icons/form/add-user.svg') no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    vertical-align: middle;
+}
+
+.icon-close {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor; /* This makes it match the text color! */
+    mask: url('../img/_icons/form/close.svg') no-repeat center;
+    -webkit-mask: url('../img/_icons/form/close.svg') no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    vertical-align: middle;
+}
+
+.icon-delete {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor; /* This makes it match the text color! */
+    mask: url('../img/_icons/form/delete.svg') no-repeat center;
+    -webkit-mask: url('../img/_icons/form/delete.svg') no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    vertical-align: middle;
+}
+
+.icon-edit {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor; /* This makes it match the text color! */
+    mask: url('../img/_icons/form/edit.svg') no-repeat center;
+    -webkit-mask: url('../img/_icons/form/edit.svg') no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    vertical-align: middle;
+}
+
+.icon-person {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor; 
+    mask: url('../img/_icons/form/person.svg') no-repeat center;
+    -webkit-mask: url('../img/_icons/form/person.svg') no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    vertical-align: middle;
+}
+
+.icon-search {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor; /* This makes it match the text color! */
+    mask: url('../img/_icons/form/search.svg') no-repeat center;
+    -webkit-mask: url('../img/_icons/form/search.svg') no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    vertical-align: middle;
+}
+
+.icon-load {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor; /* This makes it match the text color! */
+    mask: url('../img/_icons/form/load.svg') no-repeat center;
+    -webkit-mask: url('../img/_icons/form/load.svg') no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    vertical-align: middle;
+}
+
+.icon-save {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor; /* This makes it match the text color! */
+    mask: url('../img/_icons/form/save.svg') no-repeat center;
+    -webkit-mask: url('../img/_icons/form/save.svg') no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    vertical-align: middle;
+}
+.icon-deceased {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor; /* This makes it match the text color! */
+    mask: url('../img/_icons/form/deceased.svg') no-repeat center;
+    -webkit-mask: url('../img/_icons/form/deceased.svg') no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    vertical-align: middle;
+}
+
+.icon-upload {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor; /* This makes it match the text color! */
+    mask: url('../img/_icons/form/upload.svg') no-repeat center;
+    -webkit-mask: url('../img/_icons/form/upload.svg') no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    vertical-align: middle;
+}
+.icon-file {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor; /* This makes it match the text color! */
+    mask: url('../img/_icons/form/pdf.svg') no-repeat center;
+    -webkit-mask: url('../img/_icons/form/pdf.svg') no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    vertical-align: middle;
+}
+.icon-image {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor; /* This makes it match the text color! */
+    mask: url('../img/_icons/form/image.svg') no-repeat center;
+    -webkit-mask: url('../img/_icons/form/image.svg') no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    vertical-align: middle;
+}
+.icon-text {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor; /* This makes it match the text color! */
+    mask: url('../img/_icons/form/text.svg') no-repeat center;
+    -webkit-mask: url('../img/_icons/form/text.svg') no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    vertical-align: middle;
+}
+.icon-print {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor; /* This makes it match the text color! */
+    mask: url('../img/_icons/form/printer.svg') no-repeat center;
+    -webkit-mask: url('../img/_icons/form/printer.svg') no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    vertical-align: middle;
+}
+
+.icon-receipt {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor; /* This makes it match the text color! */
+    mask: url('../img/_icons/form/receipt.svg') no-repeat center;
+    -webkit-mask: url('../img/_icons/form/receipt.svg') no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    vertical-align: middle;
+}
+
+.icon-collect {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor; /* This makes it match the text color! */
+    mask: url('../img/_icons/form/collection.svg') no-repeat center;
+    -webkit-mask: url('../img/_icons/form/collection.svg') no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    vertical-align: middle;
+}
+
+.icon-check {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor; /* This makes it match the text color! */
+    mask: url('../img/_icons/form/check.svg') no-repeat center;
+    -webkit-mask: url('../img/_icons/form/check.svg') no-repeat center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    vertical-align: middle;
+}
+
+
+
+
+.dt-paging {
+    margin: 5px !important;
+}
+
+.dt-paging-button.first, .dt-paging-button.previous, .dt-paging-button.next, .dt-paging-button.last, .dt-paging-button {
+    border: 1px solid #6c757d !important;
+    border-radius: 5px !important;
+    padding: 4px 8px 4px 8px !important;
+}
+
+    .dt-paging-button.first.disabled, .dt-paging-button.previous.disabled, .dt-paging-button.next.disabled, .dt-paging-button.last.disabled {
+        border: 1px solid #6c757d !important;
+        background-color: #f1f2f3 !important;
+    }
+
+.dt-info {
+    padding-left: .5rem !important;
+    color: #6c757d !important;
+}
+
+.dt-paging-button.current {
+    border: 1px solid #6c757d !important;
+    border-radius: 5px !important;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    margin: 0px 10px 0px 10px !important;
+    font-weight: bold !important;
+    color: #6c757d !important;
+}
+
+
+
+
+
+/* Flex layout for all DataTable footers */
+.dt-container {
+    display: flex;
+    justify-content: space-between; /* info left, pagination right */
+    align-items: center;
+    flex-wrap: wrap; /* responsive */
+    margin-top: 10px;
+}
+
+    /* Info text */
+    .dt-container .dt-info {
+        margin: 0;
+        white-space: nowrap; /* prevent wrapping */
+    }
+
+    /* Pagination buttons container */
+    .dt-container .dt-paging {
+        margin: 0;
+        display: flex; /* keep buttons inline */
+        gap: 5px; /* spacing between buttons */
+    }
+
+    /* Pagination buttons styling */
+    .dt-container .dt-paging-button {
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        background: #f8f9fa;
+        padding: 5px 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+        .dt-container .dt-paging-button:hover {
+            background: #e2e6ea;
+        }
+
+
+#divUploadDocument {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+    #divUploadDocument.border-primary {
+        border-color: #0d6efd !important;
+        background-color: #f8f9fa;
+    }
+
+
+
+
+
+
+
+
+
+h1, h2, h3, h4, h5, h6 {
+    color: #1F5DA0  !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ── Panel shell ─────────────────────────────────────────── */
+#qsp-panel {
+    width: 230px;
+    min-width: 230px;
+    background: #0d2146;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-right: 1px solid rgba(255,255,255,.07);
+    font-family: 'Segoe UI', 'DM Sans', sans-serif;
+    flex-shrink: 0;
+    /* Slide transition */
+    transition: width .28s cubic-bezier(.4,0,.2,1), min-width .28s cubic-bezier(.4,0,.2,1), opacity .22s ease;
+}
+
+    /* ── Collapsed state ─────────────────────────────────────── */
+    #qsp-panel.qsp-collapsed {
+        width: 0 !important;
+        min-width: 0 !important;
+        opacity: 0;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    #qsp-panel::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    #qsp-panel::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    #qsp-panel::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,.12);
+        border-radius: 4px;
+    }
+
+/* ── Header ──────────────────────────────────────────────── */
+.qsp-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 14px 12px;
+    background: #122856;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.qsp-header-icon {
+    font-size: 1rem;
+    color: #f5a800;
+}
+
+.qsp-header-title {
+    flex: 1;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #e4ecf7;
+}
+
+/* SignalR status dot */
+.qsp-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4a5568;
+    flex-shrink: 0;
+    transition: background .3s, box-shadow .3s;
+}
+
+    .qsp-dot.connected {
+        background: #48bb78;
+        box-shadow: 0 0 6px #48bb78;
+    }
+
+    .qsp-dot.reconnecting {
+        background: #f5a800;
+        box-shadow: 0 0 6px #f5a800;
+    }
+
+    .qsp-dot.disconnected {
+        background: #fc8181;
+        box-shadow: none;
+    }
+
+/* ── Generic block ───────────────────────────────────────── */
+.qsp-block {
+    padding: 13px 14px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.qsp-block-label {
+    font-size: .67rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.4);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* ── 1 · Now Serving ─────────────────────────────────────── */
+.qsp-serving-block {
+    background: rgba(245,168,0,.07);
+    border-bottom: 1px solid rgba(245,168,0,.14);
+}
+
+.qsp-serving-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #f5a800;
+    line-height: 1;
+    letter-spacing: .02em;
+    text-align: center;
+    padding: 6px 0 4px;
+}
+
+@keyframes qspPop {
+    from {
+        transform: scale(.65);
+        opacity: .15;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.qsp-serving-number.pop {
+    animation: qspPop .35s cubic-bezier(.34,1.56,.64,1);
+}
+
+.qsp-serving-sub {
+    font-size: .67rem;
+    color: rgba(255,255,255,.38);
+    text-align: center;
+    margin-top: 4px;
+    line-height: 1.3;
+    white-space: normal;
+}
+
+/* ── 2 · Queue Count ─────────────────────────────────────── */
+.qsp-counts-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.qsp-count-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(255,255,255,.05);
+    border-radius: 7px;
+    padding: 7px 10px;
+    border-left: 3px solid transparent;
+}
+
+    .qsp-count-item.qsp-green {
+        border-left-color: #48bb78;
+    }
+
+    .qsp-count-item.qsp-blue {
+        border-left-color: #63b3ed;
+    }
+
+    .qsp-count-item.qsp-orange {
+        border-left-color: #f6ad55;
+    }
+
+.qsp-count-prefix {
+    font-size: .7rem;
+    font-weight: 800;
+    color: rgba(255,255,255,.45);
+    width: 12px;
+    flex-shrink: 0;
+}
+
+.qsp-count-label {
+    flex: 1;
+    font-size: .71rem;
+    color: rgba(255,255,255,.55);
+}
+
+.qsp-count-num {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    min-width: 22px;
+    text-align: right;
+}
+
+@keyframes qspBump {
+    0% {
+        transform: scale(1.45);
+        color: #f5a800;
+    }
+
+    100% {
+        transform: scale(1);
+        color: #fff;
+    }
+}
+
+.qsp-count-num.bump {
+    animation: qspBump .3s ease;
+}
+
+/* ── 3 · Next in Queue ───────────────────────────────────── */
+.qsp-next-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.qsp-next-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px dashed rgba(255,255,255,.06);
+}
+
+    .qsp-next-item:last-child {
+        border-bottom: none;
+    }
+
+.qsp-next-svc {
+    font-size: .7rem;
+    font-weight: 600;
+}
+
+.qsp-green-text {
+    color: #68d391;
+}
+
+.qsp-blue-text {
+    color: #76c6f4;
+}
+
+.qsp-orange-text {
+    color: #f6ad55;
+}
+
+.qsp-next-num {
+    font-size: .88rem;
+    font-weight: 700;
+    color: #fff;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ── 4 · Call Buttons ────────────────────────────────────── */
+.qsp-call-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.qsp-call-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 7px;
+    font-size: .74rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    transition: filter .15s, transform .1s, opacity .15s;
+    width: 100%;
+}
+
+    .qsp-call-btn:active {
+        transform: scale(.97);
+    }
+
+    .qsp-call-btn:disabled, .qsp-call-btn.calling {
+        opacity: .5;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    .qsp-call-btn i {
+        font-size: .78rem;
+        flex-shrink: 0;
+    }
+
+.qsp-btn-green {
+    background: #1a4731;
+    color: #9ae6b4;
+}
+
+    .qsp-btn-green:hover {
+        filter: brightness(1.25);
+    }
+
+.qsp-btn-blue {
+    background: #1a3a6e;
+    color: #90cdf4;
+}
+
+    .qsp-btn-blue:hover {
+        filter: brightness(1.25);
+    }
+
+.qsp-btn-orange {
+    background: #5c2d00;
+    color: #fbd38d;
+}
+
+    .qsp-btn-orange:hover {
+        filter: brightness(1.25);
+    }
+
+/* ── 5 · Description ─────────────────────────────────────── */
+.qsp-desc-block {
+    border-bottom: none;
+    margin-top: auto;
+    background: rgba(255,255,255,.02);
+}
+
+.qsp-desc-icon {
+    font-size: .8rem;
+    color: rgba(255,255,255,.25);
+    display: block;
+    margin-bottom: 6px;
+}
+
+.qsp-desc-text {
+    font-size: .68rem;
+    color: rgba(255,255,255,.3);
+    line-height: 1.6;
+    margin: 0;
+    white-space: normal;
+}
+
+    .qsp-desc-text strong {
+        color: rgba(255,255,255,.5);
+    }
+
+/* ── Flash animation ─────────────────────────────────────── */
+@keyframes qspFlash {
+    0% {
+        background: rgba(245,168,0,.2);
+    }
+
+    100% {
+        background: rgba(245,168,0,.07);
+    }
+}
+
+.qsp-serving-block.flash {
+    animation: qspFlash .7s ease;
+}
+
+/* ── Toggle button (lives inside the navbar) ─────────────── */
+#qsp-toggle-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border: 1.5px solid rgba(255,255,255,.22);
+    border-radius: 8px;
+    background: rgba(255,255,255,.07);
+    color: #fff;
+    font-size: .78rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    cursor: pointer;
+    transition: background .18s, border-color .18s, box-shadow .18s;
+    white-space: nowrap;
+}
+
+    #qsp-toggle-btn:hover {
+        background: rgba(255,255,255,.14);
+        border-color: rgba(255,255,255,.4);
+        box-shadow: 0 0 0 3px rgba(245,168,0,.15);
+    }
+
+    /* Ticket icon inside the button */
+    #qsp-toggle-btn .qsp-btn-icon {
+        font-size: .9rem;
+        transition: transform .25s cubic-bezier(.34,1.56,.64,1);
+    }
+
+    /* Rotate icon when panel is open */
+    #qsp-toggle-btn.active .qsp-btn-icon {
+        transform: rotate(-15deg) scale(1.15);
+        color: #f5a800;
+    }
+
+/* ── Total-count badge on the toggle button ──────────────── */
+#qsp-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 9px;
+    background: #f5a800;
+    color: #0d2146;
+    font-size: .68rem;
+    font-weight: 800;
+    line-height: 1;
+    /* Pop when updated */
+    transition: transform .2s cubic-bezier(.34,1.56,.64,1);
+}
+
+    #qsp-badge.hidden {
+        display: none;
+    }
+
+@keyframes badgePop {
+    0% {
+        transform: scale(1.6);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+#qsp-badge.pop {
+    animation: badgePop .25s cubic-bezier(.34,1.56,.64,1);
+}
