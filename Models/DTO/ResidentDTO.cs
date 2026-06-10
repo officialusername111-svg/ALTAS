@@ -37,5 +37,26 @@
         public string? Resident { get; set; }
         public string? Household { get; set; }
         public string? RelationshipToFamilyHead { get; set; }
+
+        public bool? IsPWD { get; set; }   // NEW (stored)
+        public bool? IsIP { get; set; }   // NEW (stored)
+
+        // Derived (read-only, populated by vw_ResidentDemographics)
+        public bool? IsSeniorCitizen { get; set; }   // NEW (derived)
+        public bool? IsWomen { get; set; }   // NEW (derived)
+        public bool? IsYouthCitizen { get; set; }   // NEW (derived)
+        public bool? IsChildren { get; set; }   // NEW (derived)
+    }
+
+    public class DemographicKpiDTO
+    {
+        public int PWDCount { get; set; }
+        public int IPCount { get; set; }
+        public int SeniorCount { get; set; }
+        public int WomenCount { get; set; }
+        public int YouthCount { get; set; }
+        public int ChildrenCount { get; set; }
+        public int HouseholdWithToilet { get; set; }
+        public int HouseholdWithoutToilet { get; set; }
     }
 }

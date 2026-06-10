@@ -6,22 +6,23 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <div class="mb-5 mx-5">
-        <div class="row mx-3 border-bottom-dash border-1 py-2">
-            <div class="col-auto pe-0">
+<div class="mb-5 mx-5">
+    <div class="row mx-3 border-bottom-dash border-1 py-2">
+        <div class="col-auto pe-0">
             <img src="/img/png/resident.png" alt="ATLAS Logo" class="icon-png">
+        </div>
+        <div class="col ps-0 d-flex align-items-center">
+            <div>
+                <h3 class="fw-bold mb-0">Resident Information Center</h3>
+                <p class="text-muted fs-12 w-75">A centralized hub for managing and viewing resident records, including personal details, contact information, and relevant documentation, ensuring accurate and efficient data handling.</p>
             </div>
-            <div class="col ps-0 d-flex align-items-center">
-                <div>
-                    <h3 class="fw-bold mb-0">Resident Information Center</h3>
-                    <p class="text-muted fs-12 w-75">A centralized hub for managing and viewing resident records, including personal details, contact information, and relevant documentation, ensuring accurate and efficient data handling.</p>
-                </div>
-            </div>
+        </div>
         <div class="col-auto d-flex align-content-end flex-wrap">
             <button type="button" class="btn btn-main-outline btn-sm fw-semibold" id="btnSearchResident" data-bs-toggle="modal" data-bs-target="#mdlResident"><i class="icon-person me-1"></i> Find Resident from Current List </button>
-        </div>
+            <button type="button" class="btn btn-main btn-sm fw-semibold ms-1" id="btnViewDemographics" data-bs-toggle="modal" data-bs-target="#mdlDemographics"><i class="icon-person me-1"></i> View Demographics </button>
         </div>
     </div>
+</div>
 
 <div id="divResidentInformation" class="mx-5 px-5">
     <input type="hidden" name="ResidentId" id="_hidResidentId" />
@@ -206,7 +207,7 @@
         <div class="col ps-2">
             <div class="form-group">
                 <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Religion </span>
-                <select class="form-select fs-11 text-muted " id="bloodType" name="Religion">
+                <select class="form-select fs-11 text-muted " name="Religion">
                     <option value="" class="text-muted" selected disabled>Select Religion</option>
                     <option value="Christianity">Christianity</option>
                     <option value="Islam">Islam</option>
@@ -219,7 +220,7 @@
                 <input type="text" class="form-control fs-11 ps-3 text-muted " name="ReligionSect" placeholder="">
             </div>
         </div>
-        
+
         <div class="col ps-2">
             <div class="form-group">
                 <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Tribe </span>
@@ -263,7 +264,7 @@
         </div>
     </div>
 
-    <h6 class="fs-16 fw-bold mt-5"> Physical Information </h6>
+    <h6 class="fs-16 fw-bold mt-5"> Physical &amp; Sector Information </h6>
     <div class="row pt-2">
         <div class="col-auto ps-2">
             <div class="form-group">
@@ -283,6 +284,24 @@
             </div>
         </div>
 
+        <div class="col-auto ps-2">
+            <div class="form-group">
+                <label class="custom-checkbox fs-10 form-label text-muted fw-semibold mb-0 mt-4 pt-2">
+                    <input type="checkbox" name="IsPWD">
+                    <span class="checkmark"></span> Is PWD
+                </label>
+            </div>
+        </div>
+
+        <div class="col-auto ps-2">
+            <div class="form-group">
+                <label class="custom-checkbox fs-10 form-label text-muted fw-semibold mb-0 mt-4 pt-2">
+                    <input type="checkbox" name="IsIP">
+                    <span class="checkmark"></span> Is IP (Indigenous People)
+                </label>
+            </div>
+        </div>
+
         <div class="col-1 ps-2">
             <div class="form-group">
                 <span class="fs-10 form-label text-muted fw-semibold mb-0">Height <span class="text-success fs-10 fw-normal"> (in cm) </span></span>
@@ -296,65 +315,62 @@
             </div>
         </div>
 
-        <div class="col d-flex justify-content-end gap-1">
+        <div class="col d-flex justify-content-end gap-1 align-items-end">
             <button type="button" class="btn btn-main-outline btn-sm fw-semibold" id="btnClearResident"><i class="icon-delete icon-md-2 me-1"></i> Clear </button>
             <button type="button" class="btn btn-main btn-sm fw-semibold" id="btnSaveResident"><i class="icon-add-user icon-md-2 me-1"></i> Save Resident Information </button>
-            
         </div>
     </div>
-
-
 
 </div>
 
 <div class="modal fade" id="mdlHouseHold" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-scrollable">
-            <div class="modal-content shadow-lg">
-                <div class="modal-header flex-column align-items-start border-bottom-0">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header flex-column align-items-start border-bottom-0">
 
-                    <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
-                        <div class="col-auto pe-0">
+                <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                    <div class="col-auto pe-0">
                         <img src="/img/png/household.png" alt="ATLAS Logo" class="icon-png-sm pe-3">
+                    </div>
+                    <div class="col ps-0 d-flex align-items-center">
+                        <div>
+                            <h3 class="fw-bold mb-0">Search Household</h3>
+                            <p class="text-muted fs-12 w-100">Find and identify household records using relevant information such as resident names, street, or purok.</p>
                         </div>
-                        <div class="col ps-0 d-flex align-items-center">
-                            <div>
-                                <h3 class="fw-bold mb-0">Search Household</h3>
-                                <p class="text-muted fs-12 w-100">Find and identify household records using relevant information such as resident names, street, or purok.</p>
-                            </div>
-                        </div>
+                    </div>
 
-                        <div class="col-auto">
+                    <div class="col-auto">
                         <button type="button" class="btn btn-main btn-sm fw-semibold" id="btnAddNewHousehold"><i class="icon-add icon-md me-1"></i> Add new household </button>
-                            </div>
-                    </div>
-
-                    <!-- Search -->
-                    <div class="w-75 mt-4">
-                        <div class="search-box">
-                            <i class="icon-search"></i>
-                            <input type="text" class="form-control fs-11 border-elm" id="searchHouseholdInput" placeholder="Search Household by Purok or Street...">
-                        </div>
                     </div>
                 </div>
 
-                <div class="modal-body p-2">
-                    <div class="card mx-2 rounded-2">
-                        <div class="card-body shadow-sm border-1 p-0">
-                            <table id="tblHouseHold" class="display dataTable table-striped table-hover w-100"> </table>
-                        </div>
+                <!-- Search -->
+                <div class="w-75 mt-4">
+                    <div class="search-box">
+                        <i class="icon-search"></i>
+                        <input type="text" class="form-control fs-11 border-elm" id="searchHouseholdInput" placeholder="Search Household by Purok or Street...">
                     </div>
-                    
                 </div>
+            </div>
 
-                <div class="d-flex justify-content-between p-3">
-                    <div class="text-muted">
-                        <span class="fs-10 fw-bold">Note : </span> <span class="fs-10">A green highlight indicates the head of the family. If no highlight is present, no head of household has been designated in the system.</span>
+            <div class="modal-body p-3">
+                <div id="divHouseholdCards">
+                    <div class="text-center py-4">
+                        <i class="bi bi-house fs-24 text-muted"></i>
+                        <p class="text-muted fs-11 mt-1 mb-0">Loading households...</p>
                     </div>
-                    <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0" data-bs-dismiss="modal">Close</button>
                 </div>
+            </div>
+
+            <div class="d-flex justify-content-between p-3">
+                <div class="text-muted">
+                    <span class="fs-10 fw-bold">Note : </span> <span class="fs-10">A green highlight indicates the head of the family. If no highlight is present, no head of household has been designated in the system.</span>
+                </div>
+                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>
 
 
 <div class="modal fade" id="mdlResident" tabindex="-1" aria-hidden="true">
@@ -416,7 +432,7 @@
                     </div>
                 </div>
 
-               
+
             </div>
             <!-- Search -->
             <div class="modal-body mx-2" id="divNewHousehold">
@@ -444,6 +460,16 @@
                     </div>
                 </div>
                 <div class="row pt-2">
+                    <div class="col-auto ps-2">
+                        <div class="form-group">
+                            <label class="custom-checkbox fs-10 form-label text-muted fw-semibold mb-0 mt-2 pt-2">
+                                <input type="checkbox" name="HasToiletFacility">
+                                <span class="checkmark"></span> Has Toilet Facility
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-2">
                     <div class="col ps-2">
                         <div class="form-group">
                             <span class="d-flex justify-content-between fs-10 form-label text-muted fw-semibold mb-0">Remarks </span>
@@ -452,15 +478,109 @@
                     </div>
                 </div>
             </div>
-            
-            
-
-            
 
             <div class="d-flex justify-content-end gap-2 p-3">
                 <button type="button" class="btn btn-main btn-sm fw-semibold" id="btnSaveHousehold"><i class="icon-save icon-md-2 me-1"></i> Save Household Information </button>
                 <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0" data-bs-dismiss="modal">Close</button>
             </div>
+        </div>
+    </div>
+</div>
+
+@* Demographics Modal — sectoral population breakdown with KPI cards *@
+<div class="modal fade" id="mdlDemographics" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content shadow-lg">
+
+            <div class="modal-header flex-column align-items-start border-bottom-0">
+                <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                    <div class="col-auto pe-0">
+                        <img src="/img/png/resident.png" alt="ATLAS Logo" class="icon-png-sm pe-3">
+                    </div>
+                    <div class="col ps-0 d-flex align-items-center">
+                        <div>
+                            <h3 class="fw-bold mb-0">Resident Demographics</h3>
+                            <p class="text-muted fs-12 w-100">Population breakdown by sector — persons with disability, indigenous people, senior citizens, women, youth, children, and household sanitation. Tap a card to view its list.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body p-3">
+
+                @* KPI cards *@
+                <div class="row g-2 mb-3" id="divDemographicKpi">
+                    <div class="col">
+                        <div class="kpi-card text-start h-100 demographic-kpi" data-cat="PWD" role="button">
+                            <div class="text-muted fw-semibold fs-11">PWD</div>
+                            <div class="text-dark kpi-number pt-1" id="kpiPWD">-</div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="kpi-card text-start h-100 demographic-kpi" data-cat="IP" role="button">
+                            <div class="text-muted fw-semibold fs-11">Indigenous</div>
+                            <div class="text-dark kpi-number pt-1" id="kpiIP">-</div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="kpi-card text-start h-100 demographic-kpi" data-cat="Senior" role="button">
+                            <div class="text-muted fw-semibold fs-11">Senior</div>
+                            <div class="text-dark kpi-number pt-1" id="kpiSenior">-</div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="kpi-card text-start h-100 demographic-kpi" data-cat="Women" role="button">
+                            <div class="text-muted fw-semibold fs-11">Women</div>
+                            <div class="text-dark kpi-number pt-1" id="kpiWomen">-</div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="kpi-card text-start h-100 demographic-kpi" data-cat="Youth" role="button">
+                            <div class="text-muted fw-semibold fs-11">Youth</div>
+                            <div class="text-dark kpi-number pt-1" id="kpiYouth">-</div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="kpi-card text-start h-100 demographic-kpi" data-cat="Children" role="button">
+                            <div class="text-muted fw-semibold fs-11">Children</div>
+                            <div class="text-dark kpi-number pt-1" id="kpiChildren">-</div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="kpi-card text-start h-100 demographic-kpi" data-cat="ToiletWith" role="button">
+                            <div class="text-muted fw-semibold fs-11">HH w/ Toilet</div>
+                            <div class="text-dark kpi-number pt-1" id="kpiToiletWith">-</div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="kpi-card text-start h-100 demographic-kpi" data-cat="ToiletWithout" role="button">
+                            <div class="text-muted fw-semibold fs-11">HH w/o Toilet</div>
+                            <div class="text-dark kpi-number pt-1" id="kpiToiletWithout">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                @* Active list title + count *@
+                <div class="d-flex align-items-center mb-2">
+                    <h6 class="fw-bold mb-0" id="lblDemographicTitle" style="color:#1a3a5c;">
+                        <i class="bi bi-universal-access me-1"></i> Persons With Disability
+                    </h6>
+                    <span class="badge bg-secondary ms-2" id="lblDemographicCount">0</span>
+                </div>
+
+                @* List table — switches between resident and household lists *@
+                <div class="card mx-1 rounded-2">
+                    <div class="card-body shadow-sm border-1 p-0">
+                        <table id="tblDemographic" class="display dataTable table-striped table-hover w-100"></table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-end p-3">
+                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0" data-bs-dismiss="modal">Close</button>
+            </div>
+
         </div>
     </div>
 </div>

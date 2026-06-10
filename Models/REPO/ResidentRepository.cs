@@ -67,6 +67,10 @@ namespace ALTAS.Models.REPO
                 param.Add("@IsDeceased", dto.IsDeceased);
                 param.Add("@RelationshipToFamilyHead", dto.RelationshipToFamilyHead);
 
+
+                param.Add("@IsPWD", dto.IsPWD);
+                param.Add("@IsIP", dto.IsIP);
+
                 // Execute the stored procedure
                 var result = await connection.QuerySingleAsync<int>( "SAVE_RESIDENT", param, commandType: CommandType.StoredProcedure, transaction: tran );
 
@@ -97,6 +101,24 @@ namespace ALTAS.Models.REPO
         {
             using var connection = _factory.CreateConnection("DBConnection");
             return await connection.QueryFirstOrDefaultAsync<ResidentDTO>("GET_RESIDENT_BYID", new { ResidentId = Id }, commandType: CommandType.StoredProcedure) ?? new ResidentDTO();
+        }
+
+
+        public async Task<IEnumerable<ResidentDTO>> GET_RESIDENT_DEMOGRAPHIC(string category)
+        {
+            using var connection = _factory.CreateConnection("DBConnection");
+            return await connection.QueryAsync<ResidentDTO>(
+                "GET_RESIDENT_DEMOGRAPHIC",
+                new { Category = category },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<DemographicKpiDTO> GET_DEMOGRAPHIC_KPI()
+        {
+            using var connection = _factory.CreateConnection("DBConnection");
+            return await connection.QueryFirstOrDefaultAsync<DemographicKpiDTO>(
+                "GET_DEMOGRAPHIC_KPI",
+                commandType: CommandType.StoredProcedure) ?? new DemographicKpiDTO();
         }
     }
 }

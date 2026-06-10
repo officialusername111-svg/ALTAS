@@ -32,6 +32,7 @@ namespace ALTAS.Models.REPO
                 param.Add("@PurokId", dto.PurokId);
                 param.Add("@HouseHoldNo", dto.HouseHoldNo);
                 param.Add("@Remarks", dto.Remarks);
+                param.Add("@HasToiletFacility", dto.HasToiletFacility);
 
                 // Execute the stored procedure
                 var result = await connection.QuerySingleAsync<int>("SAVE_HOUSEHOLD", param, commandType: CommandType.StoredProcedure, transaction: tran);
@@ -49,6 +50,26 @@ namespace ALTAS.Models.REPO
         {
             using var connection = _factory.CreateConnection("DBConnection");
             return await connection.QueryAsync<HouseholdDTO>( "GET_HOUSEHOLD", new { keyword }, commandType: CommandType.StoredProcedure );
+        }
+
+
+        public async Task<IEnumerable<HouseholdDTO>> GET_HOUSEHOLD_TOILET(bool withToilet)
+        {
+            using var connection = _factory.CreateConnection("DBConnection");
+            return await connection.QueryAsync<HouseholdDTO>(
+                "GET_HOUSEHOLD_TOILET",
+                new { WithToilet = withToilet },
+                commandType: CommandType.StoredProcedure);
+        }
+
+
+        public async Task<IEnumerable<HouseholdMemberDTO>> GET_HOUSEHOLD_MEMBERS(string keyword)
+        {
+            using var connection = _factory.CreateConnection("DBConnection");
+            return await connection.QueryAsync<HouseholdMemberDTO>(
+                "GET_HOUSEHOLD_MEMBERS",
+                new { keyword },
+                commandType: CommandType.StoredProcedure);
         }
     }
 }

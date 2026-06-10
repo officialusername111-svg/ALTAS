@@ -364,9 +364,8 @@
                 $(CONFIG.selectors.lblDemographicCount).text(res.length);
                 resetDataTable(CONFIG.selectors.tblDemographic);
                 $(CONFIG.selectors.tblDemographic).DataTable({
-                    retrieve: true, searching: false, order: [],
-                    dom: 'rt', data: res, paging: false, info: false,
-                    scrollY: '52vh', scrollCollapse: true, language: returnPagination(),
+                    retrieve: true, searching: false, lengthMenu: [10, 20, 50], order: [],
+                    dom: 'rtip', data: res, pagingType: 'full_numbers', language: returnPagination(),
                     columns: [
                         { title: 'Household No', data: 'HouseHoldNo', className: 'dt-center fw-semibold', orderable: false },
                         { title: 'Street', data: 'StreetName', className: 'dt-start', orderable: false },
@@ -388,9 +387,8 @@
             $(CONFIG.selectors.lblDemographicCount).text(res.length);
             resetDataTable(CONFIG.selectors.tblDemographic);
             $(CONFIG.selectors.tblDemographic).DataTable({
-                retrieve: true, searching: false, order: [],
-                dom: 'rt', data: res, paging: false, info: false,
-                scrollY: '52vh', scrollCollapse: true, language: returnPagination(),
+                retrieve: true, searching: false, lengthMenu: [10, 20, 50], order: [],
+                dom: 'rtip', data: res, pagingType: 'full_numbers', language: returnPagination(),
                 columns: [
                     { title: 'Resident', data: 'Resident', className: 'dt-start fw-semibold', orderable: false },
                     { title: 'Sex', data: 'Sex', className: 'dt-center', orderable: false },

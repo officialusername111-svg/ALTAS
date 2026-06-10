@@ -3,6 +3,7 @@ using ALTAS.Models.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
 
 namespace ALTAS.Controllers
 {
@@ -59,5 +60,41 @@ namespace ALTAS.Controllers
             return Json(new { rtn });
         }
 
+
+        // Demographic list(PWD / IP / Senior / Women / Youth / Children)
+        [HttpGet]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> getDemographic(string category)
+        {
+            var data = await _repo.GET_RESIDENT_DEMOGRAPHIC(category);
+            return Json(data);
+        }
+
+        // KPI counts for all demographic buckets + household toilet stats
+        [HttpGet]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> getDemographicKpi()
+        {
+            var data = await _repo.GET_DEMOGRAPHIC_KPI();
+            return Json(data);
+        }
+
+        // Household list filtered by toilet status (withToilet = true/false)
+        [HttpGet]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> getHouseholdToilet(bool withToilet)
+        {
+            var data = await _repohh.GET_HOUSEHOLD_TOILET(withToilet);
+            return Json(data);
+        }
+
+
+        [HttpGet]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> getHouseholdMembers(string searchKeyword)
+        {
+            var data = await _repohh.GET_HOUSEHOLD_MEMBERS(searchKeyword);
+            return Json(data);
+        }
     }
 }
