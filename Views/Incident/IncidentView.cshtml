@@ -5,7 +5,7 @@
 
 <div class="mb-5">
 
-    <div class="mb-5 mx-5">
+    <div class="mb-4 mx-5">
         <div class="row mx-3 border-bottom-dash border-1 py-2">
             <div class="col-auto pe-0">
                 <img src="/img/png/incident.png" alt="ATLAS Logo" class="icon-png">
@@ -27,35 +27,304 @@
         </div>
     </div>
 
-    @* KPI Cards *@
-    <div id="divSummaryCards" class="row g-3 px-4 mb-3">
-        <div class="col-md-2">
-            <div class="kpi-card text-start h-100">
-                <div class="text-muted fw-semibold">Total Incidents</div>
-                <div class="text-dark kpi-number pt-2" id="statTotal">-</div>
+    @* ── KPI + Dashboard Panel ──────────────────────────────────────────── *@
+    <div id="divSummaryCards" class="px-4 mb-4">
+
+        @* Period Filter Bar *@
+        <div class="d-flex align-items-center gap-3 flex-wrap mb-3">
+
+            @* Pills *@
+            <ul class="nav dashboard-period-pills mb-0" id="periodTabs" role="tablist">
+                <li class="nav-item">
+                    <button class="nav-link fw-semibold fs-11 py-1 px-3"
+                            data-period="Weekly" id="pill-weekly">
+                        Weekly
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link active fw-semibold fs-11 py-1 px-3"
+                            data-period="Monthly" id="pill-monthly">
+                        Monthly
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link fw-semibold fs-11 py-1 px-3"
+                            data-period="Yearly" id="pill-yearly">
+                        Yearly
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link fw-semibold fs-11 py-1 px-3"
+                            data-period="DateRange" id="pill-daterange">
+                        Date Range
+                    </button>
+                </li>
+            </ul>
+
+            <span class="text-muted fs-10 fst-italic" id="lblPeriodRange"></span>
+
+            @* Controls group — pushed to the right end *@
+            <div class="d-flex align-items-center gap-2 ms-auto">
+
+                @* Monthly controls — hidden by default, shown by JS *@
+                <div id="ctrlMonthly" class="align-items-center gap-2" style="display:none;">
+                    <select class="form-select form-select-sm fs-11 d-inline-block" id="selMonth" style="width:130px;">
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    <input type="number" class="form-control form-control-sm fs-11 d-inline-block ms-1" id="inpMonthYear"
+                           style="width:88px;" placeholder="Year" min="2000" max="2099">
+                </div>
+
+                @* Yearly controls — hidden by default *@
+                <div id="ctrlYearly" class="align-items-center gap-2" style="display:none;">
+                    <input type="number" class="form-control form-control-sm fs-11 d-inline-block" id="inpYear"
+                           style="width:88px;" placeholder="Year" min="2000" max="2099">
+                </div>
+
+                @* Date Range controls — hidden by default *@
+                <div id="ctrlDateRange" class="align-items-center gap-2" style="display:none;">
+                    <input type="date" class="form-control form-control-sm fs-11 d-inline-block" id="inpDateFrom" style="width:145px;">
+                    <span class="text-muted fs-11 mx-1">to</span>
+                    <input type="date" class="form-control form-control-sm fs-11 d-inline-block" id="inpDateTo" style="width:145px;">
+                </div>
+
+                @* Single Apply button — hidden for Weekly (auto), shown for all others *@
+                <button type="button" class="btn btn-main btn-sm fs-11 py-1 px-3" id="btnApplyPeriod" style="display:none;">
+                    <i class="bi bi-funnel me-1"></i> Apply
+                </button>
+
             </div>
         </div>
-        <div class="col-md-2">
-            <div class="kpi-card text-start h-100">
-                <div class="text-muted fw-semibold">Open</div>
-                <div class="text-dark kpi-number pt-2" id="statOpen">-</div>
+
+        @* ── 3-column layout ─────────────────────────────────────────────── *@
+        <div class="row g-3">
+
+            @* ── COL 1 (LEFT): Upcoming Settlement Schedule ──────────────── *@
+            <div class="col-md-3">
+                <div class="card chart-border border-0 h-100">
+                    <div class="card-body px-3 py-3 d-flex flex-column">
+
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <h5 class="fw-bold mb-0">Upcoming Hearings</h5>
+                            <span class="badge bg-primary-subtle text-primary fs-10 fw-semibold"
+                                  id="lblUpcomingCount">—</span>
+                        </div>
+                        <p class="text-muted fs-12 mb-2 border-bottom-dash pb-2">
+                            Next scheduled settlement hearings.
+                        </p>
+
+                        @* Schedule list — grows to fill, scrolls if long *@
+                        <div id="divUpcomingSchedule" class="d-flex flex-column flex-grow-1"
+                             style="overflow-y:auto;max-height:480px;">
+                            <div class="text-center py-4">
+                                <i class="bi bi-calendar-x fs-24 text-muted"></i>
+                                <p class="text-muted fs-11 mt-1 mb-0 fst-italic">No upcoming hearings.</p>
+                            </div>
+                        </div>
+
+                        <div class="pt-2 border-top mt-2">
+                            <button type="button" class="btn btn-main-outline btn-sm w-100 fs-11 fw-semibold"
+                                    id="btnViewAllSchedules">
+                                <i class="bi bi-calendar-week me-1"></i> View All Schedules
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-2">
-            <div class="kpi-card text-start h-100">
-                <div class="text-muted fw-semibold">On-going</div>
-                <div class="text-dark kpi-number pt-2" id="statOngoing">-</div>
+
+            @* ── COL 2 (CENTER): KPI Numbers + Case Status ───────────────── *@
+            <div class="col-md-5 d-flex flex-column">
+
+                @* Headline KPIs — 4 across *@
+                <div class="row g-3 mb-3">
+                    <div class="col-3">
+                        <div class="kpi-card text-start h-100">
+                            <div class="text-muted fw-semibold fs-11">Total Incidents</div>
+                            <div class="text-dark kpi-number pt-2" id="statTotal">—</div>
+                            <span class="fs-10 text-muted" id="statTotalSub"></span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="kpi-card text-start h-100">
+                            <div class="text-muted fw-semibold fs-11">Settlement Rate</div>
+                            <div class="text-dark kpi-number pt-2" id="statSettlementRate">—</div>
+                            <span class="fs-10 text-muted">settled</span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="kpi-card text-start h-100">
+                            <div class="text-muted fw-semibold fs-11">Avg. Days</div>
+                            <div class="text-dark kpi-number pt-2" id="statAvgDays">—</div>
+                            <span class="fs-10 text-muted">to settle</span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="kpi-card text-start h-100">
+                            <div class="text-muted fw-semibold fs-11">Fees Collected</div>
+                            <div class="text-dark kpi-number pt-2 fs-20" id="statTotalAmount">—</div>
+                            <span class="fs-10 text-muted">Avg <span class="fw-bold text-primary" id="statAvgAmount">—</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                @* Single Case Status card — stacked bar + status list (replaces 5 cards) *@
+                <div class="kpi-card text-start mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="text-muted fw-semibold">Case Status Breakdown</div>
+                        <span class="fs-10 text-muted">by resolution</span>
+                    </div>
+
+                    @* Stacked proportion bar *@
+                    <div id="divResolutionBar" class="inc-resolution-bar mb-3"></div>
+
+                    @* Status rows — count + percent per status *@
+                    <div class="row g-2" id="divStatusList">
+                        <div class="col-6">
+                            <div class="d-flex align-items-center justify-content-between border rounded-2 px-2 py-1">
+                                <span class="d-flex align-items-center gap-2">
+                                    <span class="inc-status-dot" style="background:#0dcaf0;"></span>
+                                    <span class="fs-11 text-muted">Open</span>
+                                </span>
+                                <span class="text-end">
+                                    <span class="fw-bold fs-13 text-dark" id="statOpen">—</span>
+                                    <span class="fs-10 text-info fw-semibold" id="statOpenPct">0%</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex align-items-center justify-content-between border rounded-2 px-2 py-1">
+                                <span class="d-flex align-items-center gap-2">
+                                    <span class="inc-status-dot" style="background:#ffc107;"></span>
+                                    <span class="fs-11 text-muted">On-going</span>
+                                </span>
+                                <span class="text-end">
+                                    <span class="fw-bold fs-13 text-dark" id="statOngoing">—</span>
+                                    <span class="fs-10 text-warning fw-semibold" id="statOngoingPct">0%</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex align-items-center justify-content-between border rounded-2 px-2 py-1">
+                                <span class="d-flex align-items-center gap-2">
+                                    <span class="inc-status-dot" style="background:#198754;"></span>
+                                    <span class="fs-11 text-muted">Settled</span>
+                                </span>
+                                <span class="text-end">
+                                    <span class="fw-bold fs-13 text-dark" id="statSettled">—</span>
+                                    <span class="fs-10 text-success fw-semibold" id="statSettledPct">0%</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="d-flex align-items-center justify-content-between border rounded-2 px-2 py-1">
+                                <span class="d-flex align-items-center gap-2">
+                                    <span class="inc-status-dot" style="background:#6c757d;"></span>
+                                    <span class="fs-11 text-muted">Dismissed</span>
+                                </span>
+                                <span class="text-end">
+                                    <span class="fw-bold fs-13 text-dark" id="statDismissed">—</span>
+                                    <span class="fs-10 text-secondary fw-semibold" id="statDismissedPct">0%</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* Case trend chart — grows to fill, aligns bottom with side columns *@
+                <div class="card chart-border border-0 flex-grow-1">
+                    <div class="card-body px-3 py-3 d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <h5 class="fw-bold mb-0">Case Trend</h5>
+                            <span class="text-muted fs-10 fst-italic" id="lblTrendSubtitle"></span>
+                        </div>
+                        <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                            Incidents filed within the selected period.
+                        </p>
+                        <div class="flex-grow-1" style="position:relative;min-height:160px;">
+                            <canvas id="chartTrend"></canvas>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </div>
-        <div class="col-md-2">
-            <div class="kpi-card text-start h-100">
-                <div class="text-muted fw-semibold">Settled</div>
-                <div class="text-dark kpi-number pt-2" id="statSettled">-</div>
+
+            @* ── COL 3 (RIGHT): Case Type + Top Residents ─────────────────── *@
+            <div class="col-md-4 d-flex flex-column">
+
+                @* By Case Type donut *@
+                <div class="card chart-border border-0 mb-3">
+                    <div class="card-body px-3 py-3">
+                        <h5 class="fw-bold mb-1">By Case Type</h5>
+                        <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                            Distribution of incidents by type.
+                        </p>
+                        <div class="d-flex align-items-center gap-3">
+                            <div style="position:relative;width:110px;flex-shrink:0;">
+                                <canvas id="chartCaseType"></canvas>
+                                <div id="chartCaseTypeCenter"
+                                     style="position:absolute;top:50%;left:50%;
+                                            transform:translate(-50%,-50%);
+                                            text-align:center;pointer-events:none;"></div>
+                            </div>
+                            <div id="divCaseTypeLegend" class="d-flex flex-column gap-1 fs-11 flex-grow-1" style="min-width:0;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @* Top residents — grows to fill remaining height, aligns bottom *@
+                <div class="card chart-border border-0 flex-grow-1">
+                    <div class="card-body px-3 py-3 d-flex flex-column h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <h5 class="fw-bold mb-0">Top Cases</h5>
+                            <select class="form-select form-select-sm fs-11"
+                                    id="selTopResidentPartyType" style="width:120px;">
+                                <option value="">All</option>
+                                <option value="Complainant">Complainant</option>
+                                <option value="Respondent">Respondent</option>
+                            </select>
+                        </div>
+                        <p class="text-muted fs-12 mb-3 border-bottom-dash pb-2">
+                            Residents with most cases this period.
+                        </p>
+                        <div id="divTopResidentCards" class="d-flex flex-column gap-2 flex-grow-1"
+                             style="overflow-y:auto;">
+                            <div class="text-center py-3">
+                                <p class="text-muted fs-11 fst-italic mb-0">Loading...</p>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-2 pt-2 border-top">
+                            <button class="btn btn-main-outline btn-sm py-1 px-2 fs-11"
+                                    id="btnResidentPrev" disabled>
+                                <i class="bi bi-chevron-left"></i>
+                            </button>
+                            <span class="text-muted fs-10" id="lblResidentPage">—</span>
+                            <button class="btn btn-main-outline btn-sm py-1 px-2 fs-11"
+                                    id="btnResidentNext">
+                                <i class="bi bi-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+
         </div>
+
     </div>
 
-    @* Incident List Panel *@
+    @* ── Incident List Panel ──────────────────────────────────────────────── *@
     <div id="divIncidentList" class="px-4">
         <div class="card border-0 shadow-sm rounded-3">
             <div class="card-body p-0">
@@ -74,7 +343,7 @@
         </div>
     </div>
 
-    @* Form Panel — hidden by default *@
+    @* ── Form Panel — hidden by default ─────────────────────────────────── *@
     <div id="divIncidentForm" class="px-4" style="display:none;">
 
         <div class="d-flex justify-content-end gap-1 mb-2">
@@ -192,7 +461,6 @@
                         </div>
                     </div>
 
-                    @* Case Payment Information *@
                     <h6 class="fs-16 fw-bold mt-4">Case Payment Information</h6>
 
                     <div class="row">
@@ -253,7 +521,6 @@
                         @* Complainant Pane *@
                         <div class="tab-pane fade show active" id="pane-complainant"
                              role="tabpanel" aria-labelledby="tab-complainant">
-
                             <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
                                 <span class="fs-10 text-muted fst-italic">
                                     <i class="bi bi-info-circle me-1"></i>
@@ -278,13 +545,11 @@
                                     <p class="text-muted fs-11 mt-1 mb-0">No complainants added yet.</p>
                                 </div>
                             </div>
-
                         </div>
 
                         @* Respondent Pane *@
                         <div class="tab-pane fade" id="pane-respondent"
                              role="tabpanel" aria-labelledby="tab-respondent">
-
                             <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
                                 <span class="fs-10 text-muted fst-italic">
                                     <i class="bi bi-exclamation-circle me-1 text-danger"></i>
@@ -302,7 +567,6 @@
                                     <p class="text-muted fs-11 mt-1 mb-0">No respondents added yet.</p>
                                 </div>
                             </div>
-
                         </div>
 
                     </div>
@@ -323,7 +587,6 @@
             @* RIGHT: Settlements + Attachments *@
             <div class="col-5">
 
-                @* Settlement Schedule Card *@
                 <div class="card border-0 shadow-sm rounded-3">
                     <div class="card-body px-3 py-3">
                         <div class="d-flex justify-content-between align-items-center mb-2">
@@ -344,7 +607,6 @@
                     </div>
                 </div>
 
-                @* Attachments Card *@
                 <div class="card border-0 shadow-sm rounded-3 mt-5">
                     <div class="card-body px-3 py-3">
                         <div class="d-flex justify-content-between align-items-center mb-2">
@@ -369,7 +631,9 @@
 
 </div>
 
-@* Modal: Add Complainant — form with optional resident lookup *@
+@* ── Modals ─────────────────────────────────────────────────────────────── *@
+
+@* Modal: Add Complainant *@
 <div class="modal fade" id="mdlAddComplainant" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content shadow-lg">
@@ -389,7 +653,6 @@
             <div class="modal-body mx-2" id="divComplainantForm">
                 <input type="hidden" id="_hidComplainantPartyId">
                 <input type="hidden" id="_hidComplainantResidentId">
-
                 <div class="row">
                     <div class="col">
                         <div class="form-group mb-3">
@@ -448,7 +711,7 @@
     </div>
 </div>
 
-@* Modal: Find Resident for Complainant lookup *@
+@* Modal: Find Resident for Complainant *@
 <div class="modal fade" id="mdlFindComplainant" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content shadow-lg">
@@ -490,7 +753,7 @@
     </div>
 </div>
 
-@* Modal: Find Resident (respondent — required) *@
+@* Modal: Find Resident (respondent) *@
 <div class="modal fade" id="mdlFindResident" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content shadow-lg">
@@ -624,8 +887,7 @@
                     <div class="col">
                         <div class="form-group mb-3">
                             <label class="fs-10 text-muted fw-semibold mb-1">Description</label>
-                            <input type="text" class="form-control fs-11"
-                                   id="inpAttachmentDescription">
+                            <input type="text" class="form-control fs-11" id="inpAttachmentDescription">
                         </div>
                     </div>
                 </div>
@@ -669,8 +931,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-body p-3" id="divPreviewBody" style="min-height:420px;">
-            </div>
+            <div class="modal-body p-3" id="divPreviewBody" style="min-height:420px;"></div>
             <div class="d-flex justify-content-between align-items-center p-3">
                 <a href="#" id="lnkDownloadAttachment" target="_blank"
                    class="btn btn-main-outline btn-sm fw-semibold">
@@ -685,7 +946,7 @@
     </div>
 </div>
 
-@* Modal: Preview Report — shared PDF viewer for all generated KP forms *@
+@* Modal: Preview Report *@
 <div class="modal fade" id="mdlPreviewReport" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content shadow-lg">
@@ -696,26 +957,78 @@
                     </div>
                     <div class="col ps-0 d-flex align-items-center">
                         <div>
-                            <h3 class="fw-bold mb-0">Preview report</h3>
-                            <p class="text-muted fs-12 mb-0">A quick view of the generated report. It allows users to review the layout, content, and accuracy of the data, ensuring everything is correct before printing or downloading.</p>
+                            <h3 class="fw-bold mb-0">Preview Report</h3>
+                            <p class="text-muted fs-12 mb-0">
+                                A quick view of the generated report. Review the layout and content before printing or downloading.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="modal-body p-0" style="height: 80vh; overflow: hidden;">
+            <div class="modal-body p-0" style="height:80vh;overflow:hidden;">
                 <div class="card h-100 border-0 rounded-0 px-3">
                     <div class="card-body p-0 h-100">
-                        <iframe id="pdfFrame" src="" frameborder="0" style="width: 100%; height: 100%; display: block;"></iframe>
+                        <iframe id="pdfFrame" src="" frameborder="0"
+                                style="width:100%;height:100%;display:block;"></iframe>
                     </div>
                 </div>
             </div>
-
             <div class="d-flex justify-content-end p-3">
-                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0"
+                        data-bs-dismiss="modal">
+                    Close
+                </button>
             </div>
         </div>
     </div>
 </div>
+
+@* Modal: All Upcoming Schedules *@
+<div class="modal fade" id="mdlAllSchedules" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header flex-column align-items-start border-bottom-0">
+                <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                    <div class="col-auto pe-0">
+                        <img src="/img/png/settle.png" class="icon-png-sm pe-3">
+                    </div>
+                    <div class="col ps-0 d-flex align-items-center">
+                        <div>
+                            <h3 class="fw-bold mb-0">All Upcoming Hearings</h3>
+                            <p class="text-muted fs-12 w-100">Every scheduled settlement hearing from today onward, across all cases.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-75 mt-4">
+                    <div class="search-box">
+                        <i class="bi bi-search"></i>
+                        <input type="text" class="form-control fs-11 border-elm"
+                               id="searchAllSchedules" placeholder="Search by name, case no., or type...">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body p-2">
+                <div class="card mx-2 rounded-2">
+                    <div class="card-body shadow-sm border-1 p-0">
+                        <table id="tblAllSchedules" class="display dataTable table-striped table-hover w-100"></table>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between p-3">
+                <span class="text-muted fs-10">
+                    <span id="lblAllSchedulesCount">0</span> upcoming hearing(s).
+                </span>
+                <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11 mb-0"
+                        data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Chart.js *@
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
 
 <script src="~/js/_defined/_incident.js"></script>

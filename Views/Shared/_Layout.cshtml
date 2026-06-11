@@ -133,7 +133,6 @@
 
         </div>
         <!-- /#qsp-panel -->
-
         <!-- Main Content Area -->
         <div class="content w-100">
 
@@ -165,11 +164,40 @@
                         </button>
                     </div>
 
-                    <!-- User Dropdown aligned right -->
+                    <!-- User Dropdown -->
                     <div class="dropdown ms-auto bg-primary px-2 bg-opacity-25 rounded-3">
                         <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle p-2 me-2"
                            id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="~/img/_icons/profile/default.png" width="25" height="25" class="rounded-circle me-2" alt="User Avatar">
+
+                            @{
+                                // Compute initials from FullName at render time
+                                var _initials = "?";
+                                if (!string.IsNullOrWhiteSpace(ViewBag.FullName as string))
+                                {
+                                    var _nameParts = ((string)ViewBag.FullName)
+                                    .Split(' ', System.StringSplitOptions.RemoveEmptyEntries);
+                                    _initials = _nameParts.Length >= 2
+                                    ? $"{_nameParts[0][0]}{_nameParts[^1][0]}"
+                                    : $"{_nameParts[0][0]}";
+                                    _initials = _initials.ToUpper();
+                                }
+                            }
+
+                            @* Initials avatar — replaces default.png *@
+                            <svg class="user-avatar-initials me-2"
+                                 width="30" height="30" viewBox="0 0 30 30"
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 aria-label="User avatar">
+                                <circle cx="15" cy="15" r="15" fill="#1a6c8a" />
+                                <text x="15" y="20"
+                                      text-anchor="middle"
+                                      font-family="inherit"
+                                      font-size="12"
+                                      font-weight="600"
+                                      fill="#ffffff"
+                                      letter-spacing="0.5">@_initials</text>
+                            </svg>
+
                             <div class="text-start lh-sm">
                                 <div class="lbl_userfullname fw-semibold text-warning small me-3">
                                     @ViewBag.FullName
@@ -179,6 +207,7 @@
                                 </div>
                             </div>
                         </a>
+
                         <ul class="dropdown-menu dropdown-menu-end shadow-sm drp-profile"
                             aria-labelledby="dropdownUser1" style="width:200px;">
                             <li class="dropdown-header fw-semibold text-muted small px-3 pt-2">Profile Actions</li>
@@ -207,16 +236,292 @@
             <!-- Page Content -->
             <div class="container-fluid pb-3">
                 @RenderBody()
-                <!-- Toast Notification -->
+                <!-- Shared modals (toast host + page-level modals) -->
+                @await Html.PartialAsync("_modals")
                 <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer"></div>
             </div>
         </div>
 
     </div>
 
+    @* ── Profile Information Modal ──────────────────────────────────────────── *@
+    <div class="modal fade" id="mdlProfileInformation" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content shadow-lg">
+                <div class="modal-header flex-column align-items-start border-bottom-0">
+                    <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                        <div class="col-auto pe-0">
+                            <img src="~/img/_icons/body/profile.svg" class="icon-png-sm pe-3">
+                        </div>
+                        <div class="col ps-0 d-flex align-items-center">
+                            <div>
+                                <h3 class="fw-bold mb-0">Profile Information</h3>
+                                <p class="text-muted fs-12 mb-0">View and update your account details.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-body mx-2">
+
+                    @* Avatar + quick info *@
+                    <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
+                        <svg id="profileAvatarSvg"
+                             class="user-avatar-initials flex-shrink-0"
+                             width="64" height="64" viewBox="0 0 64 64"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="32" cy="32" r="32" fill="#1a6c8a" />
+                            <text id="profileAvatarText"
+                                  x="32" y="41"
+                                  text-anchor="middle"
+                                  font-family="inherit"
+                                  font-size="22"
+                                  font-weight="700"
+                                  fill="#ffffff"
+                                  letter-spacing="1">@_initials</text>
+                        </svg>
+                        <div>
+                            <div class="fw-bold fs-16" id="profileDisplayName">@ViewBag.FullName</div>
+                            <div class="text-muted fs-12" id="profileDisplayPosition">@ViewBag.Position</div>
+                            <div class="text-muted fs-11 mt-1">
+                                <i class="bi bi-calendar3 me-1"></i>
+                                Member since <span id="profileDateCreated">—</span>
+                                &nbsp;·&nbsp;
+                                Last login: <span id="profileLastLogin">—</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Tabs: Profile / Change Password *@
+                    <ul class="nav nav-tabs border-bottom-dash mb-3" id="profileTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active fw-semibold fs-13 px-4"
+                                    id="tab-profileInfo" data-bs-toggle="tab"
+                                    data-bs-target="#pane-profileInfo" type="button" role="tab">
+                                <i class="bi bi-person me-1"></i> Profile
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link fw-semibold fs-13 px-4"
+                                    id="tab-changePass" data-bs-toggle="tab"
+                                    data-bs-target="#pane-changePass" type="button" role="tab">
+                                <i class="bi bi-lock me-1"></i> Change Password
+                            </button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+
+                        @* Profile tab *@
+                        <div class="tab-pane fade show active" id="pane-profileInfo" role="tabpanel">
+                            <div id="divProfileForm">
+                                <input type="hidden" name="UserId" id="_hidProfileUserId">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group mb-3">
+                                            <label class="fs-10 text-muted fw-semibold mb-1">First Name</label>
+                                            <input type="text" class="form-control fs-11"
+                                                   name="FirstName" id="inpFirstName" maxlength="20">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group mb-3">
+                                            <label class="fs-10 text-muted fw-semibold mb-1">Middle Name</label>
+                                            <input type="text" class="form-control fs-11"
+                                                   name="MiddleName" id="inpMiddleName" maxlength="20">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group mb-3">
+                                            <label class="fs-10 text-muted fw-semibold mb-1">Last Name</label>
+                                            <input type="text" class="form-control fs-11"
+                                                   name="LastName" id="inpLastName" maxlength="20">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group mb-3">
+                                            <label class="fs-10 text-muted fw-semibold mb-1">Username</label>
+                                            <input type="text" class="form-control fs-11"
+                                                   name="UserName" id="inpUserName" readonly>
+                                            <span class="fs-10 text-muted">Username cannot be changed.</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group mb-3">
+                                            <label class="fs-10 text-muted fw-semibold mb-1">Position / Role</label>
+                                            <input type="text" class="form-control fs-11"
+                                                   name="Position" id="inpPosition" maxlength="125">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end gap-2 pt-2">
+                                <button type="button" class="btn btn-main btn-sm fw-semibold"
+                                        id="btnSaveProfile">
+                                    <i class="icon-save me-1"></i> Save Changes
+                                </button>
+                            </div>
+                        </div>
+
+                        @* Change Password tab *@
+                        <div class="tab-pane fade" id="pane-changePass" role="tabpanel">
+                            <div id="divChangePasswordForm">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group mb-3">
+                                            <label class="fs-10 text-muted fw-semibold mb-1">Current Password</label>
+                                            <div class="input-group">
+                                                <input type="password" class="form-control fs-11"
+                                                       id="inpCurrentPassword" autocomplete="current-password">
+                                                <button class="btn btn-outline-secondary btn-sm btn-toggle-pw"
+                                                        type="button" data-target="#inpCurrentPassword">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group mb-3">
+                                            <label class="fs-10 text-muted fw-semibold mb-1">New Password</label>
+                                            <div class="input-group">
+                                                <input type="password" class="form-control fs-11"
+                                                       id="inpNewPassword" autocomplete="new-password">
+                                                <button class="btn btn-outline-secondary btn-sm btn-toggle-pw"
+                                                        type="button" data-target="#inpNewPassword">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                            </div>
+                                            <div id="divPasswordStrength" class="mt-1"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group mb-3">
+                                            <label class="fs-10 text-muted fw-semibold mb-1">Confirm New Password</label>
+                                            <div class="input-group">
+                                                <input type="password" class="form-control fs-11"
+                                                       id="inpConfirmPassword" autocomplete="new-password">
+                                                <button class="btn btn-outline-secondary btn-sm btn-toggle-pw"
+                                                        type="button" data-target="#inpConfirmPassword">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                            </div>
+                                            <div id="divPasswordMatch" class="fs-10 mt-1"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="alert alert-light border fs-11 py-2 px-3">
+                                    <i class="bi bi-shield-check me-1 text-success"></i>
+                                    Minimum 8 characters. Use a mix of letters, numbers, and symbols.
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end gap-2 pt-2">
+                                <button type="button" class="btn btn-main btn-sm fw-semibold"
+                                        id="btnChangePassword">
+                                    <i class="bi bi-lock-fill me-1"></i> Update Password
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end p-3">
+                    <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11"
+                            data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* ── Preferences Modal ─────────────────────────────────────────────────── *@
+    <div class="modal fade" id="mdlPreferences" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-scrollable">
+            <div class="modal-content shadow-lg">
+                <div class="modal-header flex-column align-items-start border-bottom-0">
+                    <div class="row ms-1 border-bottom-dash w-100 border-1 py-2">
+                        <div class="col-auto pe-0">
+                            <img src="~/img/_icons/sidenav/system.svg" class="icon-png-sm pe-3">
+                        </div>
+                        <div class="col ps-0 d-flex align-items-center">
+                            <div>
+                                <h3 class="fw-bold mb-0">Preferences</h3>
+                                <p class="text-muted fs-12 mb-0">Customize your display settings.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-body mx-2" id="divPreferencesForm">
+
+                    @* Font Size *@
+                    <h6 class="fs-13 fw-bold mt-3 mb-2">
+                        <i class="bi bi-fonts me-1"></i> Font Size
+                    </h6>
+                    <div class="d-flex gap-2 mb-4">
+                        <button type="button" class="btn btn-main-outline btn-sm px-4 fw-semibold btn-font-size"
+                                data-value="small" id="btnFontSmall">
+                            <span style="font-size:11px;">Small</span>
+                        </button>
+                        <button type="button" class="btn btn-main btn-sm px-4 fw-semibold btn-font-size"
+                                data-value="medium" id="btnFontMedium">
+                            <span style="font-size:13px;">Medium</span>
+                        </button>
+                        <button type="button" class="btn btn-main-outline btn-sm px-4 fw-semibold btn-font-size"
+                                data-value="large" id="btnFontLarge">
+                            <span style="font-size:15px;">Large</span>
+                        </button>
+                    </div>
+
+                    <div class="border-bottom mb-3"></div>
+
+                    @* Sidebar default *@
+                    <h6 class="fs-13 fw-bold mb-2">
+                        <i class="bi bi-layout-sidebar me-1"></i> Sidebar Default
+                    </h6>
+                    <div class="form-check form-switch mb-4">
+                        <input class="form-check-input" type="checkbox"
+                               id="chkSidebarCollapsed" name="SidebarCollapsed">
+                        <label class="form-check-label fs-12 text-muted" for="chkSidebarCollapsed">
+                            Start with sidebar collapsed
+                        </label>
+                    </div>
+
+                    @* Live preview *@
+                    <div class="alert border rounded-2 py-2 px-3 mb-0" id="divPrefPreview">
+                        <span class="text-muted fs-11">
+                            <i class="bi bi-eye me-1"></i>
+                            Preview: <span id="lblPrefPreviewText">Medium text size, sidebar expanded on load.</span>
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 p-3">
+                    <button type="button" class="btn btn-main btn-sm fw-semibold"
+                            id="btnSavePreferences">
+                        <i class="icon-save me-1"></i> Save Preferences
+                    </button>
+                    <button type="button" class="btn btn-main-outline btn-sm px-3 fs-11"
+                            data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- SignalR + Queue Status Panel script -->
     <script src="~/lib/signalr/dist/signalr.min.js"></script>
     <script src="~/js/_defined/_queuestatus.js" asp-append-version="true"></script>
+    <script src="~/js/_defined/_profile.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

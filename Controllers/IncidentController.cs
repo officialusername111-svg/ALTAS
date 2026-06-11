@@ -191,5 +191,32 @@ namespace ALTAS.Controllers
             var rtn = await _repo.DELETE_INCIDENT_SETTLEMENT(id);
             return Json(new { rtn });
         }
+
+        // GET: Dashboard KPI + trend + case types + top residents
+        [HttpGet]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> getDashboard( string periodType = "Monthly", int? year = null, int? month = null, string? dateFrom = null, string? dateTo = null)
+        {
+            var data = await _repo.GET_INCIDENT_DASHBOARD(periodType, year, month, dateFrom, dateTo);
+            return Json(data);
+        }
+
+        // GET: Period trend (monthly counts for a year)
+        [HttpGet]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> getPeriodTrend(int? year = null)
+        {
+            var data = await _repo.GET_INCIDENT_PERIOD_TREND(year);
+            return Json(data);
+        }
+
+        // GET: Upcoming settlement schedules (for dashboard left panel)
+        [HttpGet]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> getUpcomingSchedule(int limit = 10)
+        {
+            var data = await _repo.GET_UPCOMING_SETTLEMENTS(limit);
+            return Json(data);
+        }
     }
 }

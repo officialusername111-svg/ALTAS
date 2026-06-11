@@ -38,6 +38,7 @@ builder.Services.AddScoped<IQueueRepository, QueueRepository>();
 builder.Services.AddScoped<IORRepository, ORRepository>();
 builder.Services.AddScoped<ICTCCollectionRepository, CTCCollectionRepository>();
 builder.Services.AddScoped<IIncidentRepository, IncidentRepository>();
+builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 
 // ✅ Add Cookie Authentication
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

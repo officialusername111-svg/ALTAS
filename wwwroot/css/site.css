@@ -1311,3 +1311,175 @@ h1, h2, h3, h4, h5, h6 {
 #qsp-badge.pop {
     animation: badgePop .25s cubic-bezier(.34,1.56,.64,1);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ── Incident Dashboard ─────────────────────────────────────── */
+
+/* Period filter pills */
+.dashboard-period-pills {
+    gap: 4px;
+    display: flex;
+}
+
+    .dashboard-period-pills .nav-link {
+        border-radius: 20px;
+        color: #6c757d;
+        background: #f0f2f5;
+        border: 1px solid #e2e8f0;
+        transition: all .18s;
+    }
+
+        .dashboard-period-pills .nav-link:hover {
+            background: #e2e8f0;
+            color: #1a3a5c;
+        }
+
+        .dashboard-period-pills .nav-link.active {
+            background: #1a6c8a;
+            color: #fff;
+            border-color: transparent;
+        }
+
+/* Resolution stacked bar */
+.inc-resolution-bar {
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    background: #f0f2f5;
+}
+
+    .inc-resolution-bar .bar-seg {
+        height: 100%;
+        transition: width .4s ease;
+    }
+
+/* Top-residents case load bar */
+.inc-case-load-bar {
+    height: 8px;
+    border-radius: 4px;
+    background: #e9ecef;
+    overflow: hidden;
+    min-width: 80px;
+}
+
+    .inc-case-load-bar .fill {
+        height: 100%;
+        border-radius: 4px;
+        background: linear-gradient(90deg, #1a6c8a, #0d9488);
+        transition: width .4s ease;
+    }
+
+
+/* ── Incident Dashboard ─────────────────────────────────────── */
+
+/* Period filter pills */
+.dashboard-period-pills {
+    gap: 4px;
+    display: flex;
+}
+
+    .dashboard-period-pills .nav-link {
+        border-radius: 20px;
+        color: #6c757d;
+        background: #f0f2f5;
+        border: 1px solid #e2e8f0;
+        transition: all .18s;
+    }
+
+        .dashboard-period-pills .nav-link:hover {
+            background: #e2e8f0;
+            color: #1a3a5c;
+        }
+
+        .dashboard-period-pills .nav-link.active {
+            background: #1a6c8a;
+            color: #fff;
+            border-color: transparent;
+        }
+
+/* Resolution stacked bar */
+.inc-resolution-bar {
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    background: #f0f2f5;
+}
+
+    .inc-resolution-bar .bar-seg {
+        height: 100%;
+        transition: width .4s ease;
+    }
+
+/* Top-residents case load bar */
+.inc-case-load-bar {
+    height: 8px;
+    border-radius: 4px;
+    background: #e9ecef;
+    overflow: hidden;
+    min-width: 80px;
+}
+
+    .inc-case-load-bar .fill {
+        height: 100%;
+        border-radius: 4px;
+        background: linear-gradient(90deg, #1a6c8a, #0d9488);
+        transition: width .4s ease;
+    }
+
+/* ── Upcoming Hearings — agenda timeline ─────────────────────── */
+.inc-agenda-header:first-child {
+    margin-top: 0 !important;
+}
+
+.inc-agenda-item:last-child {
+    border-bottom: none !important;
+}
+
+.inc-agenda-item {
+    transition: background .15s;
+}
+
+    .inc-agenda-item:hover {
+        background: #f8f9fa;
+        border-radius: 6px;
+    }
+
+/* ── Case Status list dots + small fee number ───────────────── */
+.inc-status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.kpi-number.fs-20 {
+    font-size: 1.25rem !important;
+}
+
+
+
+.user-avatar-initials {
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+    vertical-align: middle;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .18);
+    /* Subtle ring that matches the original rounded-circle border */
+    outline: 2px solid rgba(255, 255, 255, .35);
+}

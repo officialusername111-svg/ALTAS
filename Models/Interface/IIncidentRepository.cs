@@ -30,5 +30,11 @@ namespace ALTAS.Models.Interface
         Task<successDTO> UPDATE_INCIDENT_SETTLEMENT(IncidentSettlementDTO dto);
         Task<successDTO> DELETE_INCIDENT_SETTLEMENT(int incidentSettlementId);
         Task<IEnumerable<IncidentSettlementDTO>> GET_INCIDENT_SETTLEMENTS(string kpCaseNo);
+
+
+        Task<IncidentDashboardResultDTO> GET_INCIDENT_DASHBOARD( string periodType, int? year = null, int? month = null, string? dateFrom = null, string? dateTo = null);
+        Task<IEnumerable<IncidentPeriodTrendDTO>> GET_INCIDENT_PERIOD_TREND(int? year = null);
+
+        Task<IEnumerable<UpcomingSettlementDTO>> GET_UPCOMING_SETTLEMENTS(int limit = 10);
     }
 }

@@ -355,5 +355,53 @@ namespace ALTAS.Models.REPO
                 new { KPCaseNo = kpCaseNo },
                 commandType: CommandType.StoredProcedure);
         }
+
+        public async Task<IncidentDashboardResultDTO> GET_INCIDENT_DASHBOARD( string periodType, int? year = null, int? month = null, string? dateFrom = null, string? dateTo = null)
+        {
+            using var connection = _factory.CreateConnection("DBConnection");
+
+            var param = new DynamicParameters();
+            param.Add("@PeriodType", periodType);
+            param.Add("@Year", year);
+            param.Add("@Month", month);
+            param.Add("@DateFrom", dateFrom);
+            param.Add("@DateTo", dateTo);
+
+            using var multi = await connection.QueryMultipleAsync(
+                "GET_INCIDENT_DASHBOARD",
+                param,
+                commandType: CommandType.StoredProcedure);
+
+            var kpi = await multi.ReadFirstOrDefaultAsync<IncidentDashboardKpiDTO>();
+            var trend = (await multi.ReadAsync<IncidentTrendDTO>()).ToList();
+            var caseTypes = (await multi.ReadAsync<IncidentCaseTypeBreakdownDTO>()).ToList();
+            var topResidents = (await multi.ReadAsync<IncidentTopResidentDTO>()).ToList();
+
+            return new IncidentDashboardResultDTO
+            {
+                Kpi = kpi,
+                Trend = trend,
+                CaseTypes = caseTypes,
+                TopResidents = topResidents
+            };
+        }
+
+        public async Task<IEnumerable<IncidentPeriodTrendDTO>> GET_INCIDENT_PERIOD_TREND(int? year = null)
+        {
+            using var connection = _factory.CreateConnection("DBConnection");
+            return await connection.QueryAsync<IncidentPeriodTrendDTO>(
+                "GET_INCIDENT_PERIOD_TREND",
+                new { Year = year ?? DateTime.Now.Year },
+                commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<UpcomingSettlementDTO>> GET_UPCOMING_SETTLEMENTS(int limit = 10)
+        {
+            using var connection = _factory.CreateConnection("DBConnection");
+            return await connection.QueryAsync<UpcomingSettlementDTO>(
+                "GET_UPCOMING_SETTLEMENTS",
+                new { Limit = limit },
+                commandType: CommandType.StoredProcedure);
+        }
     }
 }

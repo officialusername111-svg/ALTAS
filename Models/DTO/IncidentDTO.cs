@@ -89,4 +89,80 @@
         public string? Result { get; set; }
         public string? Remarks { get; set; }
     }
+
+
+    public class IncidentDashboardKpiDTO
+    {
+        public int TotalIncidents { get; set; }
+        public int TotalOpen { get; set; }
+        public int TotalOngoing { get; set; }
+        public int TotalSettled { get; set; }
+        public int TotalTransferred { get; set; }
+        public int TotalDismissed { get; set; }
+        public int TotalForTransfer { get; set; }
+        public decimal TotalAmount { get; set; }
+        public double AvgAmount { get; set; }
+        public double SettlementRate { get; set; }
+        public double AvgDaysToSettle { get; set; }
+        public string? PeriodFrom { get; set; }
+        public string? PeriodTo { get; set; }
+    }
+
+    public class IncidentTrendDTO
+    {
+        public DateTime TrendDate { get; set; }
+        public int TrendCount { get; set; }
+    }
+
+    public class IncidentCaseTypeBreakdownDTO
+    {
+        public string? Label { get; set; }
+        public int Value { get; set; }
+    }
+
+    public class IncidentTopResidentDTO
+    {
+        public string? ResidentName { get; set; }
+        public string? PartyType { get; set; }
+        public int CaseCount { get; set; }
+        public int OpenCount { get; set; }
+        public int OngoingCount { get; set; }
+        public int SettledCount { get; set; }
+        public int? ResidentId { get; set; }
+    }
+
+    public class IncidentPeriodTrendDTO
+    {
+        public int PeriodNo { get; set; }
+        public string? PeriodLabel { get; set; }
+        public int TotalCount { get; set; }
+        public int OpenCount { get; set; }
+        public int OngoingCount { get; set; }
+        public int SettledCount { get; set; }
+        public int TransferredCount { get; set; }
+        public int DismissedCount { get; set; }
+    }
+
+    // Wrapper returned by the dashboard endpoint (all result sets combined)
+    public class IncidentDashboardResultDTO
+    {
+        public IncidentDashboardKpiDTO? Kpi { get; set; }
+        public IEnumerable<IncidentTrendDTO>? Trend { get; set; }
+        public IEnumerable<IncidentCaseTypeBreakdownDTO>? CaseTypes { get; set; }
+        public IEnumerable<IncidentTopResidentDTO>? TopResidents { get; set; }
+    }
+
+    public class UpcomingSettlementDTO
+    {
+        public int IncidentSettlementId { get; set; }
+        public string? KPCaseNo { get; set; }
+        public DateTime? SettlementDate { get; set; }
+        public string? SettlementTime { get; set; }
+        public string? Result { get; set; }
+        public string? Remarks { get; set; }
+        public string? RespondentName { get; set; }
+        public string? CaseTypeName { get; set; }
+        public string? IncidentStatus { get; set; }
+        public int IncidentID { get; set; }
+    }
 }
